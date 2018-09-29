@@ -32,7 +32,7 @@ public class PlayScreen implements Screen {
         mapLoader = new TmxMapLoader();
 
         //Create new map
-        map = mapLoader.load("level1.tmx");
+        map = mapLoader.load("maps/level1.tmx");
 
         //Create mapRenderer, load map file
         mapRenderer = new OrthogonalTiledMapRenderer(map);

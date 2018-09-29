@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="120" height="68" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="11">
  <tileset firstgid="1" name="Dungeon II" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
-  <image source="../../../../../Game Assets/Dungeon Pack/0x72_DungeonTilesetII_v1.png" width="512" height="512"/>
+  <image source="tilesets/0x72_DungeonTilesetII_v1.png" width="512" height="512"/>
  </tileset>
  <layer id="1" name="background" width="120" height="68">
   <data encoding="base64" compression="zlib">
@@ -10,7 +10,7 @@
  </layer>
  <layer id="2" name="graphics" width="120" height="68">
   <data encoding="base64" compression="zlib">
-   eJzt0bFtwwAQBEHa7kS1uDJXLgUOlJLGYWFwBjh89NEeBwAAAAAAAAAAcFefr3393jN7/1+P6x4X9v3xt/+z47qffzCuq9vpu1W303erbqfvVt1O3626nb5bdTt9t+p2+m7V7fTdqtvpu1W303erbqfvVt1O3626nb5bdTt9t+p2+m7V7fTdqtvpu1W303erbqfvVt1O3626nb5bdTt9t+p2+m7V7fTdqtvpu1W30xcAAAAAAAAAAOCenjFDN+U=
+   eJzt0QEJA0EAxMCnUir1ldfDwRKOzkAU5HkAAAAAAAAAAIB/9bkgzn0viHPvBXGufufvVv3O3636nb9b9Tt/t+p3/m7V7/zdqt/5u1W/83erfufvVv3O3636nb9b9Tt/t+p3/m7V7/zdqt/5u1W/83erfufvVv3O3636nb9b9Tt/t+p3/m7V7/zdqt/5u1W/8xcAAAAAAAAAAADgLj/GUA5l
   </data>
  </layer>
  <objectgroup id="4" name="walls">
