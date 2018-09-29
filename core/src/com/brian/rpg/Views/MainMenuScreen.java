@@ -1,4 +1,4 @@
-package com.brian.rpg;
+package com.brian.rpg.Views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.brian.rpg.RPG;
 
 public class MainMenuScreen implements Screen {
     final RPG game;
