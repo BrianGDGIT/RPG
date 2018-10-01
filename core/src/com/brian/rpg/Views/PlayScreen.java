@@ -12,14 +12,21 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.brian.rpg.RPG;
+import com.brian.rpg.Sprites.Wizard;
 
 public class PlayScreen implements Screen {
     //Reference to RPG game used to set screens
     private RPG game;
 
+    //Reference to player sprite
+    private Wizard player;
+
     //Camera and view variables
     private OrthographicCamera gameCamera;
+    private Viewport viewPort;
 
     //Box2d
     private World world;
@@ -37,6 +44,11 @@ public class PlayScreen implements Screen {
         gameCamera = new OrthographicCamera();
         gameCamera.setToOrtho(false, RPG.V_WIDTH, RPG.V_HEIGHT);
 
+        //This limits the view of the world to 800, 600 so everything is zoomed in
+        //enough to see the 16x16 tiles
+        //Keeps the screen scaled properly based on the size of the screen
+        viewPort = new FitViewport(800, 600, gameCamera);
+
         //Create new maploader
         mapLoader = new TmxMapLoader();
 
@@ -50,6 +62,9 @@ public class PlayScreen implements Screen {
         Box2D.init();
         world = new World(new Vector2(0, 0), true);
         b2dr = new Box2DDebugRenderer();
+
+        //Create player
+        player = new Wizard(world);
 
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -78,6 +93,10 @@ public class PlayScreen implements Screen {
 
     public void update(float delta){
         handleInput(delta);
+
+        //Box2 handles physics
+        world.step(1/60f, 6, 2);
+
         //Update camera every render frame
         gameCamera.update();
 
@@ -104,13 +123,14 @@ public class PlayScreen implements Screen {
         //Render Box2d debug lines
         b2dr.render(world, gameCamera.combined);
 
+        game.batch.setProjectionMatrix(gameCamera.combined);
         game.batch.begin();
         game.batch.end();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        viewPort.update(width, height);
     }
 
     @Override

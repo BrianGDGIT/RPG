@@ -29,8 +29,6 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-
-
         //Add items to stage
         Table table = new Table();
         table.setFillParent(true);
