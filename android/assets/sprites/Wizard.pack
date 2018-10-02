@@ -1,0 +1,205 @@
+
+Wizard.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+attack
+  rotate: false
+  xy: 1, 602
+  size: 699, 418
+  orig: 699, 418
+  offset: 0, 0
+  index: 3
+jump
+  rotate: false
+  xy: 702, 639
+  size: 312, 381
+  orig: 312, 381
+  offset: 0, 0
+  index: 2
+attack
+  rotate: false
+  xy: 1, 209
+  size: 618, 391
+  orig: 618, 391
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 621, 225
+  size: 398, 375
+  orig: 398, 375
+  offset: 0, 0
+  index: 1
+dead
+  rotate: false
+  xy: 621, 1
+  size: 343, 222
+  orig: 343, 222
+  offset: 0, 0
+  index: 4
+
+Wizard2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+dead
+  rotate: false
+  xy: 1, 400
+  size: 417, 397
+  orig: 417, 397
+  offset: 0, 0
+  index: 1
+hurt
+  rotate: false
+  xy: 1, 1
+  size: 417, 397
+  orig: 417, 397
+  offset: 0, 0
+  index: 1
+hurt
+  rotate: false
+  xy: 1, 1
+  size: 417, 397
+  orig: 417, 397
+  offset: 0, 0
+  index: 3
+hurt
+  rotate: false
+  xy: 420, 436
+  size: 417, 361
+  orig: 417, 361
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 420, 59
+  size: 398, 375
+  orig: 398, 375
+  offset: 0, 0
+  index: 2
+
+Wizard3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+run
+  rotate: false
+  xy: 1, 378
+  size: 398, 375
+  orig: 398, 375
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 1, 1
+  size: 398, 375
+  orig: 398, 375
+  offset: 0, 0
+  index: 4
+jump
+  rotate: false
+  xy: 401, 405
+  size: 413, 348
+  orig: 413, 348
+  offset: 0, 0
+  index: 1
+jump
+  rotate: false
+  xy: 401, 55
+  size: 413, 348
+  orig: 413, 348
+  offset: 0, 0
+  index: 3
+
+Wizard4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+dead
+  rotate: false
+  xy: 1, 367
+  size: 417, 339
+  orig: 417, 339
+  offset: 0, 0
+  index: 2
+dead
+  rotate: false
+  xy: 1, 26
+  size: 417, 339
+  orig: 417, 339
+  offset: 0, 0
+  index: 3
+attack
+  rotate: false
+  xy: 420, 363
+  size: 402, 343
+  orig: 402, 343
+  offset: 0, 0
+  index: 1
+idle
+  rotate: false
+  xy: 420, 1
+  size: 342, 360
+  orig: 342, 360
+  offset: 0, 0
+  index: 1
+
+Wizard5.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+walk
+  rotate: false
+  xy: 1, 357
+  size: 342, 360
+  orig: 342, 360
+  offset: 0, 0
+  index: 1
+idle
+  rotate: false
+  xy: 1, 1
+  size: 342, 354
+  orig: 342, 354
+  offset: 0, 0
+  index: 2
+idle
+  rotate: false
+  xy: 345, 363
+  size: 342, 354
+  orig: 342, 354
+  offset: 0, 0
+  index: 3
+idle
+  rotate: false
+  xy: 345, 7
+  size: 342, 354
+  orig: 342, 354
+  offset: 0, 0
+  index: 4
+
+Wizard6.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+walk
+  rotate: false
+  xy: 1, 357
+  size: 342, 354
+  orig: 342, 354
+  offset: 0, 0
+  index: 2
+walk
+  rotate: false
+  xy: 1, 1
+  size: 342, 354
+  orig: 342, 354
+  offset: 0, 0
+  index: 3
+walk
+  rotate: false
+  xy: 345, 357
+  size: 342, 354
+  orig: 342, 354
+  offset: 0, 0
+  index: 4

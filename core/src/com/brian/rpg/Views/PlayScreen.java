@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -16,14 +17,15 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.brian.rpg.RPG;
-import com.brian.rpg.Sprites.Wizard;
+import com.brian.rpg.Sprites.WizardSprite;
 
 public class PlayScreen implements Screen {
     //Reference to RPG game used to set screens
     private RPG game;
+    private TextureAtlas wizardSpriteAtlas;
 
     //Reference to player sprite
-    private Wizard player;
+    private WizardSprite player;
 
     //Camera and view variables
     private OrthographicCamera gameCamera;
@@ -40,6 +42,8 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(RPG game){
         this.game = game;
+
+        wizardSpriteAtlas = new TextureAtlas("sprites/Wizard.pack");
 
         //Create camera
         gameCamera = new OrthographicCamera();
@@ -65,7 +69,7 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         //Create player
-        player = new Wizard(world);
+        player = new WizardSprite(world, this );
 
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -188,5 +192,9 @@ public class PlayScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public TextureAtlas getWizardSpriteAtlasAtlas(){
+        return wizardSpriteAtlas;
     }
 }

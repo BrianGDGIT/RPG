@@ -3,12 +3,14 @@ package com.brian.rpg.Sprites;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
 import com.brian.rpg.RPG;
+import com.brian.rpg.Views.PlayScreen;
 
-public class Wizard extends Sprite {
+public class WizardSprite extends Sprite {
     public World world;
     public Body box2body;
 
-    public Wizard(World world){
+    public WizardSprite(World world, PlayScreen screen){
+        super(screen.getWizardSpriteAtlasAtlas().findRegion("Wizard"));
         this.world = world;
         createWizard();
     }
