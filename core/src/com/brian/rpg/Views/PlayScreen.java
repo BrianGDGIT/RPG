@@ -1,6 +1,7 @@
 package com.brian.rpg.Views;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -47,7 +48,7 @@ public class PlayScreen implements Screen {
         //This limits the view of the world to 800, 600 so everything is zoomed in
         //enough to see the 16x16 tiles
         //Keeps the screen scaled properly based on the size of the screen
-        viewPort = new FitViewport(800, 600, gameCamera);
+        viewPort = new FitViewport(400, 300, gameCamera);
 
         //Create new maploader
         mapLoader = new TmxMapLoader();
@@ -88,6 +89,38 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float delta){
+        //Keyboard controls
+        if(Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S)){
+            player.box2body.applyLinearImpulse(new Vector2(0, 50), player.box2body.getWorldCenter(), true);
+        }else{
+            if(!Gdx.input.isKeyPressed(Input.Keys.S)){
+                //player.box2body.setLinearVelocity(vel.x, 0);
+            }
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.D) && !Gdx.input.isKeyPressed(Input.Keys.A)){
+            player.box2body.applyLinearImpulse(new Vector2(50, 0), player.box2body.getWorldCenter(), true);
+        }else{
+            if(!Gdx.input.isKeyPressed(Input.Keys.A)){
+                player.box2body.setLinearVelocity(0, player.box2body.getLinearVelocity().y);
+            }
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.S) && !Gdx.input.isKeyPressed(Input.Keys.W)){
+            player.box2body.applyLinearImpulse(new Vector2(0, -50), player.box2body.getWorldCenter(), true);
+        }else{
+            if(!Gdx.input.isKeyPressed(Input.Keys.W)) {
+                player.box2body.setLinearVelocity(player.box2body.getLinearVelocity().x, 0);
+            }
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)){
+            player.box2body.applyLinearImpulse(new Vector2(-50, 0), player.box2body.getWorldCenter(), true);
+        }else{
+            if(!Gdx.input.isKeyPressed(Input.Keys.D)) {
+                player.box2body.setLinearVelocity(0, player.box2body.getLinearVelocity().y);
+            }
+        }
 
     }
 
@@ -96,6 +129,10 @@ public class PlayScreen implements Screen {
 
         //Box2 handles physics
         world.step(1/60f, 6, 2);
+
+        //Make game camera follow player
+        gameCamera.position.x = player.box2body.getPosition().x;
+        gameCamera.position.y = player.box2body.getPosition().y;
 
         //Update camera every render frame
         gameCamera.update();
