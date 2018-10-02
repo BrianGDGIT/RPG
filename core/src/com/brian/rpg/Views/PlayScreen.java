@@ -141,6 +141,9 @@ public class PlayScreen implements Screen {
         //Update camera every render frame
         gameCamera.update();
 
+        //Update player sprite position every frame
+        player.update(delta);
+
         //Render only parts of the map that the camera can currently see
         mapRenderer.setView(gameCamera);
 
@@ -166,6 +169,11 @@ public class PlayScreen implements Screen {
 
         game.batch.setProjectionMatrix(gameCamera.combined);
         game.batch.begin();
+
+        //Draw the player sprite
+        player.setSize(16, 16);
+        player.draw(game.batch);
+
         game.batch.end();
     }
 
@@ -194,7 +202,7 @@ public class PlayScreen implements Screen {
 
     }
 
-    public TextureAtlas getWizardSpriteAtlasAtlas(){
+    public TextureAtlas getWizardSpriteAtlas(){
         return wizardSpriteAtlas;
     }
 }
