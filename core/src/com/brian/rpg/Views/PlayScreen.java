@@ -141,7 +141,6 @@ public class PlayScreen implements Screen {
         game.batch.begin();
 
         //Draw the player sprite
-        player.getSprite().setSize(16, 16);
         player.getSprite().draw(game.batch);
 
         game.batch.end();
