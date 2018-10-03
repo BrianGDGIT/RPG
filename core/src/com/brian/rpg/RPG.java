@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.brian.rpg.Views.MainMenuScreen;
+import java.*;
 
 public class RPG extends Game {
 	public static final int V_WIDTH = 1920;
@@ -11,7 +12,7 @@ public class RPG extends Game {
 
 	public SpriteBatch batch;
 	public BitmapFont font;
-	
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();

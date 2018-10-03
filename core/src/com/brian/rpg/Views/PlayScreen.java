@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -16,16 +17,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.brian.rpg.Model.Player;
 import com.brian.rpg.RPG;
-import com.brian.rpg.Sprites.WizardSprite;
 
 public class PlayScreen implements Screen {
     //Reference to RPG game used to set screens
     private RPG game;
+
+    //Textures
     private TextureAtlas wizardSpriteAtlas;
 
     //Reference to player sprite
-    private WizardSprite player;
+    private Player player;
 
     //Camera and view variables
     private OrthographicCamera gameCamera;
@@ -69,7 +72,7 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         //Create player
-        player = new WizardSprite(world, this );
+        player = new Player(world, this,10, 10, "Wizard", new Sprite(getWizardSpriteAtlas().findRegion("idle")));
 
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -92,44 +95,11 @@ public class PlayScreen implements Screen {
         gameCamera.update();
     }
 
-    public void handleInput(float delta){
-        //Keyboard controls
-        if(Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S)){
-            player.box2body.applyLinearImpulse(new Vector2(0, 50), player.box2body.getWorldCenter(), true);
-        }else{
-            if(!Gdx.input.isKeyPressed(Input.Keys.S)){
-                //player.box2body.setLinearVelocity(vel.x, 0);
-            }
-        }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.D) && !Gdx.input.isKeyPressed(Input.Keys.A)){
-            player.box2body.applyLinearImpulse(new Vector2(50, 0), player.box2body.getWorldCenter(), true);
-        }else{
-            if(!Gdx.input.isKeyPressed(Input.Keys.A)){
-                player.box2body.setLinearVelocity(0, player.box2body.getLinearVelocity().y);
-            }
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.S) && !Gdx.input.isKeyPressed(Input.Keys.W)){
-            player.box2body.applyLinearImpulse(new Vector2(0, -50), player.box2body.getWorldCenter(), true);
-        }else{
-            if(!Gdx.input.isKeyPressed(Input.Keys.W)) {
-                player.box2body.setLinearVelocity(player.box2body.getLinearVelocity().x, 0);
-            }
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)){
-            player.box2body.applyLinearImpulse(new Vector2(-50, 0), player.box2body.getWorldCenter(), true);
-        }else{
-            if(!Gdx.input.isKeyPressed(Input.Keys.D)) {
-                player.box2body.setLinearVelocity(0, player.box2body.getLinearVelocity().y);
-            }
-        }
-
-    }
 
     public void update(float delta){
-        handleInput(delta);
+        //Calls Player object method to handle player input every frame
+        player.handleInput(delta);
 
         //Box2 handles physics
         world.step(1/60f, 6, 2);
@@ -171,8 +141,8 @@ public class PlayScreen implements Screen {
         game.batch.begin();
 
         //Draw the player sprite
-        player.setSize(16, 16);
-        player.draw(game.batch);
+        player.getSprite().setSize(16, 16);
+        player.getSprite().draw(game.batch);
 
         game.batch.end();
     }

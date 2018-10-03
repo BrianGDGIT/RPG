@@ -1,15 +1,47 @@
 package com.brian.rpg.Model;
 
-public class Creature {
-    private int hp;
-    private int mana;
-    private String gameClass;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.*;
+import com.brian.rpg.RPG;
+import com.brian.rpg.Views.PlayScreen;
 
-    public Creature(int hp, int mana, String gameClass){
+public class Creature {
+    int hp;
+    int mana;
+    String gameClass;
+    Sprite sprite;
+
+    public World world;
+    public Body box2body;
+
+    public Creature(World world, PlayScreen screen, int hp, int mana, String gameClass, Sprite sprite){
+        this.world = world;
         this.hp = hp;
         this.mana = mana;
         this.gameClass = gameClass;
+        this.sprite = sprite;
+        this.createCreature();
     }
+
+    //Sets all Box2Body properties on a creature
+    public void createCreature(){
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        box2body = world.createBody(bdef);
+
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(5);
+
+        fdef.shape = shape;
+        box2body.createFixture(fdef);
+    }
+
+    public Sprite getSprite(){
+        return this.sprite;
+    }
+
 
 
 }
