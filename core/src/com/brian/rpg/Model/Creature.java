@@ -11,6 +11,12 @@ public class Creature {
     String gameClass;
     Sprite sprite;
 
+    //Animation states
+    enum State {IDLE, WALKING_RIGHT, WALKING_LEFT};
+    State currentState;
+    State previousState;
+
+
     public World world;
     public Body box2body;
 
