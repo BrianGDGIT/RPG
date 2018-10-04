@@ -20,6 +20,9 @@ public class Player extends Creature{
     private Animation<TextureRegion> playerWalk;
     private float stateTimer = 0;
 
+    //Player movement detection variables
+    Boolean isMovingRight = false;
+    Boolean isMovingLeft = false;
 
     public Player(World world, PlayScreen screen, int hp, int mana, String gameClass, Sprite sprite){
         super(world, screen, hp, mana, gameClass, sprite);
@@ -52,58 +55,58 @@ public class Player extends Creature{
 
         TextureRegion region = wizardSprite;
         switch(currentState){
-            case WALKING_RIGHT:
-                region = playerWalk.getKeyFrame(stateTimer, true);
-                break;
-            case WALKING_LEFT:
+            case WALKING:
                 region = playerWalk.getKeyFrame(stateTimer, true);
                 break;
             case IDLE:
                 region = wizardSprite;
         }
 
-//        if(box2body.getLinearVelocity().x < 0 && !region.isFlipX()){
-//            region.flip(true, false);
-//        }
-
-
-        if(currentState == State.WALKING_RIGHT || currentState == State.WALKING_LEFT){
+        if(currentState == State.WALKING){
             stateTimer = stateTimer + delta;
         }else{
             //Reset timer on new state transition
             stateTimer = 0;
         }
 
-        //Check if idle sprite needs to be flipped after stopping animation
-        if(currentState == State.WALKING_RIGHT && region.isFlipX()){
+        //Change Spriate direction when needed
+        if((box2body.getLinearVelocity().x < 0) && !region.isFlipX()) {
             region.flip(true, false);
-        }else if(currentState == State.WALKING_LEFT && !region.isFlipX()){
+            isMovingRight = false;
+            isMovingLeft = true;
+        }else if((box2body.getLinearVelocity().x > 0 || isMovingRight) && region.isFlipX()) {
             region.flip(true, false);
-        }else if(previousState == State.WALKING_LEFT && currentState == State.IDLE && !region.isFlipX()){
-            region.flip(true, false);
-        }else if(previousState == State.WALKING_RIGHT && currentState == State.IDLE && region.isFlipX() ){
-            region.flip(true, false);
+            isMovingRight = true;
+            isMovingLeft = false;
+        }else if(box2body.getLinearVelocity().x == 0 && box2body.getLinearVelocity().y == 0) {
+            if (isMovingLeft && !region.isFlipX()) {
+                region.flip(true, false);
+            }
+            isMovingRight = false;
+            isMovingLeft = false;
         }
+
+
 
         return region;
     }
 
     public State getState(){
-        if(box2body.getLinearVelocity().x > 0){
-            previousState = currentState;
-            return State.WALKING_RIGHT;
-        }else if(box2body.getLinearVelocity().x < 0){
-            previousState = currentState;
-            return State.WALKING_LEFT;
-        }else{
-            return State.IDLE;
+            if(box2body.getLinearVelocity().x != 0 || box2body.getLinearVelocity().y != 0){
+                return State.WALKING;
+            }else{
+                return State.IDLE;
+            }
         }
-    }
 
     public void handleInput(float delta){
             //Keyboard controls
             if(Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S)){
                 this.box2body.applyLinearImpulse(new Vector2(0, 50), this.box2body.getWorldCenter(), true);
+            }else{
+                if(!Gdx.input.isKeyPressed(Input.Keys.S)){
+                    this.box2body.setLinearVelocity(this.box2body.getLinearVelocity().x, 0);
+                }
             }
 
             if(Gdx.input.isKeyPressed(Input.Keys.D) && !Gdx.input.isKeyPressed(Input.Keys.A)){

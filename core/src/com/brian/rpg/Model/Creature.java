@@ -12,7 +12,7 @@ public class Creature {
     Sprite sprite;
 
     //Animation states
-    enum State {IDLE, WALKING_RIGHT, WALKING_LEFT};
+    enum State {IDLE, WALKING};
     State currentState;
     State previousState;
 
