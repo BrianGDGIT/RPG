@@ -13,8 +13,12 @@ public class Creature {
 
     //Animation states
     enum State {IDLE, WALKING};
+    enum Direction {LEFT, RIGHT};
+
     State currentState;
     State previousState;
+    Direction currentDirection;
+    Direction previousDirection;
 
 
     public World world;

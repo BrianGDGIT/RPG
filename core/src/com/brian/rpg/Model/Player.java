@@ -20,10 +20,6 @@ public class Player extends Creature{
     private Animation<TextureRegion> playerWalk;
     private float stateTimer = 0;
 
-    //Player movement detection variables
-    Boolean isMovingRight = false;
-    Boolean isMovingLeft = false;
-
     public Player(World world, PlayScreen screen, int hp, int mana, String gameClass, Sprite sprite){
         super(world, screen, hp, mana, gameClass, sprite);
         this.currentState = State.IDLE;
@@ -56,7 +52,7 @@ public class Player extends Creature{
         TextureRegion region = wizardSprite;
         switch(currentState){
             case WALKING:
-                region = playerWalk.getKeyFrame(stateTimer, true);
+                region = playerWalk.getKeyFrame(stateTimer, false);
                 break;
             case IDLE:
                 region = wizardSprite;
@@ -69,21 +65,13 @@ public class Player extends Creature{
             stateTimer = 0;
         }
 
-        //Change Spriate direction when needed
-        if((box2body.getLinearVelocity().x < 0) && !region.isFlipX()) {
+        //Change Sprite direction when needed
+        if(this.currentDirection == Direction.LEFT && !region.isFlipX()){
             region.flip(true, false);
-            isMovingRight = false;
-            isMovingLeft = true;
-        }else if((box2body.getLinearVelocity().x > 0 || isMovingRight) && region.isFlipX()) {
+        }else if(this.currentDirection == Direction.RIGHT && region.isFlipX()){
             region.flip(true, false);
-            isMovingRight = true;
-            isMovingLeft = false;
-        }else if(box2body.getLinearVelocity().x == 0 && box2body.getLinearVelocity().y == 0) {
-            if (isMovingLeft && !region.isFlipX()) {
-                region.flip(true, false);
-            }
-            isMovingRight = false;
-            isMovingLeft = false;
+        }else{
+            region.flip(false, false);
         }
 
 
@@ -111,6 +99,7 @@ public class Player extends Creature{
 
             if(Gdx.input.isKeyPressed(Input.Keys.D) && !Gdx.input.isKeyPressed(Input.Keys.A)){
                 this.box2body.applyLinearImpulse(new Vector2(50, 0), this.box2body.getWorldCenter(), true);
+                this.currentDirection = Direction.RIGHT;
             }else{
                 if(!Gdx.input.isKeyPressed(Input.Keys.A)){
                     this.box2body.setLinearVelocity(0, this.box2body.getLinearVelocity().y);
@@ -127,6 +116,7 @@ public class Player extends Creature{
 
             if(Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)){
                 this.box2body.applyLinearImpulse(new Vector2(-50, 0), this.box2body.getWorldCenter(), true);
+                this.currentDirection = Direction.LEFT;
             }else{
                 if(!Gdx.input.isKeyPressed(Input.Keys.D)) {
                     this.box2body.setLinearVelocity(0, this.box2body.getLinearVelocity().y);
