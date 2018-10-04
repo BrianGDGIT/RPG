@@ -22,10 +22,12 @@ public class Creature {
 
 
     public World world;
+    public PlayScreen screen;
     public Body box2body;
 
     public Creature(World world, PlayScreen screen, int hp, int mana, String gameClass, Sprite sprite){
         this.world = world;
+        this.screen = screen;
         this.hp = hp;
         this.mana = mana;
         this.gameClass = gameClass;

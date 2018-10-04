@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.brian.rpg.Views.PlayScreen;
 
@@ -88,6 +89,8 @@ public class Player extends Creature{
         }
 
     public void handleInput(float delta){
+            Vector3 touchPos = new Vector3();
+
             //Keyboard controls
             if(Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S)){
                 this.box2body.applyLinearImpulse(new Vector2(0, 50), this.box2body.getWorldCenter(), true);
@@ -120,6 +123,32 @@ public class Player extends Creature{
             }else{
                 if(!Gdx.input.isKeyPressed(Input.Keys.D)) {
                     this.box2body.setLinearVelocity(0, this.box2body.getLinearVelocity().y);
+                }
+            }
+
+            //Android / Mouse controls
+            if(Gdx.input.isTouched()){
+                touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+                screen.getGameCamera().unproject(touchPos);
+
+                //Find touchpos relative to player object and move that direction
+                //Right
+                if(touchPos.x > box2body.getPosition().x + 50){
+                    this.box2body.applyLinearImpulse(new Vector2(50, 0), this.box2body.getWorldCenter(), true);
+                    this.currentDirection = Direction.RIGHT;
+                }
+                //Left
+                if(touchPos.x < box2body.getPosition().x - 50){
+                    this.box2body.applyLinearImpulse(new Vector2(-50, 0), this.box2body.getWorldCenter(), true);
+                    this.currentDirection = Direction.LEFT;
+                }
+                //Up
+                if(touchPos.y > box2body.getPosition().y + 50){
+                    this.box2body.applyLinearImpulse(new Vector2(0, 50), this.box2body.getWorldCenter(), true);
+                }
+                //Down
+                if(touchPos.y < box2body.getPosition().y - 50){
+                    this.box2body.applyLinearImpulse(new Vector2(0, -50), this.box2body.getWorldCenter(), true);
                 }
             }
     }

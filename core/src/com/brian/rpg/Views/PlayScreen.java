@@ -27,7 +27,7 @@ public class PlayScreen implements Screen {
     //Textures
     private TextureAtlas wizardSpriteAtlas;
 
-    //Reference to player sprite
+    //Reference to player object
     private Player player;
 
     //Camera and view variables
@@ -173,5 +173,9 @@ public class PlayScreen implements Screen {
 
     public TextureAtlas getWizardSpriteAtlas(){
         return wizardSpriteAtlas;
+    }
+
+    public OrthographicCamera getGameCamera(){
+        return gameCamera;
     }
 }
