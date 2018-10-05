@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.brian.rpg.Controller.Box2dWorldGenerator;
 import com.brian.rpg.Model.Player;
+import com.brian.rpg.Model.StaffProjectile;
 import com.brian.rpg.RPG;
 
 public class PlayScreen implements Screen {
@@ -28,8 +29,11 @@ public class PlayScreen implements Screen {
     //Textures
     private TextureAtlas wizardSpriteAtlas;
 
+    //Objects Rendered
     //Reference to player object
     private Player player;
+
+    private StaffProjectile staffProjectile;
 
     //Camera and view variables
     private OrthographicCamera gameCamera;
@@ -37,6 +41,7 @@ public class PlayScreen implements Screen {
 
     //Box2d
     private World world;
+    private Box2dWorldGenerator worldGenerator;
     private Box2DDebugRenderer b2dr;
 
     //Map variables
@@ -70,12 +75,12 @@ public class PlayScreen implements Screen {
         //Initialize Box2d world
         Box2D.init();
         world = new World(new Vector2(0, 0), true);
-        //b2dr = new Box2DDebugRenderer();
+        b2dr = new Box2DDebugRenderer();
 
         //Create player
         player = new Player(world, this,10, 10, "Wizard", new Sprite(getWizardSpriteAtlas().findRegion("idle")));
 
-        new Box2dWorldGenerator(world, map);
+        worldGenerator = new Box2dWorldGenerator(world, map);
 
 
         gameCamera.update();
@@ -100,6 +105,11 @@ public class PlayScreen implements Screen {
         //Update player sprite position every frame
         player.update(delta);
 
+        //Update projectiles
+        if(staffProjectile != null){
+            staffProjectile.update();
+        }
+
         //Render only parts of the map that the camera can currently see
         mapRenderer.setView(gameCamera);
 
@@ -121,13 +131,19 @@ public class PlayScreen implements Screen {
         mapRenderer.render();
 
         //Render Box2d debug lines
-        //b2dr.render(world, gameCamera.combined);
+        b2dr.render(world, gameCamera.combined);
 
         game.batch.setProjectionMatrix(gameCamera.combined);
         game.batch.begin();
 
         //Draw the player sprite
         player.getSprite().draw(game.batch);
+
+        //Render projectiles
+        if(staffProjectile != null){
+            staffProjectile.getSprite().draw(game.batch);
+            System.out.println("Projectile.");
+        }
 
         game.batch.end();
     }
@@ -157,6 +173,10 @@ public class PlayScreen implements Screen {
 
     }
 
+    public void projectilesToRender(StaffProjectile staffProjectile){
+        this.staffProjectile = staffProjectile;
+    }
+
     public TextureAtlas getWizardSpriteAtlas(){
         return wizardSpriteAtlas;
     }
@@ -164,4 +184,6 @@ public class PlayScreen implements Screen {
     public OrthographicCamera getGameCamera(){
         return gameCamera;
     }
+
+    public Box2dWorldGenerator getWorldGenerator() { return worldGenerator;}
 }

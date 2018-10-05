@@ -2,6 +2,7 @@ package com.brian.rpg.Model;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.brian.rpg.RPG;
@@ -16,14 +17,24 @@ public class Projectile {
     public PlayScreen screen;
     public Body box2body;
 
-    public Projectile(World world, PlayScreen screen){
+    float stateTimer = 0;
+    float createX;
+    float createY;
+
+    //Projectile attributes
+    int projectileDelay;
+
+    public Projectile(World world, PlayScreen screen, float createX, float createY){
         this.world = world;
         this.screen = screen;
+        this.createX = createX;
+        this.createY = createY;
+        createProjectile();
     }
 
     public void createProjectile(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2);
+        bdef.position.set(createX, createY);
         bdef.type = BodyDef.BodyType.DynamicBody;
         box2body = world.createBody(bdef);
 
@@ -34,4 +45,9 @@ public class Projectile {
         fdef.shape = shape;
         box2body.createFixture(fdef);
     }
+
+    public Sprite getSprite(){
+        return sprite;
+    }
+
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
+import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
 
 
@@ -22,6 +23,9 @@ public class Player extends Creature{
     private Animation<TextureRegion> playerWalk;
     private float stateTimer = 0;
 
+    //Attack timers
+    float basicAttackTimer = 0;
+
     public Player(World world, PlayScreen screen, int hp, int mana, String gameClass, Sprite sprite){
         super(world, screen, hp, mana, gameClass, sprite);
         this.currentState = State.IDLE;
@@ -31,7 +35,7 @@ public class Player extends Creature{
         if(this.gameClass.equals("Wizard")){
             //Create Sprite Textures
             wizardSprite = new TextureRegion(this.sprite.getTexture(), 1078, 850, 342, 354);
-            this.sprite.setBounds(1,1, 342, 354);
+            this.sprite.setBounds(1,1, 16, 16);
             this.sprite.setRegion(wizardSprite);
             //Set size
             this.sprite.setSize(16, 16);
@@ -42,6 +46,7 @@ public class Player extends Creature{
     }
 
     public void update(float delta){
+        //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
         this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2, box2body.getPosition().y - this.sprite.getHeight() /2);
 
         //Change Sprite on player movement
@@ -126,6 +131,14 @@ public class Player extends Creature{
                     this.box2body.setLinearVelocity(0, this.box2body.getLinearVelocity().y);
                 }
             }
+
+            //Attack
+        if(Gdx.input.isTouched() && basicAttackTimer == 0){
+            StaffProjectile staffProjectile = new StaffProjectile(world, screen,box2body.getPosition().x + 5, box2body.getPosition().y + 5);
+            basicAttackTimer = basicAttackTimer + Gdx.graphics.getDeltaTime();
+            screen.projectilesToRender(staffProjectile);
+        }
+
 
             //Android Controls
             if(Gdx.app.getType() == Application.ApplicationType.Android){

@@ -5,10 +5,14 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
+import com.brian.rpg.RPG;
 
 public class Box2dWorldGenerator {
+    public World world;
+
 
     public Box2dWorldGenerator(World world, TiledMap map){
+        this.world = world;
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();

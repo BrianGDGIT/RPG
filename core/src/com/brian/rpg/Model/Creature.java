@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
 
-public class Creature {
+public abstract class Creature {
     int hp;
     int mana;
     String gameClass;
