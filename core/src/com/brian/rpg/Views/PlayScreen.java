@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.brian.rpg.Controller.Box2dWorldGenerator;
 import com.brian.rpg.Model.Player;
 import com.brian.rpg.RPG;
 
@@ -55,7 +56,7 @@ public class PlayScreen implements Screen {
         //This limits the view of the world to 800, 600 so everything is zoomed in
         //enough to see the 16x16 tiles
         //Keeps the screen scaled properly based on the size of the screen
-        viewPort = new FitViewport(400, 300, gameCamera);
+        viewPort = new FitViewport(296, 144, gameCamera);
 
         //Create new maploader
         mapLoader = new TmxMapLoader();
@@ -74,22 +75,7 @@ public class PlayScreen implements Screen {
         //Create player
         player = new Player(world, this,10, 10, "Wizard", new Sprite(getWizardSpriteAtlas().findRegion("idle")));
 
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
-
-        //Create wall bodies, so walls have physics
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
+        new Box2dWorldGenerator(world, map);
 
 
         gameCamera.update();
