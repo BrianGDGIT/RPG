@@ -70,7 +70,7 @@ public class PlayScreen implements Screen {
         //Initialize Box2d world
         Box2D.init();
         world = new World(new Vector2(0, 0), true);
-        b2dr = new Box2DDebugRenderer();
+        //b2dr = new Box2DDebugRenderer();
 
         //Create player
         player = new Player(world, this,10, 10, "Wizard", new Sprite(getWizardSpriteAtlas().findRegion("idle")));
@@ -121,7 +121,7 @@ public class PlayScreen implements Screen {
         mapRenderer.render();
 
         //Render Box2d debug lines
-        b2dr.render(world, gameCamera.combined);
+        //b2dr.render(world, gameCamera.combined);
 
         game.batch.setProjectionMatrix(gameCamera.combined);
         game.batch.begin();

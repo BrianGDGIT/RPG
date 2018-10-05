@@ -30,12 +30,12 @@ public class MainMenuScreen implements Screen {
         //Add items to stage
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        //table.setDebug(true);
         stage.addActor(table);
 
         //Add items to the stage table
         table.add(newGame).fillX().uniform();
-        table.row().pad(10, 0, 10, 0);
+        table.row().pad(20, 0, 10, 0);
         table.add(exit).fillX().uniformX();
     }
 
@@ -54,7 +54,7 @@ public class MainMenuScreen implements Screen {
         stage.draw();
 
         //Change Screen
-        if(Gdx.input.isTouched()){
+        if(newGame.isPressed()){
             game.setScreen(new PlayScreen(game));
             dispose();
         }
