@@ -160,6 +160,9 @@ public class Player extends Creature{
 
             //Attack
             if(Gdx.input.isTouched() && !hasAttacked){
+                float createX;
+                float createY;
+
                 //Getting touch position, unprojecting coords to game coords, normalizing and passing as velocity
                 touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                 touchPos = screen.getGameCamera().unproject(touchPos);
@@ -167,7 +170,25 @@ public class Player extends Creature{
                 velocity.sub(box2body.getPosition().x + 5, box2body.getPosition().y + 5);
                 velocity = velocity.nor();
 
-                StaffProjectile staffProjectile = new StaffProjectile(world, screen,box2body.getPosition().x + 5, box2body.getPosition().y + 5, velocity);
+                //Checks touched position, if the position is to the right of the player the projectile is created to the right of the player
+                //else it is created to the left of the player
+                //This prevents the projectile from hitting the player
+                //Also sets player State to either LEFT OR RIGHT so that the player is facing toward touched position
+                if(velocity.x > 0){
+                    this.currentDirection = Direction.RIGHT;
+                    createX = box2body.getPosition().x + 5;
+                }else{
+                    this.currentDirection = Direction.LEFT;
+                    createX =box2body.getPosition().x - 5;
+                }
+
+                if(velocity.y < 0){
+                    createY = box2body.getPosition().y - 5;
+                }else{
+                    createY = box2body.getPosition().y + 5;
+                }
+
+                StaffProjectile staffProjectile = new StaffProjectile(world, screen,createX, createY, velocity);
                 screen.projectilesToRender(staffProjectile);
                 hasAttacked = true;
             }
