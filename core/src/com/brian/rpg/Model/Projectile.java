@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
@@ -24,12 +25,15 @@ public class Projectile {
     //Projectile attributes
     int projectileDelay;
     int projectileLife;
+    int projectileSpeed;
+    Vector3 projectileTarget;
 
-    public Projectile(World world, PlayScreen screen, float createX, float createY){
+    public Projectile(World world, PlayScreen screen, float createX, float createY, Vector3 projectileTarget){
         this.world = world;
         this.screen = screen;
         this.createX = createX;
         this.createY = createY;
+        this.projectileTarget = projectileTarget;
         createProjectile();
     }
 

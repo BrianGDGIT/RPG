@@ -56,7 +56,7 @@ public class Player extends Creature{
         this.sprite.setRegion(getFrame(delta));
 
         //Handle basic attack
-        if(basicAttackTimer >= 3){
+        if(basicAttackTimer >= 2){
             basicAttackTimer = 0;
             hasAttacked = false;
         }
@@ -73,11 +73,18 @@ public class Player extends Creature{
         switch(currentState){
             case WALKING:
                 region = playerWalk.getKeyFrame(stateTimer, false);
+                this.sprite.setSize(16, 16);
                 break;
             case IDLE:
                 region = wizardSprite;
+                this.sprite.setSize(16, 16);
+                break;
             case ATTACKING:
                 region = playerAttack.getKeyFrame(stateTimer, false);
+                if(stateTimer > 0.3) {
+                    this.sprite.setSize(32, 16);
+                }
+                break;
         }
 
         if(currentState == State.WALKING || currentState == State.ATTACKING){
@@ -115,50 +122,53 @@ public class Player extends Creature{
             Vector3 touchPos = new Vector3();
 
             //Keyboard controls
-            if(Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S)){
-                this.box2body.applyLinearImpulse(new Vector2(0, 50), this.box2body.getWorldCenter(), true);
-            }else{
-                if(!Gdx.input.isKeyPressed(Input.Keys.S)){
-                    this.box2body.setLinearVelocity(this.box2body.getLinearVelocity().x, 0);
+            if(!hasAttacked) {
+                if (Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S)) {
+                    this.box2body.applyLinearImpulse(new Vector2(0, 50), this.box2body.getWorldCenter(), true);
+                } else {
+                    if (!Gdx.input.isKeyPressed(Input.Keys.S)) {
+                        this.box2body.setLinearVelocity(this.box2body.getLinearVelocity().x, 0);
+                    }
                 }
-            }
 
-            if(Gdx.input.isKeyPressed(Input.Keys.D) && !Gdx.input.isKeyPressed(Input.Keys.A)){
-                this.box2body.applyLinearImpulse(new Vector2(50, 0), this.box2body.getWorldCenter(), true);
-                this.currentDirection = Direction.RIGHT;
-            }else{
-                if(!Gdx.input.isKeyPressed(Input.Keys.A)){
-                    this.box2body.setLinearVelocity(0, this.box2body.getLinearVelocity().y);
+                if (Gdx.input.isKeyPressed(Input.Keys.D) && !Gdx.input.isKeyPressed(Input.Keys.A)) {
+                    this.box2body.applyLinearImpulse(new Vector2(50, 0), this.box2body.getWorldCenter(), true);
+                    this.currentDirection = Direction.RIGHT;
+                } else {
+                    if (!Gdx.input.isKeyPressed(Input.Keys.A)) {
+                        this.box2body.setLinearVelocity(0, this.box2body.getLinearVelocity().y);
+                    }
                 }
-            }
 
-            if(Gdx.input.isKeyPressed(Input.Keys.S) && !Gdx.input.isKeyPressed(Input.Keys.W)){
-                this.box2body.applyLinearImpulse(new Vector2(0, -50), this.box2body.getWorldCenter(), true);
-            }else{
-                if(!Gdx.input.isKeyPressed(Input.Keys.W)) {
-                    this.box2body.setLinearVelocity(this.box2body.getLinearVelocity().x, 0);
+                if (Gdx.input.isKeyPressed(Input.Keys.S) && !Gdx.input.isKeyPressed(Input.Keys.W)) {
+                    this.box2body.applyLinearImpulse(new Vector2(0, -50), this.box2body.getWorldCenter(), true);
+                } else {
+                    if (!Gdx.input.isKeyPressed(Input.Keys.W)) {
+                        this.box2body.setLinearVelocity(this.box2body.getLinearVelocity().x, 0);
+                    }
                 }
-            }
 
-            if(Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)){
-                this.box2body.applyLinearImpulse(new Vector2(-50, 0), this.box2body.getWorldCenter(), true);
-                this.currentDirection = Direction.LEFT;
-            }else{
-                if(!Gdx.input.isKeyPressed(Input.Keys.D)) {
-                    this.box2body.setLinearVelocity(0, this.box2body.getLinearVelocity().y);
+                if (Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
+                    this.box2body.applyLinearImpulse(new Vector2(-50, 0), this.box2body.getWorldCenter(), true);
+                    this.currentDirection = Direction.LEFT;
+                } else {
+                    if (!Gdx.input.isKeyPressed(Input.Keys.D)) {
+                        this.box2body.setLinearVelocity(0, this.box2body.getLinearVelocity().y);
+                    }
                 }
             }
 
             //Attack
             if(Gdx.input.isTouched() && !hasAttacked){
-                StaffProjectile staffProjectile = new StaffProjectile(world, screen,box2body.getPosition().x + 5, box2body.getPosition().y + 5);
+                touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+                StaffProjectile staffProjectile = new StaffProjectile(world, screen,box2body.getPosition().x + 5, box2body.getPosition().y + 5, touchPos);
                 screen.projectilesToRender(staffProjectile);
                 hasAttacked = true;
             }
 
 
             //Android Controls
-            if(Gdx.app.getType() == Application.ApplicationType.Android){
+            if(Gdx.app.getType() == Application.ApplicationType.Android && !hasAttacked){
                 //Touch
                 touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                 screen.getGameCamera().unproject(touchPos);

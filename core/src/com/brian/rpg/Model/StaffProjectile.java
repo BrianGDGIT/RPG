@@ -6,7 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
+import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
 
@@ -14,13 +18,16 @@ public class StaffProjectile extends Projectile {
     private static final int FRAME_COLS = 8;
     private static final int FRAME_ROWS = 8;
 
+
+
     Animation<TextureRegion> staffProjectileAnimation;
 
-    public StaffProjectile(World world, PlayScreen screen, float createX, float createY){
-        super(world, screen, createX, createY);
+    public StaffProjectile(World world, PlayScreen screen, float createX, float createY, Vector3 projectileTarget){
+        super(world, screen, createX, createY, projectileTarget);
         this.stateTimer = 0;
         this.projectileDelay = 3;
-        this.projectileLife = 3;
+        this.projectileLife = 2;
+        this.projectileSpeed = 10;
         texture = new Texture("sprites/vortex_spritesheet.png");
 
         //Use split function to create an array of Textures
@@ -50,6 +57,11 @@ public class StaffProjectile extends Projectile {
         this.sprite.setRegion(staffProjectileAnimation.getKeyFrame(stateTimer, true));
         this.stateTimer = this.stateTimer + Gdx.graphics.getDeltaTime();
 
+        //Move Projectile
+        Vector3 target = new Vector3(screen.getGameCamera().unproject(projectileTarget));
+        this.box2body.applyLinearImpulse(new Vector2(target.x, target.y), box2body.getWorldCenter(), true);
+
+        //Destroy projectile body when done
         if(this.stateTimer > this.projectileLife){
             world.destroyBody(box2body);
             //Stop drawing projectile sprite on screen
