@@ -3,7 +3,9 @@ package com.brian.rpg.Views;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -20,6 +22,9 @@ public class MainMenuScreen implements Screen {
     TextButton newGame = new TextButton("New Game", skin);
     TextButton exit = new TextButton("Exit", skin);
 
+    Texture titleTexture = new Texture("TitleArt.png");
+    Image titleImage = new Image(titleTexture);
+
     public MainMenuScreen(final RPG game){
         this.game = game;
 
@@ -28,10 +33,18 @@ public class MainMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         //Add items to stage
+        Table backGroundTable = new Table();
+        backGroundTable.setFillParent(true);
         Table table = new Table();
         table.setFillParent(true);
+
+
         //table.setDebug(true);
+        stage.addActor(backGroundTable);
         stage.addActor(table);
+
+        //Add items to Background table
+        backGroundTable.add(titleImage);
 
         //Add items to the stage table
         table.add(newGame).fillX().uniform();
