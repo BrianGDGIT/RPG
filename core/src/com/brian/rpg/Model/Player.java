@@ -160,8 +160,14 @@ public class Player extends Creature{
 
             //Attack
             if(Gdx.input.isTouched() && !hasAttacked){
+                //Getting touch position, unprojecting coords to game coords, normalizing and passing as velocity
                 touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                StaffProjectile staffProjectile = new StaffProjectile(world, screen,box2body.getPosition().x + 5, box2body.getPosition().y + 5, touchPos);
+                touchPos = screen.getGameCamera().unproject(touchPos);
+                Vector2 velocity = new Vector2(touchPos.x, touchPos.y);
+                velocity.sub(box2body.getPosition().x + 5, box2body.getPosition().y + 5);
+                velocity = velocity.nor();
+
+                StaffProjectile staffProjectile = new StaffProjectile(world, screen,box2body.getPosition().x + 5, box2body.getPosition().y + 5, velocity);
                 screen.projectilesToRender(staffProjectile);
                 hasAttacked = true;
             }

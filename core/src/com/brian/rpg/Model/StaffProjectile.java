@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
 
@@ -22,12 +23,12 @@ public class StaffProjectile extends Projectile {
 
     Animation<TextureRegion> staffProjectileAnimation;
 
-    public StaffProjectile(World world, PlayScreen screen, float createX, float createY, Vector3 projectileTarget){
-        super(world, screen, createX, createY, projectileTarget);
+    public StaffProjectile(World world, PlayScreen screen, float createX, float createY, Vector2 projectileVelocity){
+        super(world, screen, createX, createY, projectileVelocity);
         this.stateTimer = 0;
         this.projectileDelay = 3;
         this.projectileLife = 2;
-        this.projectileSpeed = 10;
+        this.projectileSpeed = 200;
         texture = new Texture("sprites/vortex_spritesheet.png");
 
         //Use split function to create an array of Textures
@@ -50,16 +51,16 @@ public class StaffProjectile extends Projectile {
         this.sprite = new Sprite(staffFrames[0]);
         this.sprite.setSize(32, 32);
         this.sprite.setBounds(1, 1, 16, 16);
+
+        //Move Projectile
+        this.box2body.setLinearVelocity(projectileVelocity.scl(projectileSpeed));
+
     }
 
     public void update(){
         this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2, box2body.getPosition().y - this.sprite.getHeight() /2);
         this.sprite.setRegion(staffProjectileAnimation.getKeyFrame(stateTimer, true));
         this.stateTimer = this.stateTimer + Gdx.graphics.getDeltaTime();
-
-        //Move Projectile
-        Vector3 target = new Vector3(screen.getGameCamera().unproject(projectileTarget));
-        this.box2body.applyLinearImpulse(new Vector2(target.x, target.y), box2body.getWorldCenter(), true);
 
         //Destroy projectile body when done
         if(this.stateTimer > this.projectileLife){

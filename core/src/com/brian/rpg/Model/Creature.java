@@ -2,10 +2,11 @@ package com.brian.rpg.Model;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
 
-public abstract class Creature {
+public abstract class Creature extends Actor {
     int hp;
     int mana;
     String gameClass;
