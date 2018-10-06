@@ -23,8 +23,9 @@ public class Player extends Creature{
     private Animation<TextureRegion> playerWalk;
     private float stateTimer = 0;
 
-    //Attack timers
+    //Basic Attack variables
     float basicAttackTimer = 0;
+    boolean hasAttacked = false;
 
     public Player(World world, PlayScreen screen, int hp, int mana, String gameClass, Sprite sprite){
         super(world, screen, hp, mana, gameClass, sprite);
@@ -51,6 +52,16 @@ public class Player extends Creature{
 
         //Change Sprite on player movement
         this.sprite.setRegion(getFrame(delta));
+
+        //Handle basic attack
+        if(basicAttackTimer >= 0.7){
+            basicAttackTimer = 0;
+            hasAttacked = false;
+        }
+
+        if(hasAttacked){
+            basicAttackTimer = basicAttackTimer + delta;
+        }
     }
 
     public TextureRegion getFrame(float delta){
@@ -133,11 +144,11 @@ public class Player extends Creature{
             }
 
             //Attack
-        if(Gdx.input.isTouched() && basicAttackTimer == 0){
-            StaffProjectile staffProjectile = new StaffProjectile(world, screen,box2body.getPosition().x + 5, box2body.getPosition().y + 5);
-            basicAttackTimer = basicAttackTimer + Gdx.graphics.getDeltaTime();
-            screen.projectilesToRender(staffProjectile);
-        }
+            if(Gdx.input.isTouched() && !hasAttacked){
+                StaffProjectile staffProjectile = new StaffProjectile(world, screen,box2body.getPosition().x + 5, box2body.getPosition().y + 5);
+                screen.projectilesToRender(staffProjectile);
+                hasAttacked = true;
+            }
 
 
             //Android Controls

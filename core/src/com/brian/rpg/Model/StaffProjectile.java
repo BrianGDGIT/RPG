@@ -20,6 +20,7 @@ public class StaffProjectile extends Projectile {
         super(world, screen, createX, createY);
         this.stateTimer = 0;
         this.projectileDelay = 3;
+        this.projectileLife = 3;
         texture = new Texture("sprites/vortex_spritesheet.png");
 
         //Use split function to create an array of Textures
@@ -47,9 +48,14 @@ public class StaffProjectile extends Projectile {
     public void update(){
         this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2, box2body.getPosition().y - this.sprite.getHeight() /2);
         this.sprite.setRegion(staffProjectileAnimation.getKeyFrame(stateTimer, true));
-        stateTimer = Gdx.graphics.getDeltaTime();
+        stateTimer = stateTimer + Gdx.graphics.getDeltaTime();
+
+        if(stateTimer > this.projectileLife){
+            world.destroyBody(this.box2body);
+            //Stop drawing projectile sprite on screen
+            screen.staffProjectile = null;
+            stateTimer = 0;
+        }
     }
-
-
 
 }

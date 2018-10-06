@@ -23,6 +23,7 @@ public class Projectile {
 
     //Projectile attributes
     int projectileDelay;
+    int projectileLife;
 
     public Projectile(World world, PlayScreen screen, float createX, float createY){
         this.world = world;
@@ -45,6 +46,7 @@ public class Projectile {
         fdef.shape = shape;
         box2body.createFixture(fdef);
     }
+
 
     public Sprite getSprite(){
         return sprite;

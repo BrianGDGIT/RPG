@@ -33,7 +33,7 @@ public class PlayScreen implements Screen {
     //Reference to player object
     private Player player;
 
-    private StaffProjectile staffProjectile;
+    public StaffProjectile staffProjectile;
 
     //Camera and view variables
     private OrthographicCamera gameCamera;
@@ -142,7 +142,6 @@ public class PlayScreen implements Screen {
         //Render projectiles
         if(staffProjectile != null){
             staffProjectile.getSprite().draw(game.batch);
-            System.out.println("Projectile.");
         }
 
         game.batch.end();
