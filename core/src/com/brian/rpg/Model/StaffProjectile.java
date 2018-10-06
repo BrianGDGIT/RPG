@@ -41,20 +41,20 @@ public class StaffProjectile extends Projectile {
 
         //Initialize sprite when object is created
         this.sprite = new Sprite(staffFrames[0]);
-        this.sprite.setSize(16, 16);
+        this.sprite.setSize(32, 32);
         this.sprite.setBounds(1, 1, 16, 16);
     }
 
     public void update(){
         this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2, box2body.getPosition().y - this.sprite.getHeight() /2);
         this.sprite.setRegion(staffProjectileAnimation.getKeyFrame(stateTimer, true));
-        stateTimer = stateTimer + Gdx.graphics.getDeltaTime();
+        this.stateTimer = this.stateTimer + Gdx.graphics.getDeltaTime();
 
-        if(stateTimer > this.projectileLife){
-            world.destroyBody(this.box2body);
+        if(this.stateTimer > this.projectileLife){
+            world.destroyBody(box2body);
             //Stop drawing projectile sprite on screen
             screen.staffProjectile = null;
-            stateTimer = 0;
+            this.stateTimer = 0;
         }
     }
 

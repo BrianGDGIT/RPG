@@ -54,7 +54,7 @@ public class Player extends Creature{
         this.sprite.setRegion(getFrame(delta));
 
         //Handle basic attack
-        if(basicAttackTimer >= 0.7){
+        if(basicAttackTimer >= 3){
             basicAttackTimer = 0;
             hasAttacked = false;
         }
