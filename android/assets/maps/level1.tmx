@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="120" height="68" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="11">
+<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="120" height="68" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="41">
  <tileset firstgid="1" name="Dungeon II" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/0x72_DungeonTilesetII_v1.png" width="512" height="512"/>
  </tileset>
  <layer id="1" name="background" width="120" height="68">
   <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20MH6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4G9/gAAB
+   eJzt2cENwgAQA8EEWqFSWqURekAYK2ZGur+lfd5xAAAAAAAAAAAA/+jVHkDU/TyO29leQcrzIsdn2t30zWp30zer3U3frHY3fbPa3fTNanfTN6vdTd+sdjd9s9rd9M1qd9M3q91N36x2N32z2t30zWp30zer3U3frHY3fbPa3fTNanfTN6vdTd+sdjd9s9rd9M1qd9M3q91N36x2N32vQ5dtmm7Td5u+2/Tdpu82fbfpu03fbfpu03ebvtv03abvNn236bvNT3+bvtu+3ffx2/kAjHkDbJhGnw==
   </data>
  </layer>
  <layer id="2" name="graphics" width="120" height="68">
   <data encoding="base64" compression="zlib">
-   eJzt0QEJA0EAxMCnUir1ldfDwRKOzkAU5HkAAAAAAAAAAIB/9bkgzn0viHPvBXGufufvVv3O3636nb9b9Tt/t+p3/m7V7/zdqt/5u1W/83erfufvVv3O3636nb9b9Tt/t+p3/m7V7/zdqt/5u1W/83erfufvVv3O3636nb9b9Tt/t+p3/m7V7/zdqt/5u1W/8xcAAAAAAAAAAADgLj/GUA5l
+   eJzt28FNwzAAhtG67STQTWBWzkxRjrADqF0Dc4i4EEVEbuL8fU+y5JPl9JMcVUl2OwAAAAAAAAAA4F7tOx9ft7v0u/DQ+TiW2117uv0GfruygT32St9s+mZbo+/LyHyMvvOt0fc8Mh+j73xr9L3U8Vp+51P0nc/5nM35nG2t8/mv+Rh95/P/KJu+2fTNpm82fbPpm03fbPpm0zebvtn0zaZvNn2z6ZtN32yPpd13Bue61lsdn43WG8ZJ39meSrvvDC51rWsdh4Zr/oxnfbswnPVbOPP5P32z6ZtN32z6ZtM3m77Z9M2mbzZ9s+mbTd9s+mYburZ65nhcdPdMGfq2euZ4WnT3TGl9Luvbl1Z93+s6H0Xf3rR818f9tz8t3/Vx/wWW8A2oDSO5
   </data>
  </layer>
  <objectgroup id="4" name="walls">
-  <object id="10" x="640" y="320" width="656" height="16"/>
+  <object id="10" x="624" y="320" width="672" height="16"/>
+  <object id="17" x="1296" y="320" width="16" height="432"/>
+  <object id="18" x="960" y="736" width="336" height="16"/>
+  <object id="19" x="960" y="752" width="16" height="224"/>
+  <object id="22" x="960" y="976" width="304" height="16"/>
+  <object id="23" x="1248" y="992" width="16" height="64"/>
+  <object id="24" x="928" y="1040" width="320" height="16"/>
+  <object id="26" x="912" y="752" width="16" height="288"/>
+  <object id="28" x="624" y="736" width="304" height="16"/>
+  <object id="31" x="608" y="336" width="16" height="400"/>
+  <object id="35" x="1098.33" y="458.667"/>
+  <object id="36" x="1145" y="458.667"/>
+  <object id="37" x="1145" y="408"/>
+  <object id="38" x="1096" y="409"/>
+  <object id="39" x="1113.33" y="425"/>
+  <object id="40" x="1240.33" y="1017"/>
  </objectgroup>
 </map>
