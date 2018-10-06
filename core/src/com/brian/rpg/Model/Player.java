@@ -21,6 +21,7 @@ public class Player extends Creature{
 
     //Animations
     private Animation<TextureRegion> playerWalk;
+    private Animation<TextureRegion> playerAttack;
     private float stateTimer = 0;
 
     //Basic Attack variables
@@ -43,6 +44,7 @@ public class Player extends Creature{
 
             //Set Walking Animation
             playerWalk = new Animation<TextureRegion>(0.3f, screen.getWizardSpriteAtlas().findRegions("walk"), Animation.PlayMode.LOOP);
+            playerAttack = new Animation<TextureRegion>(0.3f, screen.getWizardSpriteAtlas().findRegions("attack"), Animation.PlayMode.NORMAL);
         }
     }
 
@@ -74,9 +76,11 @@ public class Player extends Creature{
                 break;
             case IDLE:
                 region = wizardSprite;
+            case ATTACKING:
+                region = playerAttack.getKeyFrame(stateTimer, false);
         }
 
-        if(currentState == State.WALKING){
+        if(currentState == State.WALKING || currentState == State.ATTACKING){
             stateTimer = stateTimer + delta;
         }else{
             //Reset timer on new state transition
@@ -100,6 +104,8 @@ public class Player extends Creature{
     public State getState(){
             if(box2body.getLinearVelocity().x != 0 || box2body.getLinearVelocity().y != 0){
                 return State.WALKING;
+            }else if(hasAttacked){
+                return State.ATTACKING;
             }else{
                 return State.IDLE;
             }
