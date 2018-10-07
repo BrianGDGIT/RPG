@@ -23,12 +23,11 @@ public class StaffProjectile extends Projectile {
 
     Animation<TextureRegion> staffProjectileAnimation;
 
-    public StaffProjectile(World world, PlayScreen screen, float createX, float createY, Vector2 projectileVelocity){
-        super(world, screen, createX, createY, projectileVelocity);
+    public StaffProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity){
+        super(screen, createX, createY, projectileVelocity);
         this.stateTimer = 0;
-        this.projectileDelay = 3;
-        this.projectileLife = 2;
-        this.projectileSpeed = 200;
+        this.projectileLife = 3;
+        this.projectileSpeed = 1000f;
         texture = new Texture("sprites/vortex_spritesheet.png");
 
         //Use split function to create an array of Textures
@@ -64,7 +63,7 @@ public class StaffProjectile extends Projectile {
 
         //Destroy projectile body when done
         if(this.stateTimer > this.projectileLife){
-            world.destroyBody(box2body);
+            world.destroyBody(this.box2body);
             //Stop drawing projectile sprite on screen
             screen.staffProjectile = null;
             this.stateTimer = 0;

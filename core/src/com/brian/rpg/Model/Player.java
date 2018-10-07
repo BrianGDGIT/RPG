@@ -28,8 +28,8 @@ public class Player extends Creature{
     float basicAttackTimer = 0;
     boolean hasAttacked = false;
 
-    public Player(World world, PlayScreen screen, int hp, int mana, String gameClass, Sprite sprite){
-        super(world, screen, hp, mana, gameClass, sprite);
+    public Player(PlayScreen screen, int hp, int mana, String gameClass, Sprite sprite){
+        super(screen, hp, mana, gameClass, sprite);
         this.currentState = State.IDLE;
         this.previousState = State.IDLE;
 
@@ -38,9 +38,6 @@ public class Player extends Creature{
             //Create Sprite Textures
             wizardSprite = new TextureRegion(this.sprite.getTexture(), 1078, 850, 342, 354);
             this.sprite.setBounds(1,1, 16, 16);
-            this.sprite.setRegion(wizardSprite);
-            //Set size
-            this.sprite.setSize(16, 16);
 
             //Set Walking Animation
             playerWalk = new Animation<TextureRegion>(0.3f, screen.getWizardSpriteAtlas().findRegions("walk"), Animation.PlayMode.LOOP);
@@ -56,7 +53,7 @@ public class Player extends Creature{
         this.sprite.setRegion(getFrame(delta));
 
         //Handle basic attack
-        if(basicAttackTimer >= 2){
+        if(basicAttackTimer >= 3){
             basicAttackTimer = 0;
             hasAttacked = false;
         }
@@ -81,9 +78,11 @@ public class Player extends Creature{
                 break;
             case ATTACKING:
                 region = playerAttack.getKeyFrame(stateTimer, false);
-                if(stateTimer > 0.3) {
-                    this.sprite.setSize(32, 16);
+
+                if(stateTimer > 0.3 && stateTimer < 0.4){
+                    this.sprite.setSize(this.sprite.getWidth() + (stateTimer * 5) , this.sprite.getHeight() + (stateTimer) * 5);
                 }
+
                 break;
         }
 
@@ -188,7 +187,7 @@ public class Player extends Creature{
                     createY = box2body.getPosition().y + 5;
                 }
 
-                StaffProjectile staffProjectile = new StaffProjectile(world, screen,createX, createY, velocity);
+                StaffProjectile staffProjectile = new StaffProjectile(screen,createX, createY, velocity);
                 screen.projectilesToRender(staffProjectile);
                 hasAttacked = true;
             }
@@ -221,25 +220,6 @@ public class Player extends Creature{
                 }
 
             }
-
-                //if(touchPos.x > box2body.getPosition().x + 50 ){
-//                    this.box2body.applyLinearImpulse(new Vector2(50, 0), this.box2body.getWorldCenter(), true);
-//                    this.currentDirection = Direction.RIGHT;
-//                }
-//                //Left
-//                if(touchPos.x < box2body.getPosition().x - 50){
-//                    this.box2body.applyLinearImpulse(new Vector2(-50, 0), this.box2body.getWorldCenter(), true);
-//                    this.currentDirection = Direction.LEFT;
-//                }
-//                //Up
-//                if(touchPos.y > box2body.getPosition().y + 50){
-//                    this.box2body.applyLinearImpulse(new Vector2(0, 50), this.box2body.getWorldCenter(), true);
-//                }
-//                //Down
-//                if(touchPos.y < box2body.getPosition().y - 50){
-//                    this.box2body.applyLinearImpulse(new Vector2(0, -50), this.box2body.getWorldCenter(), true);
-//                }
-
 
     }
 

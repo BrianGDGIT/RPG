@@ -3,9 +3,12 @@
  <tileset firstgid="1" name="Dungeon II" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/0x72_DungeonTilesetII_v1.png" width="512" height="512"/>
  </tileset>
+ <tileset firstgid="1025" name="Dungeon II v1.1" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
+  <image source="tilesets/0x72_DungeonTilesetII_v1.1.png" width="512" height="512"/>
+ </tileset>
  <layer id="1" name="background" width="120" height="68">
   <data encoding="base64" compression="zlib">
-   eJzt2cENwgAQA8EEWqFSWqURekAYK2ZGur+lfd5xAAAAAAAAAAAA/+jVHkDU/TyO29leQcrzIsdn2t30zWp30zer3U3frHY3fbPa3fTNanfTN6vdTd+sdjd9s9rd9M1qd9M3q91N36x2N32z2t30zWp30zer3U3frHY3fbPa3fTNanfTN6vdTd+sdjd9s9rd9M1qd9M3q91N36x2N32vQ5dtmm7Td5u+2/Tdpu82fbfpu03fbfpu03ebvtv03abvNn236bvNT3+bvtu+3ffx2/kAjHkDbJhGnw==
+   eJzt2cFpA0EURMFdC2Xi1JyIU3UiOigD495m21Xw7w0P5jLHAQAAAAAAAAAA/Ec/7QFEPc7j+DjbK0j5vsnxO+1u+ma1u+mb1e6mb1a7m75Z7W76ZrW76ZvV7qZvVrubvlntbvpmtbvpm9Xupm9Wu5u+We1u+mZd3enr+T59r6Hvtva7q29Wu5u+We1u+ma1u+mb1e6mb1a7m75Z7W76ZrW76ZvV7qbvfeiyTdNt+m7Td5u+2/Tdpu82fbfpu03fbfpu03ebvtv03abvNn23+dPfpu+2v+77ee18AMa8APZrRj8=
   </data>
  </layer>
  <layer id="2" name="graphics" width="120" height="68">

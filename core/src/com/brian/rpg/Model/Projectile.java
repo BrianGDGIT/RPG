@@ -24,13 +24,12 @@ public class Projectile {
     float createY;
 
     //Projectile attributes
-    int projectileDelay;
     int projectileLife;
-    int projectileSpeed;
+    float projectileSpeed;
     Vector2 projectileVelocity;
 
-    public Projectile(World world, PlayScreen screen, float createX, float createY, Vector2 projectileVelocity){
-        this.world = world;
+    public Projectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity){
+        this.world = screen.getWorld();
         this.screen = screen;
         this.createX = createX;
         this.createY = createY;

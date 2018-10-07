@@ -82,7 +82,7 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         //Create player
-        player = new Player(world, this,10, 10, "Wizard", new Sprite(getWizardSpriteAtlas().findRegion("idle")));
+        player = new Player(this,10, 10, "Wizard", new Sprite(getWizardSpriteAtlas().findRegion("idle")));
 
         worldGenerator = new Box2dWorldGenerator(world, map);
 
@@ -189,4 +189,6 @@ public class PlayScreen implements Screen {
     }
 
     public Box2dWorldGenerator getWorldGenerator() { return worldGenerator;}
+
+    public World getWorld(){return world;}
 }
