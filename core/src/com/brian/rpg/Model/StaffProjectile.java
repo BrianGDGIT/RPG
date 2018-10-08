@@ -24,7 +24,7 @@ public class StaffProjectile extends Projectile {
     Animation<TextureRegion> staffProjectileAnimation;
 
     public StaffProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity){
-        super(screen, createX, createY, projectileVelocity);
+        super(screen, createX, createY, projectileVelocity, 10);
         this.stateTimer = 0;
         this.projectileLife = 3;
         this.projectileSpeed = 1000f;
@@ -49,7 +49,7 @@ public class StaffProjectile extends Projectile {
         //Initialize sprite when object is created
         this.sprite = new Sprite(staffFrames[0]);
         this.sprite.setSize(32, 32);
-        this.sprite.setBounds(1, 1, 16, 16);
+        this.sprite.setBounds(1, 1, 32, 32);
 
         //Move Projectile
         this.box2body.setLinearVelocity(projectileVelocity.scl(projectileSpeed));

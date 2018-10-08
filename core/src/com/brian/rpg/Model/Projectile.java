@@ -25,15 +25,17 @@ public class Projectile {
 
     //Projectile attributes
     int projectileLife;
+    int projectileSize;
     float projectileSpeed;
     Vector2 projectileVelocity;
 
-    public Projectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity){
+    public Projectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize){
         this.world = screen.getWorld();
         this.screen = screen;
         this.createX = createX;
         this.createY = createY;
         this.projectileVelocity = projectileVelocity;
+        this.projectileSize = projectileSize;
         createProjectile();
     }
 
@@ -45,7 +47,7 @@ public class Projectile {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(5);
+        shape.setRadius(projectileSize);
 
         fdef.shape = shape;
         box2body.createFixture(fdef);

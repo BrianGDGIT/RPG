@@ -179,16 +179,16 @@ public class Player extends Creature{
                 //Also sets player State to either LEFT OR RIGHT so that the player is facing toward touched position
                 if(velocity.x > 0){
                     this.currentDirection = Direction.RIGHT;
-                    createX = box2body.getPosition().x + 5;
+                    createX = box2body.getPosition().x + 10;
                 }else{
                     this.currentDirection = Direction.LEFT;
-                    createX =box2body.getPosition().x - 5;
+                    createX =box2body.getPosition().x - 10;
                 }
 
                 if(velocity.y < 0){
-                    createY = box2body.getPosition().y - 5;
+                    createY = box2body.getPosition().y - 10;
                 }else{
-                    createY = box2body.getPosition().y + 5;
+                    createY = box2body.getPosition().y + 10;
                 }
 
                 StaffProjectile staffProjectile = new StaffProjectile(screen,createX, createY, velocity);
