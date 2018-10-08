@@ -28,8 +28,8 @@ public class Player extends Creature{
     float basicAttackTimer = 0;
     boolean hasAttacked = false;
 
-    public Player(PlayScreen screen, int hp, int mana, String gameClass){
-        super(screen, hp, mana, gameClass);
+    public Player(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
+        super(screen, hp, mana, gameClass, spawnPoint);
         this.currentState = State.IDLE;
         this.previousState = State.IDLE;
 

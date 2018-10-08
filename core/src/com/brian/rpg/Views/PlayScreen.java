@@ -19,8 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.brian.rpg.Controller.Box2dWorldGenerator;
-import com.brian.rpg.Model.Player;
-import com.brian.rpg.Model.StaffProjectile;
+import com.brian.rpg.Model.*;
 import com.brian.rpg.RPG;
 
 import java.util.ArrayList;
@@ -29,14 +28,18 @@ public class PlayScreen implements Screen {
     //Reference to RPG game used to set screens
     private RPG game;
 
-    //Textures
+    //Texture Resources
     private TextureAtlas wizardSpriteAtlas;
+    private TextureAtlas monsters1SpriteAtlas;
 
     //Objects Rendered
     //Reference to player object
     private Player player;
+    MonsterSpawner monsterSpawner1;
 
+    //Spawn lists
     public ArrayList<StaffProjectile> staffProjectiles = new ArrayList<StaffProjectile>();
+    public ArrayList<Creature> spawnedCreatures = new ArrayList<Creature>();
 
     //Camera and view variables
     private OrthographicCamera gameCamera;
@@ -58,7 +61,9 @@ public class PlayScreen implements Screen {
     public PlayScreen(RPG game){
         this.game = game;
 
+        //Initializing Texture resources
         wizardSpriteAtlas = new TextureAtlas("sprites/Wizard.pack");
+        monsters1SpriteAtlas = new TextureAtlas("sprites/Monsters1.pack");
 
         //Create camera
         gameCamera = new OrthographicCamera();
@@ -84,7 +89,10 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         //Create player
-        player = new Player(this,10, 10, "Wizard");
+        player = new Player(this,10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
+
+        //Create MonsterSpawner
+        monsterSpawner1 = new MonsterSpawner(this, new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2 + 25));
 
         worldGenerator = new Box2dWorldGenerator(world, map);
 
@@ -111,12 +119,22 @@ public class PlayScreen implements Screen {
         //Update player sprite position every frame
         player.update(delta);
 
+        //Update MonsterSpawner1
+        monsterSpawner1.update(delta);
+
         //Update projectiles
         //Can't use advanced forloop here because update() removes items from the list, which causes concurrentModificationException
         //Only the normal for loop can do this
         if(staffProjectiles != null) {
             for (int i = 0; i < staffProjectiles.size(); i++ ) {
                 staffProjectiles.get(i).update();
+            }
+        }
+
+        //Update creatures
+        if(spawnedCreatures != null){
+            for(int i = 0; i < spawnedCreatures.size(); i++){
+                spawnedCreatures.get(i).update();
             }
         }
 
@@ -157,6 +175,13 @@ public class PlayScreen implements Screen {
 
         }
 
+        //Render creatures
+        if(spawnedCreatures != null){
+            for(Creature creature : spawnedCreatures){
+                creature.getSprite().draw(game.batch);
+            }
+        }
+
         game.batch.end();
     }
 
@@ -189,9 +214,15 @@ public class PlayScreen implements Screen {
         this.staffProjectiles.add(staffProjectile);
     }
 
+    public void creaturesToRender(Creature creature){
+        this.spawnedCreatures.add(creature);
+    }
+
     public TextureAtlas getWizardSpriteAtlas(){
         return wizardSpriteAtlas;
     }
+
+    public TextureAtlas getMonsters1SpriteAtlas(){return monsters1SpriteAtlas;}
 
     public OrthographicCamera getGameCamera(){
         return gameCamera;

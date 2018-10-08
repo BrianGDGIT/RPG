@@ -1,0 +1,257 @@
+
+Monsters1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Beholder (7)
+  rotate: false
+  xy: 1, 29
+  size: 22, 34
+  orig: 22, 34
+  offset: 0, 0
+  index: -1
+Beholder (2)
+  rotate: false
+  xy: 25, 32
+  size: 23, 31
+  orig: 23, 31
+  offset: 0, 0
+  index: -1
+Beholder (4)
+  rotate: false
+  xy: 50, 35
+  size: 26, 28
+  orig: 26, 28
+  offset: 0, 0
+  index: -1
+Beholder (1)
+  rotate: false
+  xy: 78, 33
+  size: 23, 30
+  orig: 23, 30
+  offset: 0, 0
+  index: -1
+Beholder (3)
+  rotate: false
+  xy: 103, 32
+  size: 22, 31
+  orig: 22, 31
+  offset: 0, 0
+  index: -1
+Beholder (6)
+  rotate: false
+  xy: 127, 34
+  size: 22, 29
+  orig: 22, 29
+  offset: 0, 0
+  index: -1
+Beholder (8)
+  rotate: false
+  xy: 151, 35
+  size: 23, 28
+  orig: 23, 28
+  offset: 0, 0
+  index: -1
+Beholder (5)
+  rotate: false
+  xy: 176, 35
+  size: 22, 28
+  orig: 22, 28
+  offset: 0, 0
+  index: -1
+EvilWizard (2)
+  rotate: false
+  xy: 1, 10
+  size: 12, 17
+  orig: 12, 17
+  offset: 0, 0
+  index: -1
+EvilWizard (3)
+  rotate: false
+  xy: 200, 47
+  size: 13, 16
+  orig: 13, 16
+  offset: 0, 0
+  index: -1
+Orc (6)
+  rotate: false
+  xy: 215, 47
+  size: 13, 16
+  orig: 13, 16
+  offset: 0, 0
+  index: -1
+Butcher (6)
+  rotate: false
+  xy: 230, 47
+  size: 12, 16
+  orig: 12, 16
+  offset: 0, 0
+  index: -1
+Orc (1)
+  rotate: false
+  xy: 244, 47
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: -1
+Butcher (7)
+  rotate: false
+  xy: 15, 10
+  size: 10, 17
+  orig: 10, 17
+  offset: 0, 0
+  index: -1
+Orc (7)
+  rotate: false
+  xy: 27, 13
+  size: 12, 17
+  orig: 12, 17
+  offset: 0, 0
+  index: -1
+EvilWizard (4)
+  rotate: false
+  xy: 200, 31
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+EvilWizard (1)
+  rotate: false
+  xy: 216, 30
+  size: 13, 15
+  orig: 13, 15
+  offset: 0, 0
+  index: -1
+Orc (2)
+  rotate: false
+  xy: 231, 30
+  size: 11, 15
+  orig: 11, 15
+  offset: 0, 0
+  index: -1
+Orc (5)
+  rotate: false
+  xy: 244, 29
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: -1
+Butcher (1)
+  rotate: false
+  xy: 41, 14
+  size: 10, 16
+  orig: 10, 16
+  offset: 0, 0
+  index: -1
+Orc (8)
+  rotate: false
+  xy: 53, 17
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: -1
+Butcher (2)
+  rotate: false
+  xy: 66, 18
+  size: 10, 15
+  orig: 10, 15
+  offset: 0, 0
+  index: -1
+Orc (3)
+  rotate: false
+  xy: 53, 1
+  size: 11, 14
+  orig: 11, 14
+  offset: 0, 0
+  index: -1
+Orc (4)
+  rotate: false
+  xy: 66, 1
+  size: 11, 15
+  orig: 11, 15
+  offset: 0, 0
+  index: -1
+Skeleton (3)
+  rotate: false
+  xy: 41, 1
+  size: 10, 11
+  orig: 10, 11
+  offset: 0, 0
+  index: -1
+Skeleton (4)
+  rotate: false
+  xy: 78, 18
+  size: 10, 13
+  orig: 10, 13
+  offset: 0, 0
+  index: -1
+Butcher (5)
+  rotate: false
+  xy: 79, 1
+  size: 10, 15
+  orig: 10, 15
+  offset: 0, 0
+  index: -1
+Skeleton (6)
+  rotate: false
+  xy: 90, 18
+  size: 10, 13
+  orig: 10, 13
+  offset: 0, 0
+  index: -1
+Skeleton (7)
+  rotate: false
+  xy: 91, 1
+  size: 10, 15
+  orig: 10, 15
+  offset: 0, 0
+  index: -1
+Butcher (3)
+  rotate: false
+  xy: 102, 18
+  size: 10, 12
+  orig: 10, 12
+  offset: 0, 0
+  index: -1
+Butcher (4)
+  rotate: false
+  xy: 103, 2
+  size: 10, 14
+  orig: 10, 14
+  offset: 0, 0
+  index: -1
+Skeleton (1)
+  rotate: false
+  xy: 114, 18
+  size: 10, 12
+  orig: 10, 12
+  offset: 0, 0
+  index: -1
+Butcher (8)
+  rotate: false
+  xy: 115, 2
+  size: 10, 14
+  orig: 10, 14
+  offset: 0, 0
+  index: -1
+Skeleton (2)
+  rotate: false
+  xy: 127, 18
+  size: 10, 14
+  orig: 10, 14
+  offset: 0, 0
+  index: -1
+Skeleton (5)
+  rotate: false
+  xy: 139, 18
+  size: 10, 14
+  orig: 10, 14
+  offset: 0, 0
+  index: -1
+Skeleton (8)
+  rotate: false
+  xy: 151, 19
+  size: 10, 14
+  orig: 10, 14
+  offset: 0, 0
+  index: -1
