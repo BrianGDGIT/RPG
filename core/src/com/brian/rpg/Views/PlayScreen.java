@@ -23,6 +23,8 @@ import com.brian.rpg.Model.Player;
 import com.brian.rpg.Model.StaffProjectile;
 import com.brian.rpg.RPG;
 
+import java.util.ArrayList;
+
 public class PlayScreen implements Screen {
     //Reference to RPG game used to set screens
     private RPG game;
@@ -34,7 +36,7 @@ public class PlayScreen implements Screen {
     //Reference to player object
     private Player player;
 
-    public StaffProjectile staffProjectile;
+    public ArrayList<StaffProjectile> staffProjectiles = new ArrayList<StaffProjectile>();
 
     //Camera and view variables
     private OrthographicCamera gameCamera;
@@ -110,8 +112,12 @@ public class PlayScreen implements Screen {
         player.update(delta);
 
         //Update projectiles
-        if(staffProjectile != null){
-            staffProjectile.update();
+        //Can't use advanced forloop here because update() removes items from the list, which causes concurrentModificationException
+        //Only the normal for loop can do this
+        if(staffProjectiles != null) {
+            for (int i = 0; i < staffProjectiles.size(); i++ ) {
+                staffProjectiles.get(i).update();
+            }
         }
 
         //Render only parts of the map that the camera can currently see
@@ -144,8 +150,11 @@ public class PlayScreen implements Screen {
         player.getSprite().draw(game.batch);
 
         //Render projectiles
-        if(staffProjectile != null){
-            staffProjectile.getSprite().draw(game.batch);
+        if(staffProjectiles != null){
+            for(StaffProjectile projectile : staffProjectiles){
+                projectile.getSprite().draw(game.batch);
+            }
+
         }
 
         game.batch.end();
@@ -177,7 +186,7 @@ public class PlayScreen implements Screen {
     }
 
     public void projectilesToRender(StaffProjectile staffProjectile){
-        this.staffProjectile = staffProjectile;
+        this.staffProjectiles.add(staffProjectile);
     }
 
     public TextureAtlas getWizardSpriteAtlas(){

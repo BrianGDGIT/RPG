@@ -53,7 +53,7 @@ public class Player extends Creature{
         this.sprite.setRegion(getFrame(delta));
 
         //Handle basic attack
-        if(basicAttackTimer >= 3){
+        if(basicAttackTimer >= 0.5){
             basicAttackTimer = 0;
             hasAttacked = false;
         }
@@ -79,9 +79,13 @@ public class Player extends Creature{
             case ATTACKING:
                 region = playerAttack.getKeyFrame(stateTimer, false);
 
-                if(stateTimer > 0.3 && stateTimer < 0.4){
-                    this.sprite.setSize(this.sprite.getWidth() + (stateTimer * 5) , this.sprite.getHeight() + (stateTimer) * 5);
+                if(stateTimer > 0.3){
+                    this.sprite.setSize(32, 16);
                 }
+//                Sprite fix v2
+//                if(stateTimer > 0.3 && stateTimer < 0.4){
+//                    this.sprite.setSize(this.sprite.getWidth() + (stateTimer * 5) , this.sprite.getHeight() + (stateTimer) * 5);
+//                }
 
                 break;
         }

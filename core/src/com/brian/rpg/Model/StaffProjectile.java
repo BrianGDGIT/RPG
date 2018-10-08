@@ -64,8 +64,8 @@ public class StaffProjectile extends Projectile {
         //Destroy projectile body when done
         if(this.stateTimer > this.projectileLife){
             world.destroyBody(this.box2body);
-            //Stop drawing projectile sprite on screen
-            screen.staffProjectile = null;
+            //Remove this projectile from screen staffProjectiles list, stops drawing and updating object
+            screen.staffProjectiles.remove(this);
             this.stateTimer = 0;
         }
     }
