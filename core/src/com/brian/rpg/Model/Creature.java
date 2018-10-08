@@ -26,13 +26,12 @@ public abstract class Creature extends Actor {
     public PlayScreen screen;
     public Body box2body;
 
-    public Creature(PlayScreen screen, int hp, int mana, String gameClass, Sprite sprite){
+    public Creature(PlayScreen screen, int hp, int mana, String gameClass){
         this.screen = screen;
         this.world = screen.getWorld();
         this.hp = hp;
         this.mana = mana;
         this.gameClass = gameClass;
-        this.sprite = sprite;
         this.createCreature();
     }
 

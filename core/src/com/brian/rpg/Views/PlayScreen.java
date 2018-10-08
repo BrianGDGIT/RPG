@@ -84,7 +84,7 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         //Create player
-        player = new Player(this,10, 10, "Wizard", new Sprite(getWizardSpriteAtlas().findRegion("idle")));
+        player = new Player(this,10, 10, "Wizard");
 
         worldGenerator = new Box2dWorldGenerator(world, map);
 

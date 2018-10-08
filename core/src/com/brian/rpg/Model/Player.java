@@ -28,14 +28,15 @@ public class Player extends Creature{
     float basicAttackTimer = 0;
     boolean hasAttacked = false;
 
-    public Player(PlayScreen screen, int hp, int mana, String gameClass, Sprite sprite){
-        super(screen, hp, mana, gameClass, sprite);
+    public Player(PlayScreen screen, int hp, int mana, String gameClass){
+        super(screen, hp, mana, gameClass);
         this.currentState = State.IDLE;
         this.previousState = State.IDLE;
 
         //Initialize player sprite to class
         if(this.gameClass.equals("Wizard")){
             //Create Sprite Textures
+            this.sprite = new Sprite(screen.getWizardSpriteAtlas().findRegion("idle"));
             wizardSprite = new TextureRegion(this.sprite.getTexture(), 1078, 850, 342, 354);
             this.sprite.setBounds(1,1, 16, 16);
 
