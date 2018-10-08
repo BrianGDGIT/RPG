@@ -52,10 +52,9 @@ public abstract class Creature{
         box2body.createFixture(fdef);
     }
 
-    public void update() {
-        //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
-        this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2, box2body.getPosition().y - this.sprite.getHeight() / 2);
-    }
+    public abstract void update(float delta);
+
+
 
     public Sprite getSprite(){
         return this.sprite;

@@ -14,7 +14,7 @@ public class MonsterSpawner {
     public Body box2body;
 
     float timeSinceCreation = 0;
-    int spawnInterval = 10;
+    int spawnInterval = 3;
 
     public MonsterSpawner(PlayScreen screen, Vector2 spawnPoint){
         this.screen = screen;
@@ -40,12 +40,14 @@ public class MonsterSpawner {
         bdef.type = BodyDef.BodyType.StaticBody;
         box2body = world.createBody(bdef);
 
-//        FixtureDef fdef = new FixtureDef();
-//        CircleShape shape = new CircleShape();
-//        shape.setRadius(5);
-//
-//        fdef.shape = shape;
-//        box2body.createFixture(fdef);
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(5);
+
+        fdef.shape = shape;
+        //So nothing can interact or collide with it
+        fdef.isSensor = true;
+        box2body.createFixture(fdef);
     }
 
 

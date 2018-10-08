@@ -134,7 +134,7 @@ public class PlayScreen implements Screen {
         //Update creatures
         if(spawnedCreatures != null){
             for(int i = 0; i < spawnedCreatures.size(); i++){
-                spawnedCreatures.get(i).update();
+                spawnedCreatures.get(i).update(delta);
             }
         }
 
@@ -231,4 +231,6 @@ public class PlayScreen implements Screen {
     public Box2dWorldGenerator getWorldGenerator() { return worldGenerator;}
 
     public World getWorld(){return world;}
+
+    public Player getPlayer(){return player;}
 }
