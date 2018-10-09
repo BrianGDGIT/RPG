@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.brian.rpg.Views.PlayScreen;
 
-public class Projectile {
+public abstract class Projectile {
     Texture texture;
     TextureRegion textureRegion;
     Sprite sprite;
@@ -28,6 +28,8 @@ public class Projectile {
     int projectileSize;
     float projectileSpeed;
     Vector2 projectileVelocity;
+
+    Fixture fixture;
 
     public Projectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize){
         this.world = screen.getWorld();
@@ -50,8 +52,10 @@ public class Projectile {
         shape.setRadius(projectileSize);
 
         fdef.shape = shape;
-        box2body.createFixture(fdef).setUserData("projectile");
+        fixture = box2body.createFixture(fdef);
     }
+
+    public abstract void onHit();
 
 
     public Sprite getSprite(){

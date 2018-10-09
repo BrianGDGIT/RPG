@@ -19,6 +19,8 @@ public class StaffProjectile extends Projectile {
     private static final int FRAME_COLS = 8;
     private static final int FRAME_ROWS = 8;
 
+    Boolean deleteFlag = false;
+
 
 
     Animation<TextureRegion> staffProjectileAnimation;
@@ -28,6 +30,7 @@ public class StaffProjectile extends Projectile {
         this.stateTimer = 0;
         this.projectileLife = 3;
         this.projectileSpeed = 1000f;
+        this.fixture.setUserData(this);
         texture = new Texture("sprites/vortex_spritesheet.png");
 
         //Use split function to create an array of Textures
@@ -67,6 +70,15 @@ public class StaffProjectile extends Projectile {
             //Remove this projectile from screen staffProjectiles list, stops drawing and updating object
             screen.staffProjectiles.remove(this);
             this.stateTimer = 0;
+        }
+    }
+
+    public void onHit(){
+        //If not a player destroy the projectile
+        if(box2body != null && !deleteFlag) {
+            screen.bodiesToDelete.add(box2body);
+            this.deleteFlag = true;
+            screen.staffProjectiles.remove(this);
         }
     }
 
