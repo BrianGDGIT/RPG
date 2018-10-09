@@ -1,5 +1,6 @@
 package com.brian.rpg.Controller;
 
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.physics.box2d.*;
 import com.brian.rpg.Model.Creature;
 import com.brian.rpg.Model.Projectile;
@@ -23,6 +24,11 @@ public class WorldContactListener implements ContactListener {
                 //If it is call creatures onHit method to damage/kill it
                 if (object.getUserData() != null && Creature.class.isAssignableFrom(object.getUserData().getClass())) {
                     ((Creature) object.getUserData()).onHit();
+                    ((Projectile) projectile.getUserData()).onHit();
+                }
+
+                //Destroy projectile on collision with wall
+                if(object.getUserData() != null && object.getUserData().equals("wall")){
                     ((Projectile) projectile.getUserData()).onHit();
                 }
 

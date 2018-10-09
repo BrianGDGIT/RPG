@@ -27,7 +27,7 @@ public class Box2dWorldGenerator {
             body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
             fdef.shape = shape;
-            body.createFixture(fdef);
+            body.createFixture(fdef).setUserData("wall");
         }
     }
 }
