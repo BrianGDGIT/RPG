@@ -1,6 +1,7 @@
 package com.brian.rpg.Model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -21,6 +22,8 @@ public class StaffProjectile extends Projectile {
 
     Boolean deleteFlag = false;
 
+    Sound staffProjectileSound;
+
 
 
     Animation<TextureRegion> staffProjectileAnimation;
@@ -32,6 +35,7 @@ public class StaffProjectile extends Projectile {
         this.projectileSpeed = 1000f;
         this.fixture.setUserData(this);
         texture = new Texture("sprites/vortex_spritesheet.png");
+        staffProjectileSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/magic1.wav"));
 
         //Use split function to create an array of Textures
         TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / FRAME_COLS,
@@ -53,6 +57,9 @@ public class StaffProjectile extends Projectile {
         this.sprite = new Sprite(staffFrames[0]);
         this.sprite.setSize(projectileSize + 10, projectileSize + 10);
         this.sprite.setBounds(1, 1, projectileSize + 10, projectileSize + 10);
+
+        //Play projectile sound
+        staffProjectileSound.play();
 
         //Move Projectile
         this.box2body.setLinearVelocity(projectileVelocity.scl(projectileSpeed));

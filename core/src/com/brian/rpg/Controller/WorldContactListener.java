@@ -32,7 +32,6 @@ public class WorldContactListener implements ContactListener {
                     ((Projectile) projectile.getUserData()).onHit();
                 }
 
-
             }
         }
     }
