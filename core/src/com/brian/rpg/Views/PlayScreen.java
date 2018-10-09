@@ -39,6 +39,7 @@ public class PlayScreen implements Screen {
     private Player player;
     MonsterSpawner monsterSpawner1;
     MonsterSpawner monsterSpawner2;
+    MonsterSpawner monsterSpawner3;
 
     //Spawn lists
     public ArrayList<StaffProjectile> staffProjectiles = new ArrayList<StaffProjectile>();
@@ -99,6 +100,7 @@ public class PlayScreen implements Screen {
         //Create MonsterSpawner
         monsterSpawner1 = new MonsterSpawner(this, new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2 + 25));
         monsterSpawner2 = new MonsterSpawner(this, new Vector2(RPG.V_WIDTH / 2 - 300, RPG.V_HEIGHT / 2));
+        monsterSpawner3 = new MonsterSpawner(this, new Vector2(947, 70));
 
         worldGenerator = new Box2dWorldGenerator(world, map);
 
@@ -131,6 +133,7 @@ public class PlayScreen implements Screen {
         //Update MonsterSpawners
         monsterSpawner1.update(delta);
         monsterSpawner2.update(delta);
+        monsterSpawner3.update(delta);
 
         //Update projectiles
         //Can't use advanced forloop here because update() removes items from the list, which causes concurrentModificationException
@@ -169,7 +172,7 @@ public class PlayScreen implements Screen {
         mapRenderer.render();
 
         //Render Box2d debug lines
-        b2dr.render(world, gameCamera.combined);
+        //b2dr.render(world, gameCamera.combined);
 
         game.batch.setProjectionMatrix(gameCamera.combined);
         game.batch.begin();
