@@ -15,6 +15,7 @@ public class MonsterSpawner {
 
     float timeSinceCreation = 0;
     int spawnInterval = 3;
+    int totalSpawns = 0;
 
     public MonsterSpawner(PlayScreen screen, Vector2 spawnPoint){
         this.screen = screen;
@@ -27,8 +28,9 @@ public class MonsterSpawner {
         //Increase spawn counter every frame
         timeSinceCreation += delta;
 
-        if(timeSinceCreation >= spawnInterval){
+        if(timeSinceCreation >= spawnInterval && totalSpawns < 20){
             timeSinceCreation = 0;
+            totalSpawns++;
             SkeletonEnemy skeleton = new SkeletonEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
             screen.creaturesToRender(skeleton);
         }
