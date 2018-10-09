@@ -19,10 +19,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.brian.rpg.Controller.Box2dWorldGenerator;
+import com.brian.rpg.Controller.WorldContactListener;
 import com.brian.rpg.Model.*;
 import com.brian.rpg.RPG;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PlayScreen implements Screen {
     //Reference to RPG game used to set screens
@@ -40,6 +42,7 @@ public class PlayScreen implements Screen {
     //Spawn lists
     public ArrayList<StaffProjectile> staffProjectiles = new ArrayList<StaffProjectile>();
     public ArrayList<Creature> spawnedCreatures = new ArrayList<Creature>();
+    public ArrayList<Body> bodiesToDelete = new ArrayList<Body>();
 
     //Camera and view variables
     private OrthographicCamera gameCamera;
@@ -87,6 +90,7 @@ public class PlayScreen implements Screen {
         Box2D.init();
         world = new World(new Vector2(0, 0), true);
         b2dr = new Box2DDebugRenderer();
+        world.setContactListener(new WorldContactListener());
 
         //Create player
         player = new Player(this,10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
@@ -108,6 +112,9 @@ public class PlayScreen implements Screen {
 
         //Box2 handles physics
         world.step(1/60f, 6, 2);
+
+        //Remove all bodies that need deleted
+        removeBodies();
 
         //Make game camera follow player
         gameCamera.position.x = player.box2body.getPosition().x;
@@ -208,6 +215,15 @@ public class PlayScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public void removeBodies(){
+        if(bodiesToDelete != null){
+            for(int i = 0; i < bodiesToDelete.size(); i++){
+                world.destroyBody(bodiesToDelete.get(i));
+                bodiesToDelete.remove(i);
+            }
+        }
     }
 
     public void projectilesToRender(StaffProjectile staffProjectile){

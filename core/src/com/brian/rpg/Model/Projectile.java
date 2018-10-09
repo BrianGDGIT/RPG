@@ -50,7 +50,7 @@ public class Projectile {
         shape.setRadius(projectileSize);
 
         fdef.shape = shape;
-        box2body.createFixture(fdef);
+        box2body.createFixture(fdef).setUserData("projectile");
     }
 
 

@@ -22,6 +22,12 @@ public abstract class Creature{
     Direction currentDirection;
     Direction previousDirection;
 
+    //Used to for collisions
+    //Sets fixture to the userdata
+    Fixture fixture;
+
+    Boolean deleteFlag = false;
+
 
     public World world;
     public PlayScreen screen;
@@ -49,7 +55,19 @@ public abstract class Creature{
         shape.setRadius(5);
 
         fdef.shape = shape;
-        box2body.createFixture(fdef);
+        fixture = box2body.createFixture(fdef);
+    }
+
+    public void onHit(){
+        //If not a player destroy the creature
+        if(this.getClass() != Player.class && box2body != null){
+            screen.bodiesToDelete.add(box2body);
+            deleteFlag = true;
+            screen.spawnedCreatures.remove(this);
+        }
+
+
+
     }
 
     public abstract void update(float delta);
