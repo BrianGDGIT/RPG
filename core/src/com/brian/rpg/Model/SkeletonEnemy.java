@@ -1,6 +1,7 @@
 package com.brian.rpg.Model;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -10,11 +11,18 @@ public class SkeletonEnemy extends Creature {
     private static final int FRAME_COLS = 8;
     private static final int FRAME_ROWS = 8;
 
+    float stateTimer = 0;
+
+    //Animations
+    private Animation<TextureRegion> skeletonWalk;
+
     public SkeletonEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
         this.fixture.setUserData(this);
         //Setting sprite
-        this.sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton (1)"));
+        this.sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton"));
+        //Setting Animation
+        skeletonWalk = new Animation<TextureRegion>(0.3f, screen.getMonsters1SpriteAtlas().findRegions("Skeleton"));
     }
 
     @Override
@@ -29,5 +37,9 @@ public class SkeletonEnemy extends Creature {
         Vector2 velocity = new Vector2(playerPosition.x - box2body.getPosition().x, playerPosition.y - box2body.getPosition().y);
 
         this.box2body.setLinearVelocity(velocity);
+
+        //Update Animation every frame
+        this.sprite.setRegion(skeletonWalk.getKeyFrame(stateTimer, true));
+        stateTimer += delta;
     }
 }
