@@ -9,8 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.World;
-import com.brian.rpg.RPG;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.brian.rpg.Views.PlayScreen;
 
 
@@ -22,6 +21,7 @@ public class Player extends Creature{
     //Animations
     private Animation<TextureRegion> playerWalk;
     private Animation<TextureRegion> playerAttack;
+    private Animation<TextureRegion> playerDeath;
     private float stateTimer = 0;
 
     //Basic Attack variables
@@ -30,6 +30,7 @@ public class Player extends Creature{
 
     public Player(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
+        this.fixture.setUserData(this);
         this.currentState = State.IDLE;
         this.previousState = State.IDLE;
 
@@ -40,9 +41,10 @@ public class Player extends Creature{
             wizardSprite = new TextureRegion(this.sprite.getTexture(), 1078, 850, 342, 354);
             this.sprite.setBounds(1,1, 16, 16);
 
-            //Set Walking Animation
+            //Set Animations
             playerWalk = new Animation<TextureRegion>(0.3f, screen.getWizardSpriteAtlas().findRegions("walk"), Animation.PlayMode.LOOP);
             playerAttack = new Animation<TextureRegion>(0.3f, screen.getWizardSpriteAtlas().findRegions("attack"), Animation.PlayMode.NORMAL);
+            playerDeath = new Animation<TextureRegion>(0.1f, screen.getWizardSpriteAtlas().findRegions("dead"), Animation.PlayMode.NORMAL);
         }
     }
 
@@ -84,15 +86,16 @@ public class Player extends Creature{
                 if(stateTimer > 0.3){
                     this.sprite.setSize(32, 16);
                 }
-//                Sprite fix v2
-//                if(stateTimer > 0.3 && stateTimer < 0.4){
-//                    this.sprite.setSize(this.sprite.getWidth() + (stateTimer * 5) , this.sprite.getHeight() + (stateTimer) * 5);
-//                }
-
+                break;
+            case DEAD:
+                region = playerDeath.getKeyFrame(stateTimer, false);
+                this.sprite.setSize(16, 16);
+                //Prevent body from moving after death
+                this.box2body.setType(BodyDef.BodyType.StaticBody);
                 break;
         }
 
-        if(currentState == State.WALKING || currentState == State.ATTACKING){
+        if(currentState != State.IDLE){
             stateTimer = stateTimer + delta;
         }else{
             //Reset timer on new state transition
@@ -114,7 +117,9 @@ public class Player extends Creature{
     }
 
     public State getState(){
-            if(box2body.getLinearVelocity().x != 0 || box2body.getLinearVelocity().y != 0){
+            if(currentState == State.DEAD){
+                return State.DEAD;
+            }else if(box2body.getLinearVelocity().x != 0 || box2body.getLinearVelocity().y != 0){
                 return State.WALKING;
             }else if(hasAttacked){
                 return State.ATTACKING;
@@ -127,7 +132,7 @@ public class Player extends Creature{
             Vector3 touchPos = new Vector3();
 
             //Keyboard controls
-            if(!hasAttacked) {
+            if(!hasAttacked && currentState != State.DEAD) {
                 if (Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S)) {
                     this.box2body.applyLinearImpulse(new Vector2(0, 50), this.box2body.getWorldCenter(), true);
                 } else {
@@ -164,7 +169,7 @@ public class Player extends Creature{
             }
 
             //Attack
-            if(Gdx.input.isTouched() && !hasAttacked){
+            if(Gdx.input.isTouched() && !hasAttacked && currentState != State.DEAD){
                 float createX;
                 float createY;
 
@@ -200,7 +205,7 @@ public class Player extends Creature{
 
 
             //Android Controls
-            if(Gdx.app.getType() == Application.ApplicationType.Android && !hasAttacked){
+            if(Gdx.app.getType() == Application.ApplicationType.Android && !hasAttacked && currentState != State.DEAD){
                 //Touch
                 touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                 screen.getGameCamera().unproject(touchPos);
@@ -227,6 +232,10 @@ public class Player extends Creature{
 
             }
 
+    }
+
+    public void onHit(){
+        this.currentState = State.DEAD;
     }
 
 }

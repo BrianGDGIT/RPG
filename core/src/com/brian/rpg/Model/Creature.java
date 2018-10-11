@@ -14,7 +14,7 @@ public abstract class Creature{
     Vector2 spawnPoint;
 
     //Animation states
-    enum State {IDLE, WALKING, ATTACKING};
+    enum State {IDLE, WALKING, ATTACKING, DEAD};
     enum Direction {LEFT, RIGHT};
 
     State currentState;
@@ -60,13 +60,11 @@ public abstract class Creature{
 
     public void onHit(){
         //If not a player destroy the creature
-        if(this.getClass() != Player.class && box2body != null){
+        if(box2body != null){
             screen.bodiesToDelete.add(box2body);
             deleteFlag = true;
             screen.spawnedCreatures.remove(this);
         }
-
-
 
     }
 

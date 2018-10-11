@@ -28,7 +28,7 @@ public class MonsterSpawner {
         //Increase spawn counter every frame
         timeSinceCreation += delta;
 
-        if(box2body.getPosition().dst(screen.getPlayer().box2body.getPosition()) > 99 && timeSinceCreation >= spawnInterval && totalSpawns < 20){
+        if(box2body.getPosition().dst(screen.getPlayer().box2body.getPosition()) > 150 && timeSinceCreation >= spawnInterval && totalSpawns < 20){
             timeSinceCreation = 0;
             totalSpawns++;
             SkeletonEnemy skeleton = new SkeletonEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
