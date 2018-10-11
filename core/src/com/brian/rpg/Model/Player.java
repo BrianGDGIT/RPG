@@ -47,8 +47,7 @@ public class Player extends Creature{
     }
 
     public void update(float delta){
-
-        System.out.println(this.box2body.getPosition());
+        //System.out.println(this.box2body.getPosition());
         //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
         this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2, box2body.getPosition().y - this.sprite.getHeight() /2);
 

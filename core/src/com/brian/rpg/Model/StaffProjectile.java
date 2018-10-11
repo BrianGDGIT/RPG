@@ -1,6 +1,7 @@
 package com.brian.rpg.Model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -22,30 +23,28 @@ public class StaffProjectile extends Projectile {
 
     Boolean deleteFlag = false;
 
-    Sound staffProjectileSound;
 
 
 
     Animation<TextureRegion> staffProjectileAnimation;
 
-    public StaffProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity){
+    public StaffProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity) {
         super(screen, createX, createY, projectileVelocity, 5);
         this.stateTimer = 0;
         this.projectileLife = 3;
         this.projectileSpeed = 1000f;
         this.fixture.setUserData(this);
         texture = new Texture("sprites/vortex_spritesheet.png");
-        staffProjectileSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/magic1.wav"));
 
         //Use split function to create an array of Textures
         TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / FRAME_COLS,
-                                                    texture.getHeight() / FRAME_ROWS);
+                texture.getHeight() / FRAME_ROWS);
 
         //Place the regions into an array
         TextureRegion[] staffFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index = 0;
-        for(int i = 0; i < FRAME_ROWS; i++){
-            for(int j = 0; j < FRAME_COLS; j++){
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
                 staffFrames[index++] = tmp[i][j];
             }
         }
@@ -59,7 +58,7 @@ public class StaffProjectile extends Projectile {
         this.sprite.setBounds(1, 1, projectileSize + 10, projectileSize + 10);
 
         //Play projectile sound
-        staffProjectileSound.play();
+        screen.getGameManager().get("Sounds/magic1.wav", Sound.class).play();
 
         //Move Projectile
         this.box2body.setLinearVelocity(projectileVelocity.scl(projectileSpeed));
