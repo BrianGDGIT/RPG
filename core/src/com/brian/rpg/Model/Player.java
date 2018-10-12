@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.brian.rpg.Views.GameOverScreen;
+import com.brian.rpg.Views.MainMenuScreen;
 import com.brian.rpg.Views.PlayScreen;
 
 
@@ -28,6 +30,9 @@ public class Player extends Creature{
     float basicAttackTimer = 0;
     boolean hasAttacked = false;
 
+    //Death variables
+    float deathTimer = 0;
+
     public Player(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
         this.fixture.setUserData(this);
@@ -44,7 +49,7 @@ public class Player extends Creature{
             //Set Animations
             playerWalk = new Animation<TextureRegion>(0.3f, screen.getWizardSpriteAtlas().findRegions("walk"), Animation.PlayMode.LOOP);
             playerAttack = new Animation<TextureRegion>(0.3f, screen.getWizardSpriteAtlas().findRegions("attack"), Animation.PlayMode.NORMAL);
-            playerDeath = new Animation<TextureRegion>(0.1f, screen.getWizardSpriteAtlas().findRegions("dead"), Animation.PlayMode.NORMAL);
+            playerDeath = new Animation<TextureRegion>(0.3f, screen.getWizardSpriteAtlas().findRegions("dead"), Animation.PlayMode.NORMAL);
         }
     }
 
@@ -92,6 +97,10 @@ public class Player extends Creature{
                 this.sprite.setSize(16, 16);
                 //Prevent body from moving after death
                 this.box2body.setType(BodyDef.BodyType.StaticBody);
+                deathTimer += delta;
+                if(deathTimer > 5){
+                    screen.getGame().setScreen(new GameOverScreen(screen.getGame()));
+                }
                 break;
         }
 

@@ -71,6 +71,10 @@ public class MainMenuScreen implements Screen {
             game.setScreen(new PlayScreen(game));
             dispose();
         }
+
+        if(exit.isPressed()){
+            Gdx.app.exit();
+        }
     }
 
     @Override

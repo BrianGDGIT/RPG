@@ -254,4 +254,6 @@ public class PlayScreen implements Screen {
     public Player getPlayer(){return player;}
 
     public AssetManager getGameManager(){return game.getManager();}
+
+    public RPG getGame(){return game;}
 }

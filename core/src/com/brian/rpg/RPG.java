@@ -37,4 +37,8 @@ public class RPG extends Game {
 	}
 
 	public AssetManager getManager(){return manager;}
+
+	public void setupScreenRender(){
+
+	}
 }
