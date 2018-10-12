@@ -17,6 +17,10 @@ import com.brian.rpg.Views.PlayScreen;
 
 public class Player extends Creature{
 
+    //Player stats
+    int experience;
+    int kills;
+
     //Textures
     private TextureRegion wizardSprite;
 
@@ -36,9 +40,11 @@ public class Player extends Creature{
 
     public Player(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
+        //Set player stats
+        this.level = 1;
+
         this.fixture.setUserData(this);
         this.currentState = State.IDLE;
-        this.previousState = State.IDLE;
 
         //Initialize player sprite to class
         if(this.gameClass.equals("Wizard")){
@@ -63,7 +69,7 @@ public class Player extends Creature{
         this.sprite.setRegion(getFrame(delta));
 
         //Handle basic attack
-        if(basicAttackTimer >= 0.5){
+        if(basicAttackTimer >= 0.8){
             basicAttackTimer = 0;
             hasAttacked = false;
             projectileFired = false;
@@ -225,7 +231,6 @@ public class Player extends Creature{
         Vector3 touchPos = new Vector3();
         float createX;
         float createY;
-        float animationTimer = 0;
 
         //Getting touch position, unprojecting coords to game coords, normalizing and passing as velocity
         touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -261,4 +266,5 @@ public class Player extends Creature{
         this.currentState = State.DEAD;
     }
 
+    public int getExperience(){return this.experience;}
 }

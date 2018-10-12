@@ -5,17 +5,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.brian.rpg.Model.Player;
 import com.brian.rpg.RPG;
 
 public class GameOverScreen implements Screen {
     final RPG game;
     private Stage stage;
-
 
     //Table Buttons
     Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
@@ -45,6 +42,7 @@ public class GameOverScreen implements Screen {
         table.add(newGame).fillX().uniform();
         table.row().pad(0, 0, 10, 0);
         table.add(exit).fillX().uniformX();
+
     }
 
     @Override

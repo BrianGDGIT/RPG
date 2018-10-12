@@ -21,7 +21,6 @@ import com.brian.rpg.Model.*;
 import com.brian.rpg.RPG;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class PlayScreen implements Screen {
     //Reference to RPG game used to set screens

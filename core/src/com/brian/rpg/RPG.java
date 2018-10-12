@@ -20,6 +20,7 @@ public class RPG extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		font = new BitmapFont();
 		manager = new AssetManager();
 		manager.load("Sounds/magic1.wav", Sound.class);
 		manager.finishLoading();
@@ -34,11 +35,9 @@ public class RPG extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		font.dispose();
 	}
 
 	public AssetManager getManager(){return manager;}
 
-	public void setupScreenRender(){
-
-	}
 }

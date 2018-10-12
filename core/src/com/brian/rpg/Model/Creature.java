@@ -3,12 +3,14 @@ package com.brian.rpg.Model;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
 
 public abstract class Creature{
+    int level;
     int hp;
     int mana;
+    int experienceValue;
+
     String gameClass;
     Sprite sprite;
     Vector2 spawnPoint;
@@ -18,9 +20,8 @@ public abstract class Creature{
     enum Direction {LEFT, RIGHT};
 
     State currentState;
-    State previousState;
+
     Direction currentDirection;
-    Direction previousDirection;
 
     //Used to for collisions
     //Sets fixture to the userdata
@@ -64,6 +65,11 @@ public abstract class Creature{
             screen.bodiesToDelete.add(box2body);
             deleteFlag = true;
             screen.spawnedCreatures.remove(this);
+
+            //Increase player experience on creature death
+            //And increase player kill count
+            screen.getPlayer().experience += experienceValue;
+            screen.getPlayer().kills += 1;
         }
 
     }
@@ -76,6 +82,8 @@ public abstract class Creature{
         return this.sprite;
     }
 
+    public String getGameClass(){return this.gameClass;}
 
+    public int getLevel(){return this.level;}
 
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="120" height="68" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="41">
+<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="120" height="68" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="44">
  <tileset firstgid="1" name="Dungeon II" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/0x72_DungeonTilesetII_v1.png" width="512" height="512"/>
  </tileset>
@@ -8,7 +8,7 @@
  </tileset>
  <layer id="1" name="background" width="120" height="68">
   <data encoding="base64" compression="zlib">
-   eJzt2cFpA0EURMFdC2Xi1JyIU3UiOigD495m21Xw7w0P5jLHAQAAAAAAAAAA/Ec/7QFEPc7j+DjbK0j5vsnxO+1u+ma1u+mb1e6mb1a7m75Z7W76ZrW76ZvV7qZvVrubvlntbvpmtbvpm9Xupm9Wu5u+We1u+mZd3enr+T59r6Hvtva7q29Wu5u+We1u+ma1u+mb1e6mb1a7m75Z7W76ZrW76ZvV7qbvfeiyTdNt+m7Td5u+2/Tdpu82fbfpu03fbfpu03ebvtv03abvNn23+dPfpu+2v+77ee18AMa8APZrRj8=
+   eJzt2cENwgAQA8EEWqFSWqURekAYK2ZGur+lfd5xAAAAAAAAAAAA/+jVHkDU/TyO29leQcrzIsdn2t30zWp30zer3U3frHY3fbPa3fTNanfTN6vdTd+sdjd9s9rd9M1qd9M3q91N36x2N32z2t30zWp30zer3U3frHY3fbPa3fTNanfTN6vdTd+sdjd9s9rd9M1qd9M3q91N36x2N32vQ5dtmm7Td5u+2/Tdpu82fbfpu03fbfpu03ebvtv03abvNn236bvNT3+bvtu+3ffx2/kAjHkDbJhGnw==
   </data>
  </layer>
  <layer id="2" name="graphics" width="120" height="68">
@@ -27,11 +27,11 @@
   <object id="26" x="912" y="752" width="16" height="288"/>
   <object id="28" x="624" y="736" width="304" height="16"/>
   <object id="31" x="608" y="336" width="16" height="400"/>
-  <object id="35" x="1098.33" y="458.667"/>
-  <object id="36" x="1145" y="458.667"/>
-  <object id="37" x="1145" y="408"/>
-  <object id="38" x="1096" y="409"/>
-  <object id="39" x="1113.33" y="425"/>
+  <object id="35" x="1087.45" y="436.417" width="17.5" height="32.5"/>
+  <object id="39" x="1111.83" y="424.375"/>
   <object id="40" x="1240.33" y="1017"/>
+  <object id="41" x="1136.25" y="436.375" width="17.5" height="32.5"/>
+  <object id="42" x="1135.38" y="388.375" width="17.5" height="32.5"/>
+  <object id="43" x="1087.13" y="388.125" width="17.5" height="32.5"/>
  </objectgroup>
 </map>
