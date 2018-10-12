@@ -29,6 +29,7 @@ public class Player extends Creature{
     //Basic Attack variables
     float basicAttackTimer = 0;
     boolean hasAttacked = false;
+    boolean projectileFired = false;
 
     //Death variables
     float deathTimer = 0;
@@ -65,11 +66,18 @@ public class Player extends Creature{
         if(basicAttackTimer >= 0.5){
             basicAttackTimer = 0;
             hasAttacked = false;
+            projectileFired = false;
         }
 
         if(hasAttacked){
+            if(!projectileFired && stateTimer > 0.2){
+                staffAttack();
+                projectileFired = true;
+            }
+
             basicAttackTimer = basicAttackTimer + delta;
         }
+
     }
 
     public TextureRegion getFrame(float delta){
@@ -87,10 +95,10 @@ public class Player extends Creature{
                 break;
             case ATTACKING:
                 region = playerAttack.getKeyFrame(stateTimer, false);
-
                 if(stateTimer > 0.3){
                     this.sprite.setSize(32, 16);
                 }
+                this.box2body.setLinearVelocity(0, 0);
                 break;
             case DEAD:
                 region = playerDeath.getKeyFrame(stateTimer, false);
@@ -128,10 +136,10 @@ public class Player extends Creature{
     public State getState(){
             if(currentState == State.DEAD){
                 return State.DEAD;
-            }else if(box2body.getLinearVelocity().x != 0 || box2body.getLinearVelocity().y != 0){
-                return State.WALKING;
             }else if(hasAttacked){
                 return State.ATTACKING;
+            }else if(box2body.getLinearVelocity().x != 0 || box2body.getLinearVelocity().y != 0){
+                return State.WALKING;
             }else{
                 return State.IDLE;
             }
@@ -179,36 +187,6 @@ public class Player extends Creature{
 
             //Attack
             if(Gdx.input.isTouched() && !hasAttacked && currentState != State.DEAD){
-                float createX;
-                float createY;
-
-                //Getting touch position, unprojecting coords to game coords, normalizing and passing as velocity
-                touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                touchPos = screen.getGameCamera().unproject(touchPos);
-                Vector2 velocity = new Vector2(touchPos.x, touchPos.y);
-                velocity.sub(box2body.getPosition().x + 5, box2body.getPosition().y + 5);
-                velocity = velocity.nor();
-
-                //Checks touched position, if the position is to the right of the player the projectile is created to the right of the player
-                //else it is created to the left of the player
-                //This prevents the projectile from hitting the player
-                //Also sets player State to either LEFT OR RIGHT so that the player is facing toward touched position
-                if(velocity.x > 0){
-                    this.currentDirection = Direction.RIGHT;
-                    createX = box2body.getPosition().x + 5;
-                }else{
-                    this.currentDirection = Direction.LEFT;
-                    createX =box2body.getPosition().x - 5;
-                }
-
-                if(velocity.y < 0){
-                    createY = box2body.getPosition().y - 5;
-                }else{
-                    createY = box2body.getPosition().y + 5;
-                }
-
-                StaffProjectile staffProjectile = new StaffProjectile(screen,createX, createY, velocity);
-                screen.projectilesToRender(staffProjectile);
                 hasAttacked = true;
             }
 
@@ -240,6 +218,42 @@ public class Player extends Creature{
                 }
 
             }
+
+    }
+
+    public void staffAttack(){
+        Vector3 touchPos = new Vector3();
+        float createX;
+        float createY;
+        float animationTimer = 0;
+
+        //Getting touch position, unprojecting coords to game coords, normalizing and passing as velocity
+        touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        touchPos = screen.getGameCamera().unproject(touchPos);
+        Vector2 velocity = new Vector2(touchPos.x, touchPos.y);
+        velocity.sub(box2body.getPosition().x + 5, box2body.getPosition().y + 5);
+        velocity = velocity.nor();
+
+        //Checks touched position, if the position is to the right of the player the projectile is created to the right of the player
+        //else it is created to the left of the player
+        //This prevents the projectile from hitting the player
+        //Also sets player State to either LEFT OR RIGHT so that the player is facing toward touched position
+        if(velocity.x > 0){
+            this.currentDirection = Direction.RIGHT;
+            createX = box2body.getPosition().x + 5;
+        }else{
+            this.currentDirection = Direction.LEFT;
+            createX =box2body.getPosition().x - 5;
+        }
+
+        if(velocity.y < 0){
+            createY = box2body.getPosition().y - 5;
+        }else{
+            createY = box2body.getPosition().y + 5;
+        }
+
+        StaffProjectile staffProjectile = new StaffProjectile(screen, createX, createY, velocity);
+        screen.projectilesToRender(staffProjectile);
 
     }
 
