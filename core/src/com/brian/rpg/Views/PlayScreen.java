@@ -3,7 +3,6 @@ package com.brian.rpg.Views;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -25,6 +24,9 @@ import java.util.ArrayList;
 public class PlayScreen implements Screen {
     //Reference to RPG game used to set screens
     private RPG game;
+
+    //Screens
+    InventoryScreen inventory;
 
     //Texture Resources
     private TextureAtlas wizardSpriteAtlas;
@@ -92,6 +94,9 @@ public class PlayScreen implements Screen {
 
         //Create player
         player = new Player(this,10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
+
+        //Create Inventory Screen
+        inventory = new InventoryScreen(game, player, game.batch);
 
         //Create MonsterSpawner
         monsterSpawner1 = new MonsterSpawner(this, new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2 + 151));
@@ -192,6 +197,13 @@ public class PlayScreen implements Screen {
         }
 
         game.batch.end();
+
+        //Render Inventory Screen
+        if(player.inventoryDisplayed){
+            inventory.stage.draw();
+        }else{
+            //inventory.stage.clear();
+        }
     }
 
     @Override
@@ -255,4 +267,5 @@ public class PlayScreen implements Screen {
     public AssetManager getGameManager(){return game.getManager();}
 
     public RPG getGame(){return game;}
+
 }

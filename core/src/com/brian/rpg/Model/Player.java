@@ -11,8 +11,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.brian.rpg.Views.GameOverScreen;
+import com.brian.rpg.Views.InventoryScreen;
 import com.brian.rpg.Views.MainMenuScreen;
 import com.brian.rpg.Views.PlayScreen;
+
+import static com.badlogic.gdx.Input.Keys.I;
 
 
 public class Player extends Creature{
@@ -37,6 +40,9 @@ public class Player extends Creature{
 
     //Death variables
     float deathTimer = 0;
+
+    //Player states
+    public boolean inventoryDisplayed = false;
 
     public Player(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
@@ -188,6 +194,15 @@ public class Player extends Creature{
                     if (!Gdx.input.isKeyPressed(Input.Keys.D)) {
                         this.box2body.setLinearVelocity(0, this.box2body.getLinearVelocity().y);
                     }
+                }
+            }
+
+            //Display Inventory
+            if(Gdx.input.isKeyJustPressed(I)){
+                if(!inventoryDisplayed) {
+                    inventoryDisplayed = true;
+                }else{
+                    inventoryDisplayed = false;
                 }
             }
 
