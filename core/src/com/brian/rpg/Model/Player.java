@@ -21,8 +21,8 @@ import static com.badlogic.gdx.Input.Keys.I;
 public class Player extends Creature{
 
     //Player stats
-    int experience;
-    int kills;
+    int experience = 0;
+    int kills = 0;
 
     //Textures
     private TextureRegion wizardSprite;
@@ -282,4 +282,15 @@ public class Player extends Creature{
     }
 
     public int getExperience(){return this.experience;}
+    public int getKills(){return kills;}
+
+    public void awardExperience(int experience){
+        System.out.println(experience);
+        //Increase player experience on creature death
+        this.experience += experience;
+    }
+
+    public void increaseKillCount(){
+        this.kills++;
+    }
 }

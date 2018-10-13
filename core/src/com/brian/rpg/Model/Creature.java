@@ -66,10 +66,9 @@ public abstract class Creature{
             deleteFlag = true;
             screen.spawnedCreatures.remove(this);
 
-            //Increase player experience on creature death
-            //And increase player kill count
-            screen.getPlayer().experience += experienceValue;
-            screen.getPlayer().kills += 1;
+            //Award Experience
+            screen.getPlayer().awardExperience(this.experienceValue);
+            screen.getPlayer().increaseKillCount();
         }
 
     }
@@ -85,5 +84,7 @@ public abstract class Creature{
     public String getGameClass(){return this.gameClass;}
 
     public int getLevel(){return this.level;}
+
+    public int getExperienceValue(){return experienceValue;}
 
 }

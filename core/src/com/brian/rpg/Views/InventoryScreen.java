@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.brian.rpg.Model.Player;
@@ -22,9 +24,12 @@ public class InventoryScreen {
 
     public Stage stage;
     private Viewport viewport;
+    Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+
     private Player player;
 
     Label levelLabel;
+    TextArea textArea;
 
     public InventoryScreen(RPG game, Player player, SpriteBatch batch){
         this.game = game;
@@ -32,15 +37,12 @@ public class InventoryScreen {
         viewport = new FitViewport(800, 600, new OrthographicCamera());
         stage = new Stage(viewport, batch);
 
-        Table table = new Table();
-        table.setFillParent(true);
-        table.top();
+        textArea = new TextArea("Class: " + player.getGameClass() + '\n' + "Level: " + player.getLevel() + '\n' + "Experience: " + player.getExperience() + '\n' + "Total Kills: " + player.getKills(), skin);
+        textArea.setSize(250, 250);
+        textArea.setPosition( 300, 300);
+        stage.addActor(textArea);
+        
 
-        stage.addActor(table);
-
-        levelLabel = new Label("Level: " + player.getLevel(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-
-        table.add(levelLabel).expandX();
     }
 
 }
