@@ -40,7 +40,7 @@ public class InventoryScreen {
 
         textArea = new TextArea("Class: " + player.getGameClass() + '\n' + "Level: " + player.getLevel() + '\n' + "Experience: " + player.getExperience() + '\n' + "Total Kills: " + player.getKills(), skin);
         textArea.setSize(250, 250);
-        textArea.setPosition( 300, 300);
+        textArea.setPosition( 300, 350);
 
         stage.addActor(textArea);
     }
@@ -48,7 +48,7 @@ public class InventoryScreen {
     public void update(){
         textArea = new TextArea("Class: " + player.getGameClass() + '\n' + "Level: " + player.getLevel() + '\n' + "Experience: " + player.getExperience() + '\n' + "Total Kills: " + player.getKills(), skin);
         textArea.setSize(250, 250);
-        textArea.setPosition( 300, 300);
+        textArea.setPosition( 300, 350);
         stage.addActor(textArea);
     }
 

@@ -118,7 +118,13 @@ public class Player extends Creature{
                 //Prevent body from moving after death
                 this.box2body.setType(BodyDef.BodyType.StaticBody);
                 deathTimer += delta;
-                if(deathTimer > 5){
+
+                //Display Inventory on Death
+                if(deathTimer > 2) {
+                    inventoryDisplayed = true;
+                }
+
+                if(deathTimer > 10){
                     screen.getGame().setScreen(new GameOverScreen(screen.getGame()));
                 }
                 break;
@@ -158,8 +164,6 @@ public class Player extends Creature{
         }
 
     public void handleInput(float delta){
-            Vector3 touchPos = new Vector3();
-
             //Keyboard controls
             if(!hasAttacked && currentState != State.DEAD) {
                 if (Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S)) {
@@ -206,7 +210,9 @@ public class Player extends Creature{
                 }
             }
 
-            //Attack
+
+
+            //Attack && Display Inventory on Android
             if(Gdx.input.isTouched() && !hasAttacked && currentState != State.DEAD){
                 hasAttacked = true;
             }
@@ -214,15 +220,10 @@ public class Player extends Creature{
 
             //Android Controls
             if(Gdx.app.getType() == Application.ApplicationType.Android && !hasAttacked && currentState != State.DEAD){
-                //Touch
-                touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                screen.getGameCamera().unproject(touchPos);
-
-                //Accelerometer
+                //Accelerometer Movement
                 Float accelX = Gdx.input.getAccelerometerX();
                 Float accelY = Gdx.input.getAccelerometerY();
-                //Find touchpos relative to player object and move that direction
-                //Right
+
                 if(accelY > 2){
                     this.box2body.applyLinearImpulse(new Vector2(50, 0), this.box2body.getWorldCenter(), true);
                     this.currentDirection = Direction.RIGHT;
@@ -239,7 +240,6 @@ public class Player extends Creature{
                 }
 
             }
-
     }
 
     public void staffAttack(){
