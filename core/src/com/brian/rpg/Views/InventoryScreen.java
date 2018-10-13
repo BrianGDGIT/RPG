@@ -33,6 +33,7 @@ public class InventoryScreen {
 
     public InventoryScreen(RPG game, Player player, SpriteBatch batch){
         this.game = game;
+        this.player = player;
 
         viewport = new FitViewport(800, 600, new OrthographicCamera());
         stage = new Stage(viewport, batch);
@@ -40,9 +41,15 @@ public class InventoryScreen {
         textArea = new TextArea("Class: " + player.getGameClass() + '\n' + "Level: " + player.getLevel() + '\n' + "Experience: " + player.getExperience() + '\n' + "Total Kills: " + player.getKills(), skin);
         textArea.setSize(250, 250);
         textArea.setPosition( 300, 300);
-        stage.addActor(textArea);
-        
 
+        stage.addActor(textArea);
+    }
+
+    public void update(){
+        textArea = new TextArea("Class: " + player.getGameClass() + '\n' + "Level: " + player.getLevel() + '\n' + "Experience: " + player.getExperience() + '\n' + "Total Kills: " + player.getKills(), skin);
+        textArea.setSize(250, 250);
+        textArea.setPosition( 300, 300);
+        stage.addActor(textArea);
     }
 
 }

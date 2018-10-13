@@ -200,9 +200,8 @@ public class PlayScreen implements Screen {
 
         //Render Inventory Screen
         if(player.inventoryDisplayed){
+            inventory.update();
             inventory.stage.draw();
-        }else{
-            //inventory.stage.clear();
         }
     }
 
