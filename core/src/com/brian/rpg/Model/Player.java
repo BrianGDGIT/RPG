@@ -272,8 +272,24 @@ public class Player extends Creature{
             createY = box2body.getPosition().y + 5;
         }
 
+        //Projectile 1
         StaffProjectile staffProjectile = new StaffProjectile(screen, createX, createY, velocity);
         screen.projectilesToRender(staffProjectile);
+
+        if(this.level == 2){
+            staffProjectile = new StaffProjectile(screen, createX + 5, createY, velocity);
+            screen.projectilesToRender(staffProjectile);
+        }
+
+        if(this.level >= 3){
+            //Projectile 2
+            staffProjectile = new StaffProjectile(screen, createX + 5, createY, velocity);
+            screen.projectilesToRender(staffProjectile);
+            //Projectile3
+            staffProjectile = new StaffProjectile(screen, createX + 10, createY, velocity);
+            screen.projectilesToRender(staffProjectile);
+        }
+
 
     }
 
@@ -285,9 +301,21 @@ public class Player extends Creature{
     public int getKills(){return kills;}
 
     public void awardExperience(int experience){
-        System.out.println(experience);
         //Increase player experience on creature death
         this.experience += experience;
+        evaluatePlayerLevel();
+    }
+
+    public void evaluatePlayerLevel(){
+        if(this.level == 1){
+            if(this.experience > 99){
+                this.level = 2;
+            }
+        }else if(this.level == 2){
+            if(this.experience > 199){
+                this.level = 3;
+            }
+        }
     }
 
     public void increaseKillCount(){
