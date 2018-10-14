@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.brian.rpg.Controller.Box2dWorldGenerator;
@@ -52,9 +51,6 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2dWorldGenerator worldGenerator;
     private Box2DDebugRenderer b2dr;
-
-    //Stage
-    private Stage stage;
 
     //Map variables
     private TmxMapLoader mapLoader;
@@ -227,13 +223,17 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        wizardSpriteAtlas.dispose();
+        monsters1SpriteAtlas.dispose();
+        mapRenderer.dispose();
+        map.dispose();
     }
 
     public void removeBodies(){
         if(bodiesToDelete != null){
             for(int i = 0; i < bodiesToDelete.size(); i++){
                 world.destroyBody(bodiesToDelete.get(i));
+                bodiesToDelete.get(i).equals(null);
                 bodiesToDelete.remove(i);
             }
         }

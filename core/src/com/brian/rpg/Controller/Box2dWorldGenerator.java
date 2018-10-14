@@ -27,6 +27,7 @@ public class Box2dWorldGenerator {
             body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
             fdef.shape = shape;
+            fdef.filter.categoryBits = RPG.WALL_BIT;
             body.createFixture(fdef).setUserData("wall");
         }
     }

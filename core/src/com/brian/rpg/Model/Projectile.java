@@ -8,11 +8,11 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
 
 public abstract class Projectile {
     Texture texture;
-    TextureRegion textureRegion;
     Sprite sprite;
 
     public World world;
@@ -52,11 +52,12 @@ public abstract class Projectile {
         shape.setRadius(projectileSize);
 
         fdef.shape = shape;
+        fdef.filter.categoryBits = RPG.PROJECTILE_BIT;
+        fdef.filter.maskBits = RPG.WALL_BIT | RPG.CREATURE_BIT;
         fixture = box2body.createFixture(fdef);
     }
 
     public abstract void onHit();
-
 
     public Sprite getSprite(){
         return sprite;

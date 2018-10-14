@@ -126,6 +126,7 @@ public class Player extends Creature{
 
                 if(deathTimer > 10){
                     screen.getGame().setScreen(new GameOverScreen(screen.getGame()));
+                    screen.dispose();
                 }
                 break;
         }
@@ -243,6 +244,7 @@ public class Player extends Creature{
     }
 
     public void staffAttack(){
+        StaffProjectile staffProjectile;
         Vector3 touchPos = new Vector3();
         float createX;
         float createY;
@@ -273,20 +275,29 @@ public class Player extends Creature{
         }
 
         //Projectile 1
-        StaffProjectile staffProjectile = new StaffProjectile(screen, createX, createY, velocity);
-        screen.projectilesToRender(staffProjectile);
+        if(this.level ==1) {
+            staffProjectile = new StaffProjectile(screen, createX, createY, velocity);
+            screen.projectilesToRender(staffProjectile);
+        }
 
         if(this.level == 2){
+            staffProjectile = new StaffProjectile(screen, createX, createY, velocity);
+            screen.projectilesToRender(staffProjectile);
+
             staffProjectile = new StaffProjectile(screen, createX + 5, createY, velocity);
             screen.projectilesToRender(staffProjectile);
         }
 
         if(this.level >= 3){
-            //Projectile 2
+            //Projectile 1
             staffProjectile = new StaffProjectile(screen, createX + 5, createY, velocity);
             screen.projectilesToRender(staffProjectile);
+            //Projectile2
+            staffProjectile = new StaffProjectile(screen, createX + 7, createY, velocity);
+            screen.projectilesToRender(staffProjectile);
+
             //Projectile3
-            staffProjectile = new StaffProjectile(screen, createX + 10, createY, velocity);
+            staffProjectile = new StaffProjectile(screen, createX + 9, createY, velocity);
             screen.projectilesToRender(staffProjectile);
         }
 

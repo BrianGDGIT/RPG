@@ -3,6 +3,7 @@ package com.brian.rpg.Model;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
 
 public abstract class Creature{
@@ -56,6 +57,10 @@ public abstract class Creature{
         shape.setRadius(5);
 
         fdef.shape = shape;
+        fdef.filter.categoryBits = RPG.CREATURE_BIT;
+        if(this instanceof Player){
+            fdef.filter.categoryBits = RPG.PLAYER_BIT;
+        }
         fixture = box2body.createFixture(fdef);
     }
 

@@ -34,7 +34,7 @@ public class StaffProjectile extends Projectile {
         this.projectileLife = 3;
         this.projectileSpeed = 1000f;
         this.fixture.setUserData(this);
-        texture = new Texture("sprites/vortex_spritesheet.png");
+        texture = screen.getGameManager().get("sprites/vortex_spritesheet.png", Texture.class);
 
         //Use split function to create an array of Textures
         TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / FRAME_COLS,
