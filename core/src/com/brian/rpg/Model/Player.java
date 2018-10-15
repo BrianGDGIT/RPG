@@ -118,12 +118,7 @@ public class Player extends Creature{
                 //Prevent body from moving after death
                 this.box2body.setType(BodyDef.BodyType.StaticBody);
                 deathTimer += delta;
-
-                //Display Inventory on Death
-                if(deathTimer > 2) {
-                    inventoryDisplayed = true;
-                }
-
+                
                 if(deathTimer > 10){
                     screen.getGame().setScreen(new GameOverScreen(screen.getGame()));
                     screen.dispose();
@@ -213,8 +208,8 @@ public class Player extends Creature{
 
 
 
-            //Attack && Display Inventory on Android
-            if(Gdx.input.isTouched() && !hasAttacked && currentState != State.DEAD){
+            //Attack
+            if(Gdx.input.isTouched() && !hasAttacked && currentState != State.DEAD && !screen.getHud().button.isPressed()){
                 hasAttacked = true;
             }
 

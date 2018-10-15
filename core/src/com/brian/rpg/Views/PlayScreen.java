@@ -26,6 +26,7 @@ public class PlayScreen implements Screen {
 
     //Screens
     InventoryScreen inventory;
+    HUD hud;
 
     //Texture Resources
     private TextureAtlas wizardSpriteAtlas;
@@ -93,6 +94,9 @@ public class PlayScreen implements Screen {
 
         //Create Inventory Screen
         inventory = new InventoryScreen(game, player, game.batch);
+
+        //Create HUD
+        hud = new HUD(player);
 
         //Create MonsterSpawner
         monsterSpawner1 = new MonsterSpawner(this, new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2 + 151));
@@ -199,11 +203,17 @@ public class PlayScreen implements Screen {
             inventory.update();
             inventory.stage.draw();
         }
+
+        //Render HUD
+        hud.stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        hud.stage.draw();
+        hud.checkHudClicks();
     }
 
     @Override
     public void resize(int width, int height) {
         viewPort.update(width, height);
+        hud.stage.getViewport().update(width, height);
     }
 
     @Override
@@ -267,4 +277,5 @@ public class PlayScreen implements Screen {
 
     public RPG getGame(){return game;}
 
+    public HUD getHud(){return hud;}
 }
