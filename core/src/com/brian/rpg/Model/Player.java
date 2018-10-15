@@ -4,6 +4,7 @@ package com.brian.rpg.Model;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -118,7 +119,7 @@ public class Player extends Creature{
                 //Prevent body from moving after death
                 this.box2body.setType(BodyDef.BodyType.StaticBody);
                 deathTimer += delta;
-                
+
                 if(deathTimer > 10){
                     screen.getGame().setScreen(new GameOverScreen(screen.getGame()));
                     screen.dispose();
@@ -312,17 +313,25 @@ public class Player extends Creature{
         evaluatePlayerLevel();
     }
 
-    public void evaluatePlayerLevel(){
+    private void evaluatePlayerLevel(){
         if(this.level == 1){
             if(this.experience > 99){
-                this.level = 2;
+                levelUp();
             }
         }else if(this.level == 2){
             if(this.experience > 199){
-                this.level = 3;
+                levelUp();
             }
         }
     }
+
+    private void levelUp(){
+        this.level++;
+        //Play Levelup sound
+        screen.getGameManager().get("Sounds/blessing.wav", Sound.class).play();
+    }
+
+
 
     public void increaseKillCount(){
         this.kills++;
