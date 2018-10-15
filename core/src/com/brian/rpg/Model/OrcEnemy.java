@@ -7,9 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.brian.rpg.Views.PlayScreen;
 
 public class OrcEnemy extends Creature {
-    private static final int FRAME_COLS = 8;
-    private static final int FRAME_ROWS = 8;
-
     float stateTimer = 0;
 
     //Animations
