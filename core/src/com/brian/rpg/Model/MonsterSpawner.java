@@ -1,5 +1,6 @@
 package com.brian.rpg.Model;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.brian.rpg.RPG;
@@ -8,6 +9,7 @@ import com.brian.rpg.Views.PlayScreen;
 public class MonsterSpawner {
     //Create coords
     Vector2 spawnPoint;
+    String monsterType = "";
 
     public World world;
     public PlayScreen screen;
@@ -21,6 +23,11 @@ public class MonsterSpawner {
         this.screen = screen;
         this.world = screen.getWorld();
         this.spawnPoint = spawnPoint;
+        if(MathUtils.random(1) == 0){
+            monsterType = "Skeleton";
+        }else{
+            monsterType = "Orc";
+        }
         createMonsterSpawner();
     }
 
@@ -31,8 +38,15 @@ public class MonsterSpawner {
         if(box2body.getPosition().dst(screen.getPlayer().box2body.getPosition()) > 150 && timeSinceCreation >= spawnInterval && totalSpawns < 20){
             timeSinceCreation = 0;
             totalSpawns++;
-            SkeletonEnemy skeleton = new SkeletonEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
-            screen.creaturesToRender(skeleton);
+            if(monsterType == "Skeleton") {
+                SkeletonEnemy skeleton = new SkeletonEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
+                screen.creaturesToRender(skeleton);
+            }else if(monsterType == "Orc"){
+                OrcEnemy orc = new OrcEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
+                screen.creaturesToRender(orc);
+            }
+
+
         }
     }
 
