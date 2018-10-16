@@ -16,6 +16,8 @@ import com.brian.rpg.Views.InventoryScreen;
 import com.brian.rpg.Views.MainMenuScreen;
 import com.brian.rpg.Views.PlayScreen;
 
+import java.util.ArrayList;
+
 import static com.badlogic.gdx.Input.Keys.I;
 
 
@@ -45,6 +47,10 @@ public class Player extends Creature{
     //Player states
     public boolean inventoryDisplayed = false;
 
+    //Spell Related
+    ArrayList<String> spellBook = new ArrayList<String>();
+    String activeSpell;
+
     public Player(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
         //Set player stats
@@ -64,6 +70,11 @@ public class Player extends Creature{
             playerWalk = new Animation<TextureRegion>(0.3f, screen.getWizardSpriteAtlas().findRegions("walk"), Animation.PlayMode.LOOP);
             playerAttack = new Animation<TextureRegion>(0.3f, screen.getWizardSpriteAtlas().findRegions("attack"), Animation.PlayMode.NORMAL);
             playerDeath = new Animation<TextureRegion>(0.3f, screen.getWizardSpriteAtlas().findRegions("dead"), Animation.PlayMode.NORMAL);
+
+            //Initialize Spellbook with level 1 spell Magic Missile
+            this.spellBook.add("Magic Missile");
+            //Set active spell to magic missle
+            this.activeSpell = this.spellBook.get(0);
         }
     }
 
@@ -306,6 +317,7 @@ public class Player extends Creature{
 
     public int getExperience(){return this.experience;}
     public int getKills(){return kills;}
+    public String getActiveSpell(){return this.activeSpell;}
 
     public void awardExperience(int experience){
         //Increase player experience on creature death

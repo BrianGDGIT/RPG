@@ -39,7 +39,7 @@ public class InventoryScreen {
     }
 
     public void update(){
-        textArea.setText("***Character Sheet***" + '\n' + '\n' + "Class: " + player.getGameClass() + '\n' + "Level: " + player.getLevel() + '\n' + "Experience: " + player.getExperience() + '\n' + "Total Kills: " + player.getKills());
+        textArea.setText("***Character Sheet***" + '\n' + '\n' + "Class: " + player.getGameClass() + '\n' + "Level: " + player.getLevel() + '\n' + "Experience: " + player.getExperience() + '\n' + "Total Kills: " + player.getKills() + '\n' + '\n' + "Active Spell: " + player.getActiveSpell());
     }
 
 }
