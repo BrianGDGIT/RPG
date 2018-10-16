@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
 
 public class Item {
@@ -48,7 +49,11 @@ public class Item {
         shape.setRadius(5);
 
         fdef.shape = shape;
+        fdef.filter.categoryBits = RPG.ITEM_BIT;
+        fdef.filter.maskBits = RPG.PLAYER_BIT;
+
         fixture = box2body.createFixture(fdef);
+        fixture.setUserData(this);
 
         //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
         this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2, box2body.getPosition().y - this.sprite.getHeight() / 2);
@@ -58,7 +63,14 @@ public class Item {
     }
 
     public void onContact(){
+        if(box2body != null && !screen.bodiesToDelete.contains(this)){
+            screen.bodiesToDelete.add(box2body);
 
+            if(screen.spawnedItems.contains(this)){
+                screen.spawnedItems.remove(this);
+            }
+
+        }
     }
 
     public int getItemType(){return itemType;}

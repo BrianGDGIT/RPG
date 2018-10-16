@@ -42,6 +42,10 @@ public class WorldContactListener implements ContactListener {
                 if(object.getUserData() != null && Creature.class.isAssignableFrom(object.getUserData().getClass())){
                     ((Player) player.getUserData()).onHit();
                 }
+
+                if(object.getUserData() != null && Item.class.isAssignableFrom(object.getUserData().getClass())){
+                    ((Item) object.getUserData()).onContact();
+                }
             }
         }
     }

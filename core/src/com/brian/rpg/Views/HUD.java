@@ -55,7 +55,6 @@ public class HUD extends Stage {
 
         if(!player.inventoryDisplayed && button.isPressed() && timeSinceLastClick > 1){
             player.inventoryDisplayed = true;
-            System.out.println("Test");
             timeSinceLastClick = 0f;
         }else if(player.inventoryDisplayed && button.isPressed() && timeSinceLastClick > 1){
             player.inventoryDisplayed = false;
