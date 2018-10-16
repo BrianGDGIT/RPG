@@ -269,7 +269,7 @@ public class Player extends Creature{
         }else{
             createY = box2body.getPosition().y + 5;
         }
-        
+
         //Projectile 1
         if(this.level ==1) {
             staffProjectile = new StaffProjectile(screen, createX, createY, velocity);
