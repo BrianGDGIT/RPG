@@ -105,19 +105,31 @@ public class HUD extends Stage {
         //ActiveSpell button
         if(activeSpellButton.isPressed() && timeSinceLastClick > 0.5){
             //Sets active spell to spellbook index of activeSpell + 1
-
-//            try{
-//                player.activeSpell = player.getSpellBook().get(player.getSpellBook().indexOf(player.activeSpell + 1));
-//            }catch(ArrayIndexOutOfBoundsException e){
-//                player.activeSpell = player.getSpellBook().get(0);
-//            }
+            int currentSpellIndex = 0;
 
 
-            if(player.getSpellBook().contains("Fireball")){;
-                player.activeSpell = "Fireball";
-                Button.ButtonStyle style = activeSpellButton.getStyle();
-                style.up = fireBallImage.getDrawable();
+            //Find activeSpell index in player spellbook arraylist
+            for(String tempSpell : player.getSpellBook()){
+                if(player.activeSpell.equals(tempSpell)){
+                    currentSpellIndex = player.getSpellBook().indexOf(tempSpell);
+                }
             }
+
+            //Use that index to iterate to + 1 index in the array
+
+            try {
+                if (player.getSpellBook().get(currentSpellIndex + 1).equals("Fireball")) {
+                    player.activeSpell = "Fireball";
+                    Button.ButtonStyle style = activeSpellButton.getStyle();
+                    style.up = fireBallImage.getDrawable();
+                }
+            }catch(IndexOutOfBoundsException e){
+                player.activeSpell = "Magic Missile";
+                Button.ButtonStyle style = activeSpellButton.getStyle();
+                style.up = magicMissileImage.getDrawable();
+            }
+
+            timeSinceLastClick = 0f;
         }
     }
 
