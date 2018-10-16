@@ -39,6 +39,7 @@ public class PlayScreen implements Screen {
     MonsterSpawner monsterSpawner2;
     MonsterSpawner monsterSpawner3;
     Item item;
+    Item item2;
 
     //Spawn lists
     public ArrayList<Projectile> staffProjectiles = new ArrayList<Projectile>();
@@ -106,6 +107,7 @@ public class PlayScreen implements Screen {
         monsterSpawner3 = new MonsterSpawner(this, new Vector2(947, 70));
 
         item = new Item(this, new Vector2(1000, 80));
+        item2 = new Item(this, new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2 + 30));
 
         worldGenerator = new Box2dWorldGenerator(world, map);
 

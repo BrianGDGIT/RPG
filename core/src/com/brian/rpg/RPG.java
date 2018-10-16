@@ -34,6 +34,8 @@ public class RPG extends Game {
 		manager.load("sprites/vortex_spritesheet.png", Texture.class);
 		manager.load("sprites/11_fire_spritesheet.png", Texture.class);
 		manager.load("sprites/16_sunburn_spritesheet.png", Texture.class);
+		manager.load("GUI/magicmissile.png", Texture.class);
+		manager.load("GUI/fireball.png", Texture.class);
 		manager.load("GUI/spell-book.png", Texture.class);
 		manager.finishLoading();
 		this.setScreen(new MainMenuScreen(this));

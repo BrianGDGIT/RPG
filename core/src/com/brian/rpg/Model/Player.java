@@ -51,7 +51,7 @@ public class Player extends Creature{
 
     //Spell Related
     ArrayList<String> spellBook = new ArrayList<String>();
-    String activeSpell;
+    public String activeSpell;
 
     public Player(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
