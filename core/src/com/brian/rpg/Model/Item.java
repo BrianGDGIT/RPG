@@ -63,7 +63,7 @@ public class Item {
     }
 
     public void onContact(){
-        if(box2body != null && !screen.bodiesToDelete.contains(this)){
+        if(box2body != null && !screen.bodiesToDelete.contains(box2body)){
             screen.bodiesToDelete.add(box2body);
 
             if(screen.spawnedItems.contains(this)){

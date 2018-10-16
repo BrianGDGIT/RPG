@@ -55,7 +55,7 @@ public class HUD extends Stage {
         spellbookButton = new Button(spellbookImage.getDrawable());
         spellbookButton.setPosition(1700, 50);
         if(Gdx.app.getType() == Application.ApplicationType.Android){
-            spellbookButton.setPosition( 2400, 50);
+            spellbookButton.setPosition( 2300, 50);
             spellbookButton.setSize(100, 100);
         }
 
@@ -70,18 +70,18 @@ public class HUD extends Stage {
 
         timeSinceLastClick += Gdx.graphics.getDeltaTime();
 
-        if(!player.inventoryDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 1){
+        if(!player.inventoryDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 0.5){
             player.inventoryDisplayed = true;
             timeSinceLastClick = 0f;
-        }else if(player.inventoryDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 1){
+        }else if(player.inventoryDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 0.5){
             player.inventoryDisplayed = false;
             timeSinceLastClick = 0f;
         }
 
-        if(!player.spellbookDisplayed && spellbookButton.isPressed() && timeSinceLastClick > 1){
+        if(!player.spellbookDisplayed && spellbookButton.isPressed() && timeSinceLastClick > 0.5){
             player.spellbookDisplayed = true;
             timeSinceLastClick = 0f;
-        }else if(player.spellbookDisplayed && spellbookButton.isPressed() && timeSinceLastClick > 1){
+        }else if(player.spellbookDisplayed && spellbookButton.isPressed() && timeSinceLastClick > 0.5){
             player.spellbookDisplayed = false;
             timeSinceLastClick = 0f;
         }

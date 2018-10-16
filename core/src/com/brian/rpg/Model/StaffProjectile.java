@@ -21,11 +21,6 @@ public class StaffProjectile extends Projectile {
     private static final int FRAME_COLS = 8;
     private static final int FRAME_ROWS = 8;
 
-    Boolean deleteFlag = false;
-
-
-
-
     Animation<TextureRegion> staffProjectileAnimation;
 
     public StaffProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity) {
@@ -71,20 +66,25 @@ public class StaffProjectile extends Projectile {
         this.stateTimer = this.stateTimer + Gdx.graphics.getDeltaTime();
 
         //Destroy projectile body when done
-        if(this.stateTimer > this.projectileLife){
-            world.destroyBody(this.box2body);
+        if(this.stateTimer > this.projectileLife && this.box2body != null){
+            screen.bodiesToDelete.add(this.box2body);
             //Remove this projectile from screen staffProjectiles list, stops drawing and updating object
-            screen.staffProjectiles.remove(this);
+            if(screen.staffProjectiles.contains(this)){
+                screen.staffProjectiles.remove(this);
+            }
+
             this.stateTimer = 0;
         }
     }
 
     public void onHit(){
         //If not a player destroy the projectile
-        if(box2body != null && !deleteFlag) {
-            screen.bodiesToDelete.add(box2body);
-            this.deleteFlag = true;
-            screen.staffProjectiles.remove(this);
+        if(box2body != null && !screen.bodiesToDelete.contains(this.box2body)) {
+            screen.bodiesToDelete.add(this.box2body);
+            if(screen.staffProjectiles.contains(this)){
+                screen.staffProjectiles.remove(this);
+            }
+
         }
     }
 
