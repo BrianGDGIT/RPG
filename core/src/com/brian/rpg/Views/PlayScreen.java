@@ -98,7 +98,7 @@ public class PlayScreen implements Screen {
         inventory = new InventoryScreen(game, player, game.batch);
 
         //Create HUD
-        hud = new HUD(player);
+        hud = new HUD(this);
 
         //Create MonsterSpawner
         monsterSpawner1 = new MonsterSpawner(this, new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2 + 151));

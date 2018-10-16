@@ -43,7 +43,7 @@ public class InventoryScreen {
     }
 
     public void showSpellbook(){
-        textArea.setText("***Spellbook***");
+        textArea.setText("***Spellbook***" + '\n');
         for(String spell : player.getSpellBook()){
             textArea.appendText('\n' + spell);
         }

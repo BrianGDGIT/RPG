@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.brian.rpg.Model.Player;
+import com.brian.rpg.RPG;
 
 public class HUD extends Stage {
     public Stage stage;
@@ -25,39 +26,63 @@ public class HUD extends Stage {
     Float timeSinceLastClick = 0f;
     Boolean buttonClicked = false;
 
-    public Button button;
+    public Button characterSheetButton;
+    public Button spellbookButton;
+
+
     Image image;
+    Image spellbookImage;
     Texture texture;
+    Texture spellBookTexture;
     Drawable drawable;
 
-    public HUD(Player player){
-        this.player = player;
+    public HUD(PlayScreen screen){
+        this.screen = screen;
+        this.player = screen.getPlayer();
         texture = new Texture(Gdx.files.internal("GUI/robe.png"));
+        spellBookTexture = screen.getGameManager().get("GUI/spell-book.png", Texture.class);
         image = new Image(texture);
+        spellbookImage = new Image(spellBookTexture);
 
-        button = new Button(image.getDrawable());
-        button.setPosition(1800, 50);
+        characterSheetButton = new Button(image.getDrawable());
+        characterSheetButton.setPosition(1800, 50);
         //Set button position on Android. It's different for some reason even though I'm using the same viewPort???
         if(Gdx.app.getType() == Application.ApplicationType.Android){
-            button.setPosition(2500, 50);
-            button.setSize(100, 100);
+            characterSheetButton.setPosition(2500, 50);
+            characterSheetButton.setSize(100, 100);
+        }
+
+        spellbookButton = new Button(spellbookImage.getDrawable());
+        spellbookButton.setPosition(1700, 50);
+        if(Gdx.app.getType() == Application.ApplicationType.Android){
+            spellbookButton.setPosition( 2400, 50);
+            spellbookButton.setSize(100, 100);
         }
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        stage.addActor(button);
+        stage.addActor(characterSheetButton);
+        stage.addActor(spellbookButton);
     }
 
     public void checkHudClicks(){
 
         timeSinceLastClick += Gdx.graphics.getDeltaTime();
 
-        if(!player.inventoryDisplayed && button.isPressed() && timeSinceLastClick > 1){
+        if(!player.inventoryDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 1){
             player.inventoryDisplayed = true;
             timeSinceLastClick = 0f;
-        }else if(player.inventoryDisplayed && button.isPressed() && timeSinceLastClick > 1){
+        }else if(player.inventoryDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 1){
             player.inventoryDisplayed = false;
+            timeSinceLastClick = 0f;
+        }
+
+        if(!player.spellbookDisplayed && spellbookButton.isPressed() && timeSinceLastClick > 1){
+            player.spellbookDisplayed = true;
+            timeSinceLastClick = 0f;
+        }else if(player.spellbookDisplayed && spellbookButton.isPressed() && timeSinceLastClick > 1){
+            player.spellbookDisplayed = false;
             timeSinceLastClick = 0f;
         }
     }
