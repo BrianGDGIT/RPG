@@ -38,10 +38,12 @@ public class PlayScreen implements Screen {
     MonsterSpawner monsterSpawner1;
     MonsterSpawner monsterSpawner2;
     MonsterSpawner monsterSpawner3;
+    Item item;
 
     //Spawn lists
     public ArrayList<Projectile> staffProjectiles = new ArrayList<Projectile>();
     public ArrayList<Creature> spawnedCreatures = new ArrayList<Creature>();
+    public ArrayList<Item> spawnedItems = new ArrayList<Item>();
     public ArrayList<Body> bodiesToDelete = new ArrayList<Body>();
 
     //Camera and view variables
@@ -102,6 +104,8 @@ public class PlayScreen implements Screen {
         monsterSpawner1 = new MonsterSpawner(this, new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2 + 151));
         monsterSpawner2 = new MonsterSpawner(this, new Vector2(RPG.V_WIDTH / 2 - 300, RPG.V_HEIGHT / 2));
         monsterSpawner3 = new MonsterSpawner(this, new Vector2(947, 70));
+
+        item = new Item(this, new Vector2(1000, 80));
 
         worldGenerator = new Box2dWorldGenerator(world, map);
 
@@ -173,7 +177,7 @@ public class PlayScreen implements Screen {
         mapRenderer.render();
 
         //Render Box2d debug lines
-        //b2dr.render(world, gameCamera.combined);
+        b2dr.render(world, gameCamera.combined);
 
         game.batch.setProjectionMatrix(gameCamera.combined);
         game.batch.begin();
@@ -193,6 +197,13 @@ public class PlayScreen implements Screen {
         if(spawnedCreatures != null){
             for(Creature creature : spawnedCreatures){
                 creature.getSprite().draw(game.batch);
+            }
+        }
+
+        //Render Items
+        if(!spawnedItems.isEmpty()){
+            for(Item item : spawnedItems){
+                item.getSprite().draw(game.batch);
             }
         }
 
@@ -255,6 +266,10 @@ public class PlayScreen implements Screen {
 
     public void creaturesToRender(Creature creature){
         this.spawnedCreatures.add(creature);
+    }
+
+    public void itemsToRender(Item item){
+        this.spawnedItems.add(item);
     }
 
     public TextureAtlas getWizardSpriteAtlas(){
