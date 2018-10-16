@@ -18,6 +18,7 @@ import com.brian.rpg.Views.PlayScreen;
 
 import java.util.ArrayList;
 
+import static com.badlogic.gdx.Input.Keys.B;
 import static com.badlogic.gdx.Input.Keys.I;
 
 
@@ -46,6 +47,7 @@ public class Player extends Creature{
 
     //Player states
     public boolean inventoryDisplayed = false;
+    public boolean spellbookDisplayed = false;
 
     //Spell Related
     ArrayList<String> spellBook = new ArrayList<String>();
@@ -218,6 +220,15 @@ public class Player extends Creature{
                 }
             }
 
+            //Display Spellbook
+            if(Gdx.input.isKeyJustPressed(B)){
+                if(!spellbookDisplayed){
+                    spellbookDisplayed = true;
+                }else {
+                    spellbookDisplayed = false;
+                }
+            }
+
 
 
             //Attack
@@ -318,6 +329,7 @@ public class Player extends Creature{
     public int getExperience(){return this.experience;}
     public int getKills(){return kills;}
     public String getActiveSpell(){return this.activeSpell;}
+    public ArrayList<String> getSpellBook(){return this.spellBook;}
 
     public void awardExperience(int experience){
         //Increase player experience on creature death

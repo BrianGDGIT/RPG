@@ -70,10 +70,20 @@ public class Item {
                 screen.spawnedItems.remove(this);
             }
 
+            //Give item to player on contact
+            switch(this.itemType){
+                case 0:
+                    if(!screen.getPlayer().spellBook.contains("Fireball")){
+                        screen.getPlayer().spellBook.add("Fireball");
+                    }
+
+            }
+
+
         }
     }
 
-    public int getItemType(){return itemType;}
+    public int getItemType(){return this.itemType;}
 
     public Sprite getSprite(){return this.sprite;}
 }

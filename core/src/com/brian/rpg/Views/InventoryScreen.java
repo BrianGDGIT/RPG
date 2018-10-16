@@ -38,8 +38,16 @@ public class InventoryScreen {
         stage.addActor(textArea);
     }
 
-    public void update(){
+    public void showCharacterScreen(){
         textArea.setText("***Character Sheet***" + '\n' + '\n' + "Class: " + player.getGameClass() + '\n' + "Level: " + player.getLevel() + '\n' + "Experience: " + player.getExperience() + '\n' + "Total Kills: " + player.getKills() + '\n' + '\n' + "Active Spell: " + player.getActiveSpell());
+    }
+
+    public void showSpellbook(){
+        textArea.setText("***Spellbook***");
+        for(String spell : player.getSpellBook()){
+            textArea.appendText('\n' + spell);
+        }
+
     }
 
 }

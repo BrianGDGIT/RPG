@@ -211,7 +211,13 @@ public class PlayScreen implements Screen {
 
         //Render Inventory Screen
         if(player.inventoryDisplayed){
-            inventory.update();
+            inventory.showCharacterScreen();
+            inventory.stage.draw();
+        }
+
+        //Render Spellbook
+        if(player.spellbookDisplayed){
+            inventory.showSpellbook();
             inventory.stage.draw();
         }
 
