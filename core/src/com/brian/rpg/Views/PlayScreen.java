@@ -40,7 +40,7 @@ public class PlayScreen implements Screen {
     MonsterSpawner monsterSpawner3;
 
     //Spawn lists
-    public ArrayList<StaffProjectile> staffProjectiles = new ArrayList<StaffProjectile>();
+    public ArrayList<Projectile> staffProjectiles = new ArrayList<Projectile>();
     public ArrayList<Creature> spawnedCreatures = new ArrayList<Creature>();
     public ArrayList<Body> bodiesToDelete = new ArrayList<Body>();
 
@@ -183,7 +183,7 @@ public class PlayScreen implements Screen {
 
         //Render projectiles
         if(staffProjectiles != null){
-            for(StaffProjectile projectile : staffProjectiles){
+            for(Projectile projectile : staffProjectiles){
                 projectile.getSprite().draw(game.batch);
             }
 
@@ -249,7 +249,7 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public void projectilesToRender(StaffProjectile staffProjectile){
+    public void projectilesToRender(Projectile staffProjectile){
         this.staffProjectiles.add(staffProjectile);
     }
 

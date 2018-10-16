@@ -57,6 +57,8 @@ public abstract class Projectile {
         fixture = box2body.createFixture(fdef);
     }
 
+    public abstract void update();
+
     public abstract void onHit();
 
     public Sprite getSprite(){

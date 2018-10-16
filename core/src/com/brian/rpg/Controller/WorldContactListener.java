@@ -12,8 +12,8 @@ public class WorldContactListener implements ContactListener {
 
         //Determine when a projectile and a creature collide
         if(fixA.getUserData() != null && fixB.getUserData() != null) {
-            if (fixA.getUserData() instanceof StaffProjectile || fixB.getUserData() instanceof StaffProjectile) {
-                Fixture projectile = fixA.getUserData() instanceof StaffProjectile ? fixA : fixB;
+            if (fixA.getUserData() instanceof Projectile || fixB.getUserData() instanceof Projectile) {
+                Fixture projectile = fixA.getUserData() instanceof Projectile ? fixA : fixB;
                 Fixture object = projectile == fixA ? fixB : fixA;
 
                 //In a collision between a projectile and some other object
