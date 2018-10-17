@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.brian.rpg.Views.PlayScreen;
 
 public class FireballProjectile extends Projectile {
@@ -13,14 +14,17 @@ public class FireballProjectile extends Projectile {
     private static final int FRAME_ROWS = 8;
     Animation<TextureRegion> fireballAnimation;
 
-    Boolean deleteFlag = false;
+    //Explosion related variables
+    Boolean hasExploded = false;
+    Float explosionTimer = 0f;
 
     public FireballProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity){
-        super(screen, createX, createY, projectileVelocity, 30);
+        super(screen, createX, createY, projectileVelocity, 10);
         this.stateTimer = 0;
-        this.projectileLife = 3;
+        this.projectileLife = 5;
         this.projectileSpeed = 1000f;
         this.fixture.setUserData(this);
+        this.box2body.setType(BodyDef.BodyType.KinematicBody);
         texture = screen.getGameManager().get("sprites/16_sunburn_spritesheet.png", Texture.class);
 
         //Use split function to create an array of Textures
@@ -40,8 +44,8 @@ public class FireballProjectile extends Projectile {
 
         //Initialize sprite when object is created
         this.sprite = new Sprite(staffFrames[0]);
-        this.sprite.setSize(projectileSize + 10, projectileSize + 10);
-        this.sprite.setBounds(1, 1, projectileSize + 10, projectileSize + 10);
+        this.sprite.setSize(projectileSize + 30, projectileSize + 30);
+        this.sprite.setBounds(1, 1, projectileSize + 30, projectileSize + 30);
 
         //Move Projectile
         this.box2body.setLinearVelocity(projectileVelocity.scl(projectileSpeed));
@@ -59,14 +63,34 @@ public class FireballProjectile extends Projectile {
             screen.staffProjectiles.remove(this);
             this.stateTimer = 0;
         }
+
+        //Destroy fireball after sometime after explosion
+        if(hasExploded){
+            explosionTimer += Gdx.graphics.getDeltaTime();
+            if(explosionTimer >= 1f){
+                destroyAfterExplosion();
+            }
+        }
     }
 
+    @Override
     public void onHit(){
-        //If not a player destroy the projectile
-        if(box2body != null && !deleteFlag) {
+        //Increase sprite size as fireball explodes
+        this.sprite.setSize(projectileSize + 50, projectileSize + 50);
+        this.sprite.setBounds(1, 1,projectileSize + 50, projectileSize + 50);
+        this.box2body.setLinearVelocity(0, 0);
+        this.box2body.setAngularVelocity(0);
+        hasExploded = true;
+    }
+
+    private void destroyAfterExplosion(){
+        if (box2body != null && !screen.bodiesToDelete.contains(box2body)) {
             screen.bodiesToDelete.add(box2body);
-            this.deleteFlag = true;
-            screen.staffProjectiles.remove(this);
+
+            if(screen.staffProjectiles.contains(this)) {
+                screen.staffProjectiles.remove(this);
+            }
+
         }
     }
 }

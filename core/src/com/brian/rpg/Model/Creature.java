@@ -80,8 +80,6 @@ public abstract class Creature{
 
     public abstract void update(float delta);
 
-
-
     public Sprite getSprite(){
         return this.sprite;
     }
