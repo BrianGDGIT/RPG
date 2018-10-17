@@ -53,6 +53,9 @@ public class Player extends Creature{
     ArrayList<String> spellBook = new ArrayList<String>();
     public String activeSpell;
 
+    //Spells
+    SpellMagicMissile magicMissile = new SpellMagicMissile(screen, this);
+
     public Player(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
         //Set player stats
@@ -97,7 +100,7 @@ public class Player extends Creature{
 
         if(hasAttacked){
             if(!projectileFired && stateTimer > 0.2){
-                staffAttack();
+                castSpell();
                 projectileFired = true;
             }
 
@@ -261,8 +264,7 @@ public class Player extends Creature{
             }
     }
 
-    public void staffAttack(){
-        StaffProjectile staffProjectile;
+    private void castSpell(){
         Vector3 touchPos = new Vector3();
         float createX;
         float createY;
@@ -271,7 +273,7 @@ public class Player extends Creature{
         touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         touchPos = screen.getGameCamera().unproject(touchPos);
         Vector2 velocity = new Vector2(touchPos.x, touchPos.y);
-        velocity.sub(box2body.getPosition().x + 5, box2body.getPosition().y + 5);
+        velocity.sub(this.box2body.getPosition().x + 5, this.box2body.getPosition().y + 5);
         velocity = velocity.nor();
 
         //Checks touched position, if the position is to the right of the player the projectile is created to the right of the player
@@ -279,48 +281,25 @@ public class Player extends Creature{
         //This prevents the projectile from hitting the player
         //Also sets player State to either LEFT OR RIGHT so that the player is facing toward touched position
         if(velocity.x > 0){
-            this.currentDirection = Direction.RIGHT;
-            createX = box2body.getPosition().x + 5;
+            this.currentDirection = Creature.Direction.RIGHT;
+            createX = this.box2body.getPosition().x + 5;
         }else{
-            this.currentDirection = Direction.LEFT;
-            createX =box2body.getPosition().x - 5;
+            this.currentDirection = Creature.Direction.LEFT;
+            createX = this.box2body.getPosition().x - 5;
         }
 
         if(velocity.y < 0){
-            createY = box2body.getPosition().y - 5;
+            createY = this.box2body.getPosition().y - 5;
         }else{
-            createY = box2body.getPosition().y + 5;
+            createY = this.box2body.getPosition().y + 5;
         }
 
-        //Projectile 1
-        if(this.level ==1) {
-            staffProjectile = new StaffProjectile(screen, createX, createY, velocity);
-            screen.projectilesToRender(staffProjectile);
+        if(this.activeSpell.equals("Magic Missile")){
+            magicMissile.castMagicMissile(createX, createY, velocity);
         }
-
-        if(this.level == 2){
-            staffProjectile = new StaffProjectile(screen, createX, createY, velocity);
-            screen.projectilesToRender(staffProjectile);
-
-            staffProjectile = new StaffProjectile(screen, createX + 5, createY, velocity);
-            screen.projectilesToRender(staffProjectile);
-        }
-
-        if(this.level >= 3){
-            //Projectile 1
-            staffProjectile = new StaffProjectile(screen, createX + 5, createY, velocity);
-            screen.projectilesToRender(staffProjectile);
-            //Projectile2
-            staffProjectile = new StaffProjectile(screen, createX + 7, createY, velocity);
-            screen.projectilesToRender(staffProjectile);
-
-            //Projectile3
-            staffProjectile = new StaffProjectile(screen, createX + 9, createY, velocity);
-            screen.projectilesToRender(staffProjectile);
-        }
-
-
     }
+
+
 
     public void onHit(){
         this.currentState = State.DEAD;
