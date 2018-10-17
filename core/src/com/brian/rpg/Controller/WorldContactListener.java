@@ -25,7 +25,7 @@ public class WorldContactListener implements ContactListener {
                 }
 
                 //Destroy projectile on collision with wall
-                if(object.getUserData() != null && object.getUserData().equals("wall")){
+                if(object.getUserData() != null && object.getUserData() instanceof WallTile){
                     ((Projectile) projectile.getUserData()).onHit();
                 }
 

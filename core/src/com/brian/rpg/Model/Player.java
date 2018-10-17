@@ -137,7 +137,7 @@ public class Player extends Creature{
                 this.box2body.setType(BodyDef.BodyType.StaticBody);
                 deathTimer += delta;
 
-                if(deathTimer > 10){
+                if(deathTimer > 5){
                     screen.getGame().setScreen(new GameOverScreen(screen.getGame()));
                     screen.dispose();
                 }
