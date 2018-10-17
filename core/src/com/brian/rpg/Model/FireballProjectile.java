@@ -1,6 +1,7 @@
 package com.brian.rpg.Model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -47,6 +48,9 @@ public class FireballProjectile extends Projectile {
         this.sprite.setSize(projectileSize + 30, projectileSize + 30);
         this.sprite.setBounds(1, 1, projectileSize + 30, projectileSize + 30);
 
+        //Play sound
+        screen.getGameManager().get("Sounds/Fireball.wav", Sound.class).play();
+
         //Move Projectile
         this.box2body.setLinearVelocity(projectileVelocity.scl(projectileSpeed));
     }
@@ -81,6 +85,7 @@ public class FireballProjectile extends Projectile {
         this.box2body.setLinearVelocity(0, 0);
         this.box2body.setAngularVelocity(0);
         hasExploded = true;
+        screen.getGameManager().get("Sounds/Explosion.wav", Sound.class).play();
     }
 
     private void destroyAfterExplosion(){
