@@ -340,6 +340,14 @@ public class Player extends Creature{
             if(this.experience > 199){
                 levelUp();
             }
+        }else if(this.level == 3){
+            if(this.experience > 500){
+                levelUp();
+            }
+        }else if(this.level == 4) {
+            if (this.experience > 1000) {
+                levelUp();
+            }
         }
     }
 

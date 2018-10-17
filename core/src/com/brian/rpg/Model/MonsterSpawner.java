@@ -32,10 +32,13 @@ public class MonsterSpawner {
     }
 
     public void update(float delta){
+        Vector2 spawnerPos = box2body.getPosition();
+        Vector2 playerPos = screen.getPlayer().box2body.getPosition();
+
         //Increase spawn counter every frame
         timeSinceCreation += delta;
 
-        if(box2body.getPosition().dst(screen.getPlayer().box2body.getPosition()) > 150 && timeSinceCreation >= spawnInterval && totalSpawns < 20){
+        if(spawnerPos.dst(playerPos) > 150 && spawnerPos.dst(playerPos) < 450  && timeSinceCreation >= spawnInterval && totalSpawns < 20){
             timeSinceCreation = 0;
             totalSpawns++;
             if(monsterType == "Skeleton") {
