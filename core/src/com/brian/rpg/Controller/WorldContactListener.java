@@ -46,6 +46,11 @@ public class WorldContactListener implements ContactListener {
                 if(object.getUserData() != null && Item.class.isAssignableFrom(object.getUserData().getClass())){
                     ((Item) object.getUserData()).onContact();
                 }
+
+                //Chest collision
+                if(object.getUserData() != null && object.getUserData() instanceof ChestTile){
+                    ((ChestTile) object.getUserData()).onContact();
+                }
             }
         }
     }

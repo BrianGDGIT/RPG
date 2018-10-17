@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.brian.rpg.RPG;
 import com.brian.rpg.Views.GameOverScreen;
 import com.brian.rpg.Views.InventoryScreen;
 import com.brian.rpg.Views.MainMenuScreen;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 import static com.badlogic.gdx.Input.Keys.B;
 import static com.badlogic.gdx.Input.Keys.I;
+import static com.badlogic.gdx.Input.Keys.P;
 
 
 public class Player extends Creature{
@@ -63,6 +65,7 @@ public class Player extends Creature{
         this.level = 1;
 
         this.fixture.setUserData(this);
+        setCategoryFilter(RPG.PLAYER_BIT);
         this.currentState = State.IDLE;
 
         //Initialize player sprite to class
@@ -178,6 +181,13 @@ public class Player extends Creature{
         }
 
     public void handleInput(float delta){
+
+            //Test
+            if(Gdx.input.isKeyJustPressed(P)){
+                System.out.println("Box2d: " + "X: " + this.box2body.getPosition().x + " Y: " + this.box2body.getPosition().y );
+                System.out.println("X: " + this.sprite.getX() + " Y: " + this.sprite.getY());
+            }
+
             //Keyboard controls
             if(!hasAttacked && currentState != State.DEAD) {
                 if (Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S)) {

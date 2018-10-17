@@ -58,9 +58,6 @@ public abstract class Creature{
 
         fdef.shape = shape;
         fdef.filter.categoryBits = RPG.CREATURE_BIT;
-        if(this instanceof Player){
-            fdef.filter.categoryBits = RPG.PLAYER_BIT;
-        }
         fixture = box2body.createFixture(fdef);
     }
 
@@ -82,6 +79,12 @@ public abstract class Creature{
 
     public Sprite getSprite(){
         return this.sprite;
+    }
+
+    public void setCategoryFilter(short filterBit){
+        Filter filter = new Filter();
+        filter.categoryBits = filterBit;
+        fixture.setFilterData(filter);
     }
 
     public String getGameClass(){return this.gameClass;}

@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
+import com.brian.rpg.Model.ChestTile;
 import com.brian.rpg.Model.WallTile;
 import com.brian.rpg.RPG;
 
@@ -20,6 +21,12 @@ public class Box2dWorldGenerator {
         for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new WallTile(world, map, rect);
+        }
+
+        //Create chest bodies
+        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            new ChestTile(world, map, rect);
         }
     }
 }

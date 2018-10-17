@@ -14,6 +14,4 @@ public class WallTile extends InteractiveTile {
         setCategoryFilter(RPG.WALL_BIT);
     }
 
-    //fdef.filter.categoryBits = RPG.WALL_BIT;
-    //            body.createFixture(fdef).setUserData("wall");
 }
