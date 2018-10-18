@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="120" height="68" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="56">
+<map version="1.1" tiledversion="2018.09.12" orientation="orthogonal" renderorder="right-down" width="120" height="68" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="64">
  <tileset firstgid="1" name="Dungeon II" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/0x72_DungeonTilesetII_v1.png" width="512" height="512"/>
  </tileset>
@@ -8,16 +8,16 @@
  </tileset>
  <layer id="1" name="background" width="120" height="68">
   <data encoding="base64" compression="zlib">
-   eJzt2bENwlAUQ9EMw6SMwqQUEaKPMFasc6TX5/uWOQ4AAAAAAAAAAADgTp43Oa5pd9M3q91N36x2N32z2t30zWp30zer3U3fU2qDdjd9T/pu03dbe9/2rWvv2751n3e+jt9t0G6m71dqg3Y3fU/6ckW7m75Z7W76ZrW76ZvV7qZvVrubvlntbvpmtbvpm9Xupm9Wu5u+We1u+t6HLts03abvNn236btN3236btN3m77b9N2m7zZ9t+m7Td9t+m7Td5t/+tv03fbrvo//fj4AY94+vHgb
+   eJzt2cENggAQRFGKsVJKsRYL0wSNnoV1dHwvmXDV/SfCsgAAAAD/ar3tcn/SZ30ZffTtpu9vWXeM76dvN8266dtN3276dtO3m77d9P0+e95ZPznek+6m76x0N31npbvpOyvdTd9Z6W76zkp303czdYN0N303+nbTt1v6vum1S983vXaP/3lejrtBupm+T1M3SHfTd6Mv70h303dWupu+s9Ld9J2V7qbvrHQ3fWelu+k7K91N31npbvrOSnfTd1a6m76/Q5dumnbTt5u+3fTtpm83fbvp203fbvp207ebvt307aZvN3276dvNN/1u+nY7uu/psz8fgDJXvX2b6Q==
   </data>
  </layer>
  <layer id="2" name="graphics" width="120" height="68">
   <data encoding="base64" compression="zlib">
-   eJzt21tOwzAQhWG77UpIV0JZK8+sojzCFriobANXUdRACXbBjedM/k8aKZUqazpHcqJYDQEAAAAAAAAAAAAAAADA0rykWgnU+7UG4FyMIdwE+7WJVxuBa1Fkbip9WqMyN5U+rVGZm0qf1rSa2/3E9RTy/ZtWc9tPXE9ZQr5vqdaZer1wzVZzO6R6iKfrnCXku06/sQunug1fPx9rdeEc2J/tKMlOJV/253Ml2XUxv4ePa9twf/7pegr59nbxfM/+re5E5ka+vpFvr+QZe1wq7+3Jt/f9GTtXKu/tybf8O2Mqc1Pp8z9Kno3JV1fJszH5Ykxlbip9WqMyN5U+rVGZm0qf1qjMTaVPa1TmptKnNSpzU+nTGpW5qfRpjcrcVPq05ji3mv8z2Kf1HmN/zlFz3Vbn1Opq/3/hkNb7iP05R811Vc6pvRvejy75rNoz8vWNfH0jX9/I1zfy9Y18fSNf38jXN/L1jXx9I1/fyNe3Ideu0rnjZtbukTPku6t0PridtXvk1N6XydeWWvk+pXWeI/laU+u+y/3Xplr3Xe6/AObyCdMqLxg=
+   eJztm29OAjEQR1sWLyLrRYSz+tlT4Ee9gn+C13CblViBdcs6Yfsb3ksmKQlpJvPCbOlACAAAAAAAANN57aL5jo+ZcwF7YgxhFfpYxrmzAWtiPL0GH+BXj/culoXR4leOpvPUhrLY4FeOxURP+NUg95u+/5T26hv8SrA46LmlvfoOvxIc+gVf4Nc3+PUNfusinXEXhrHKnKb7C6t9mT9MI33GboNdrDO/G8O9mT9MQ6WHquRZGyp1U8mzNlTqppJnbcxVt4eB9RD4ncZcddsOrIe4Br9pttqMxNuZe85Vt10Xj/FnPcY1+G2y3yuluA+/X6c4dz5Hf66HEncqfunPx5S4S/dHYz08j3bG/nxqPQR+e9bxuGf/FRuRuuHXN/jtKTlj56Fyb4/fnsMz9lio3Nvjt/w9OSp1U8nzP5ScjfGrS8nZGL+Qo1I3lTxrQ6VuKnnWhkrdVPKsDZW6qeRZGyp1U8mzNlTqppJnbajUTSXP2lCpm0qetREN/2OQYtvt9xT7OYflvnPNqdWx/v/CrtvvM/ZzDst9VebU3tnfj17zrNoz+PUNfn2DX9/g1zf49Q1+fYNf3+DXN/j1DX59g1/f4Nc3e68ro7nj8qLZwxh7v2uj+WB70exhDOu+jN+6sPL73O3zEvFbG1bPXZ6/dWL13OX5CwCX4gvJNzcd
   </data>
  </layer>
  <objectgroup id="4" name="walls">
-  <object id="10" x="624" y="320" width="672" height="16"/>
+  <object id="10" x="624" y="317.091" width="319.121" height="18.9091"/>
   <object id="17" x="1296" y="320" width="16" height="432"/>
   <object id="18" x="960" y="736" width="336" height="16"/>
   <object id="19" x="960" y="752" width="16" height="224"/>
@@ -39,6 +39,14 @@
   <object id="53" x="271.333" y="573.333" width="149.333" height="30"/>
   <object id="54" x="416" y="525.333" width="14.3333" height="65"/>
   <object id="55" x="416.333" y="525" width="205" height="19.3333"/>
+  <object id="56" x="976.621" y="317.273" width="319.121" height="18.7273"/>
+  <object id="57" x="911.636" y="172.182" width="20.3636" height="145.273"/>
+  <object id="58" x="988.182" y="221.091" width="20.3636" height="96.3636"/>
+  <object id="59" x="932" y="172" width="187.636" height="18.9091"/>
+  <object id="60" x="1114.73" y="108" width="4.72727" height="66.1818"/>
+  <object id="61" x="1120.36" y="108.364" width="47.2727" height="19.0909"/>
+  <object id="62" x="1163.64" y="113.455" width="13.4545" height="126.182"/>
+  <object id="63" x="1009.09" y="220.909" width="154.909" height="19.2727"/>
  </objectgroup>
  <objectgroup id="5" name="chests">
   <object id="44" x="1112.55" y="424.636"/>

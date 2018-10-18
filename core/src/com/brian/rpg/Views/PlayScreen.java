@@ -39,6 +39,7 @@ public class PlayScreen implements Screen {
     MonsterSpawner monsterSpawner2;
     MonsterSpawner monsterSpawner3;
     MonsterSpawner monsterSpawner4;
+    MonsterSpawner monsterSpawner5;
     Item item;
     Item item2;
 
@@ -107,6 +108,7 @@ public class PlayScreen implements Screen {
         monsterSpawner2 = new MonsterSpawner(this, new Vector2(RPG.V_WIDTH / 2 - 300, RPG.V_HEIGHT / 2), "Normal");
         monsterSpawner3 = new MonsterSpawner(this, new Vector2(947, 70), "Normal");
         monsterSpawner4 = new MonsterSpawner(this, new Vector2(331, 589), "Boss");
+        monsterSpawner5 = new MonsterSpawner(this, new Vector2(1141, 888), "Normal");
 
         item = new Item(this, new Vector2(1000, 80));
         item2 = new Item(this, new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2 + 30));
@@ -144,6 +146,7 @@ public class PlayScreen implements Screen {
         monsterSpawner2.update(delta);
         monsterSpawner3.update(delta);
         monsterSpawner4.update(delta);
+        monsterSpawner5.update(delta);
 
         //Update projectiles
         //Can't use advanced forloop here because update() removes items from the list, which causes concurrentModificationException

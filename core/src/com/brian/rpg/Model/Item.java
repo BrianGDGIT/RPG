@@ -35,7 +35,7 @@ public class Item {
 
     private void generateItem(){
         if(MathUtils.random(0) == 0) {
-            this.sprite.setRegion(itemAtlas.findRegion("book_02c"));
+            this.sprite.setRegion(itemAtlas.findRegion("book_03f"));
             this.itemType = 0;
         }
 

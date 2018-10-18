@@ -15,7 +15,7 @@ public class ChestTile extends InteractiveTile{
     }
 
     public void onContact(){
-        getCell().setTile(null);
+        //getCell().setTile(null);
     }
 
     private TiledMapTileLayer.Cell getCell(){
