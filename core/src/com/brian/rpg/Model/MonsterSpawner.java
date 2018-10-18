@@ -18,11 +18,13 @@ public class MonsterSpawner {
     float timeSinceCreation = 0;
     int spawnInterval = 3;
     int totalSpawns = 0;
+    String spawnerType;
 
-    public MonsterSpawner(PlayScreen screen, Vector2 spawnPoint){
+    public MonsterSpawner(PlayScreen screen, Vector2 spawnPoint, String spawnerType){
         this.screen = screen;
         this.world = screen.getWorld();
         this.spawnPoint = spawnPoint;
+        this.spawnerType = spawnerType;
         if(MathUtils.random(1) == 0){
             monsterType = "Skeleton";
         }else{
@@ -38,19 +40,34 @@ public class MonsterSpawner {
         //Increase spawn counter every frame
         timeSinceCreation += delta;
 
-        if(spawnerPos.dst(playerPos) > 150 && spawnerPos.dst(playerPos) < 450  && timeSinceCreation >= spawnInterval && totalSpawns < 20){
-            timeSinceCreation = 0;
+        if(spawnerType.equals("Normal")) {
+            if (spawnerPos.dst(playerPos) > 150 && spawnerPos.dst(playerPos) < 450 && timeSinceCreation >= spawnInterval && totalSpawns < 20) {
+                timeSinceCreation = 0;
+                totalSpawns++;
+                if (monsterType == "Skeleton") {
+                    SkeletonEnemy skeleton = new SkeletonEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
+                    screen.creaturesToRender(skeleton);
+                } else if (monsterType == "Orc") {
+                    OrcEnemy orc = new OrcEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
+                    screen.creaturesToRender(orc);
+                }
+
+
+            }
+        }
+
+        if (spawnerType.equals("Boss") && spawnerPos.dst(playerPos) < 150 && totalSpawns < 1) {
             totalSpawns++;
-            if(monsterType == "Skeleton") {
-                SkeletonEnemy skeleton = new SkeletonEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
+            if (monsterType == "Skeleton") {
+                SkeletonEnemy skeleton = new SkeletonEnemy(screen, 50, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
                 screen.creaturesToRender(skeleton);
-            }else if(monsterType == "Orc"){
-                OrcEnemy orc = new OrcEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
+            }else if (monsterType == "Orc") {
+                OrcEnemy orc = new OrcEnemy(screen, 50, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y), 35);
                 screen.creaturesToRender(orc);
             }
-
-
         }
+
+
     }
 
     public void createMonsterSpawner(){
