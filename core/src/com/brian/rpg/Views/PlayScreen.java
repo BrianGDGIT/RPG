@@ -110,8 +110,8 @@ public class PlayScreen implements Screen {
         monsterSpawner4 = new MonsterSpawner(this, new Vector2(331, 589), "Boss");
         monsterSpawner5 = new MonsterSpawner(this, new Vector2(1141, 888), "Normal");
 
-        item = new Item(this, new Vector2(1000, 80));
-        item2 = new Item(this, new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2 + 30));
+        item = new Item(this, new Vector2(1238, 60));
+        item2 = new Item(this, new Vector2(1112,650));
 
         worldGenerator = new Box2dWorldGenerator(world, map);
 

@@ -45,10 +45,10 @@ public class MonsterSpawner {
                 timeSinceCreation = 0;
                 totalSpawns++;
                 if (monsterType == "Skeleton") {
-                    SkeletonEnemy skeleton = new SkeletonEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
+                    SkeletonEnemy skeleton = new SkeletonEnemy(screen, 6, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
                     screen.creaturesToRender(skeleton);
                 } else if (monsterType == "Orc") {
-                    OrcEnemy orc = new OrcEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
+                    OrcEnemy orc = new OrcEnemy(screen, 6, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
                     screen.creaturesToRender(orc);
                 }
 
