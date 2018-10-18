@@ -1,5 +1,6 @@
 package com.brian.rpg.Model;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -23,6 +24,18 @@ public class SkeletonEnemy extends Creature {
         skeletonWalk = new Animation<TextureRegion>(0.3f, screen.getMonsters1SpriteAtlas().findRegions("Skeleton"));
     }
 
+    public SkeletonEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint, int size){
+        super(screen, hp, mana, gameClass, spawnPoint);
+        this.experienceValue = 10 + size;
+        this.size = size;
+        this.fixture.setUserData(this);
+        //Setting sprite
+        this.sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton"));
+        this.sprite.setSize(size, size);
+        //Setting Animation
+        skeletonWalk = new Animation<TextureRegion>(0.3f, screen.getMonsters1SpriteAtlas().findRegions("Skeleton"));
+    }
+
     @Override
     public void update(float delta) {
         //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
@@ -39,5 +52,24 @@ public class SkeletonEnemy extends Creature {
         //Update Animation every frame
         this.sprite.setRegion(skeletonWalk.getKeyFrame(stateTimer, true));
         stateTimer += delta;
+    }
+
+    @Override
+    public void onHit(){
+        //If not a player destroy the creature
+        if(box2body != null){
+            this.hp -= 2;
+            screen.getGameManager().get("Sounds/Bone Crushing.wav", Sound.class).play();
+            if(this.hp <= 0) {
+                screen.bodiesToDelete.add(box2body);
+                deleteFlag = true;
+                screen.spawnedCreatures.remove(this);
+
+                //Award Experience
+                screen.getPlayer().awardExperience(this.experienceValue);
+                screen.getPlayer().increaseKillCount();
+            }
+        }
+
     }
 }

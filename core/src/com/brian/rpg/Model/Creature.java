@@ -11,6 +11,7 @@ public abstract class Creature{
     int hp;
     int mana;
     int experienceValue;
+    int size;
 
     String gameClass;
     Sprite sprite;
@@ -64,13 +65,16 @@ public abstract class Creature{
     public void onHit(){
         //If not a player destroy the creature
         if(box2body != null){
-            screen.bodiesToDelete.add(box2body);
-            deleteFlag = true;
-            screen.spawnedCreatures.remove(this);
+            this.hp -= 2;
+            if(this.hp <= 0) {
+                screen.bodiesToDelete.add(box2body);
+                deleteFlag = true;
+                screen.spawnedCreatures.remove(this);
 
-            //Award Experience
-            screen.getPlayer().awardExperience(this.experienceValue);
-            screen.getPlayer().increaseKillCount();
+                //Award Experience
+                screen.getPlayer().awardExperience(this.experienceValue);
+                screen.getPlayer().increaseKillCount();
+            }
         }
 
     }

@@ -12,9 +12,6 @@ public class OrcEnemy extends Creature {
     //Animations
     private Animation<TextureRegion> orcWalk;
 
-    //Stats
-    int size;
-
     public OrcEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
         this.experienceValue = 10;
@@ -27,7 +24,7 @@ public class OrcEnemy extends Creature {
 
     public OrcEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint, int size){
         super(screen, hp, mana, gameClass, spawnPoint);
-        this.experienceValue = 10;
+        this.experienceValue = 10 + size;
         this.size = size;
         this.fixture.setUserData(this);
         //Setting sprite

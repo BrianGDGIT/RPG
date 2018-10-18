@@ -34,6 +34,7 @@ public class RPG extends Game {
 		manager.load("Sounds/blessing.wav", Sound.class);
 		manager.load("Sounds/Fireball.wav", Sound.class);
 		manager.load("Sounds/Explosion.wav", Sound.class);
+		manager.load("Sounds/Bone Crushing.wav", Sound.class);
 		manager.load("sprites/vortex_spritesheet.png", Texture.class);
 		manager.load("sprites/11_fire_spritesheet.png", Texture.class);
 		manager.load("sprites/16_sunburn_spritesheet.png", Texture.class);
