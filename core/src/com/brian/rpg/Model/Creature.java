@@ -12,6 +12,7 @@ public abstract class Creature{
     int mana;
     int experienceValue;
     int size;
+    float speed;
 
     String gameClass;
     Sprite sprite;
