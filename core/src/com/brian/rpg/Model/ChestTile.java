@@ -23,5 +23,5 @@ public class ChestTile extends InteractiveTile{
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
         return layer.getCell((int)(body.getPosition().x / 16), (int)(body.getPosition().y / 16));
     }
-    
+
 }

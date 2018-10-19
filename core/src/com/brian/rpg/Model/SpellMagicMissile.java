@@ -9,12 +9,15 @@ public class SpellMagicMissile {
     private PlayScreen screen;
     private Player player;
 
+    //Spell related
+    private double castDelay = 1;
+
     public SpellMagicMissile(PlayScreen screen, Player player){
         this.screen = screen;
         this.player = player;
     }
 
-    public void castMagicMissile(float createX, float createY, Vector2 velocity){
+    public double castMagicMissile(float createX, float createY, Vector2 velocity){
         StaffProjectile staffProjectile;
 
 
@@ -44,5 +47,7 @@ public class SpellMagicMissile {
             staffProjectile = new StaffProjectile(screen, createX + 9, createY, velocity);
             screen.projectilesToRender(staffProjectile);
         }
+
+        return castDelay;
     }
 }

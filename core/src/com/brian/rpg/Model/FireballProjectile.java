@@ -23,7 +23,7 @@ public class FireballProjectile extends Projectile {
         super(screen, createX, createY, projectileVelocity, 10);
         this.stateTimer = 0;
         this.projectileLife = 5;
-        this.projectileSpeed = 1000f;
+        this.projectileSpeed = 100f;
         this.fixture.setUserData(this);
         this.box2body.setType(BodyDef.BodyType.KinematicBody);
         texture = screen.getGameManager().get("sprites/16_sunburn_spritesheet.png", Texture.class);

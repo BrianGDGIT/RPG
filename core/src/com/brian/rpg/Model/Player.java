@@ -54,6 +54,7 @@ public class Player extends Creature{
     //Spell Related
     ArrayList<String> spellBook = new ArrayList<String>();
     public String activeSpell;
+    private double castDelay;
 
     //Spells
     SpellMagicMissile magicMissile = new SpellMagicMissile(screen, this);
@@ -96,15 +97,16 @@ public class Player extends Creature{
         this.sprite.setRegion(getFrame(delta));
 
         //Handle basic attack
-        if(basicAttackTimer >= 0.8){
+        if(basicAttackTimer >= castDelay && castDelay != 0){
             basicAttackTimer = 0;
             hasAttacked = false;
             projectileFired = false;
+            castDelay = 0;
         }
 
         if(hasAttacked){
             if(!projectileFired && stateTimer > 0.2){
-                castSpell();
+                castDelay = castSpell();
                 projectileFired = true;
             }
 
@@ -275,10 +277,14 @@ public class Player extends Creature{
             }
     }
 
-    private void castSpell(){
+    private Double castSpell(){
         Vector3 touchPos = new Vector3();
         float createX;
         float createY;
+
+        //Cast delay of spell being cast
+        //Default 1.5 but should always be set below
+        double castDelay = 1.5;
 
         //Getting touch position, unprojecting coords to game coords, normalizing and passing as velocity
         touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -305,13 +311,17 @@ public class Player extends Creature{
             createY = this.box2body.getPosition().y + 5;
         }
 
+        //The potential spells being cast
+
         if(this.activeSpell.equals("Magic Missile")){
-            magicMissile.castMagicMissile(createX, createY, velocity);
+            castDelay = magicMissile.castMagicMissile(createX, createY, velocity);
         }
 
         if(this.activeSpell.equals("Fireball")){
-            fireball.castFireball(createX, createY, velocity);
+            castDelay = fireball.castFireball(createX, createY, velocity);
         }
+
+        return castDelay;
     }
 
 
