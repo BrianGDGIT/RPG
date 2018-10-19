@@ -16,22 +16,22 @@ public class SkeletonEnemy extends Creature {
 
     public SkeletonEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
-        this.experienceValue = 10;
-        this.fixture.setUserData(this);
+        experienceValue = 10;
+        fixture.setUserData(this);
         //Setting sprite
-        this.sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton"));
+        sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton"));
         //Setting Animation
         skeletonWalk = new Animation<TextureRegion>(0.3f, screen.getMonsters1SpriteAtlas().findRegions("Skeleton"));
     }
 
     public SkeletonEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint, int size){
         super(screen, hp, mana, gameClass, spawnPoint);
-        this.experienceValue = 10 + size;
+        experienceValue = 10 + size;
         this.size = size;
-        this.fixture.setUserData(this);
+        fixture.setUserData(this);
         //Setting sprite
-        this.sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton"));
-        this.sprite.setSize(size, size);
+        sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton"));
+        sprite.setSize(size, size);
         //Setting Animation
         skeletonWalk = new Animation<TextureRegion>(0.3f, screen.getMonsters1SpriteAtlas().findRegions("Skeleton"));
     }
@@ -39,7 +39,7 @@ public class SkeletonEnemy extends Creature {
     @Override
     public void update(float delta) {
         //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
-        this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2, box2body.getPosition().y - this.sprite.getHeight() / 2);
+        sprite.setPosition(box2body.getPosition().x - sprite.getWidth() / 2, box2body.getPosition().y - sprite.getHeight() / 2);
 
         //Move toward player
         Vector2 playerPosition = new Vector2(screen.getPlayer().box2body.getPosition().x, screen.getPlayer().box2body.getPosition().y);
@@ -47,10 +47,10 @@ public class SkeletonEnemy extends Creature {
         //Velocity equals target position - current position
         Vector2 velocity = new Vector2(playerPosition.x - box2body.getPosition().x, playerPosition.y - box2body.getPosition().y);
 
-        this.box2body.setLinearVelocity(velocity);
+        box2body.setLinearVelocity(velocity);
 
         //Update Animation every frame
-        this.sprite.setRegion(skeletonWalk.getKeyFrame(stateTimer, true));
+        sprite.setRegion(skeletonWalk.getKeyFrame(stateTimer, true));
         stateTimer += delta;
     }
 
@@ -58,15 +58,15 @@ public class SkeletonEnemy extends Creature {
     public void onHit(){
         //If not a player destroy the creature
         if(box2body != null){
-            this.hp -= 2;
+            hp -= 2;
             screen.getGameManager().get("Sounds/Bone Crushing.wav", Sound.class).play();
-            if(this.hp <= 0) {
+            if(hp <= 0) {
                 screen.bodiesToDelete.add(box2body);
                 deleteFlag = true;
                 screen.spawnedCreatures.remove(this);
 
                 //Award Experience
-                screen.getPlayer().awardExperience(this.experienceValue);
+                screen.getPlayer().awardExperience(experienceValue);
                 screen.getPlayer().increaseKillCount();
             }
         }

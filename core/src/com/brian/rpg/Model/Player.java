@@ -13,15 +13,11 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.brian.rpg.RPG;
 import com.brian.rpg.Views.GameOverScreen;
-import com.brian.rpg.Views.InventoryScreen;
-import com.brian.rpg.Views.MainMenuScreen;
 import com.brian.rpg.Views.PlayScreen;
 
 import java.util.ArrayList;
 
-import static com.badlogic.gdx.Input.Keys.B;
-import static com.badlogic.gdx.Input.Keys.I;
-import static com.badlogic.gdx.Input.Keys.P;
+import static com.badlogic.gdx.Input.Keys.*;
 
 
 public class Player extends Creature{
@@ -227,8 +223,13 @@ public class Player extends Creature{
                 }
             }
 
+            //Change spells
+            if(Gdx.input.isKeyJustPressed(Q)){
+                screen.getHud().equipNextSpell();
+            }
+
             //Display Inventory
-            if(Gdx.input.isKeyJustPressed(I)){
+            if(Gdx.input.isKeyJustPressed(C)){
                 if(!inventoryDisplayed) {
                     inventoryDisplayed = true;
                 }else{
@@ -370,13 +371,13 @@ public class Player extends Creature{
     public int evaluateExpToNextLevel(){
         switch(this.level){
             case 1:
-                return 99 - this.experience;
+                return 100 - this.experience;
             case 2:
-                return 199 - this.experience;
+                return 200 - this.experience;
             case 3:
-                return 499 - this.experience;
+                return 500 - this.experience;
             case 4:
-                return 999 - this.experience;
+                return 1000 - this.experience;
             default: return 0;
         }
     }

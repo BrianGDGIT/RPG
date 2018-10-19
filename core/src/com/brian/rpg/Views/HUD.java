@@ -104,32 +104,35 @@ public class HUD extends Stage {
 
         //ActiveSpell button
         if(activeSpellButton.isPressed() && timeSinceLastClick > 0.5){
-            //Sets active spell to spellbook index of activeSpell + 1
-            int currentSpellIndex = 0;
-
-
-            //Find activeSpell index in player spellbook arraylist
-            for(String tempSpell : player.getSpellBook()){
-                if(player.activeSpell.equals(tempSpell)){
-                    currentSpellIndex = player.getSpellBook().indexOf(tempSpell);
-                }
-            }
-
-            //Use that index to iterate to + 1 index in the array
-
-            try {
-                if (player.getSpellBook().get(currentSpellIndex + 1).equals("Fireball")) {
-                    player.activeSpell = "Fireball";
-                    Button.ButtonStyle style = activeSpellButton.getStyle();
-                    style.up = fireBallImage.getDrawable();
-                }
-            }catch(IndexOutOfBoundsException e){
-                player.activeSpell = "Magic Missile";
-                Button.ButtonStyle style = activeSpellButton.getStyle();
-                style.up = magicMissileImage.getDrawable();
-            }
-
+            equipNextSpell();
             timeSinceLastClick = 0f;
+        }
+    }
+
+    public void equipNextSpell(){
+        //Sets active spell to spellbook index of activeSpell + 1
+        int currentSpellIndex = 0;
+
+
+        //Find activeSpell index in player spellbook arraylist
+        for(String tempSpell : player.getSpellBook()){
+            if(player.activeSpell.equals(tempSpell)){
+                currentSpellIndex = player.getSpellBook().indexOf(tempSpell);
+            }
+        }
+
+        //Use that index to iterate to + 1 index in the array
+
+        try {
+            if (player.getSpellBook().get(currentSpellIndex + 1).equals("Fireball")) {
+                player.activeSpell = "Fireball";
+                Button.ButtonStyle style = activeSpellButton.getStyle();
+                style.up = fireBallImage.getDrawable();
+            }
+        }catch(IndexOutOfBoundsException e){
+            player.activeSpell = "Magic Missile";
+            Button.ButtonStyle style = activeSpellButton.getStyle();
+            style.up = magicMissileImage.getDrawable();
         }
     }
 
