@@ -351,11 +351,11 @@ public class Player extends Creature{
                 levelUp();
             }
         }else if(this.level == 3){
-            if(this.experience > 500){
+            if(this.experience > 499){
                 levelUp();
             }
         }else if(this.level == 4) {
-            if (this.experience > 1000) {
+            if (this.experience > 999) {
                 levelUp();
             }
         }
@@ -367,6 +367,19 @@ public class Player extends Creature{
         screen.getGameManager().get("Sounds/blessing.wav", Sound.class).play();
     }
 
+    public int evaluateExpToNextLevel(){
+        switch(this.level){
+            case 1:
+                return 99 - this.experience;
+            case 2:
+                return 199 - this.experience;
+            case 3:
+                return 499 - this.experience;
+            case 4:
+                return 999 - this.experience;
+            default: return 0;
+        }
+    }
 
 
     public void increaseKillCount(){

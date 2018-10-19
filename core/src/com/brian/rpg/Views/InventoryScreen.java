@@ -31,7 +31,7 @@ public class InventoryScreen {
         viewport = new FitViewport(800, 600, new OrthographicCamera());
         stage = new Stage(viewport, batch);
 
-        textArea = new TextArea("Class: " + player.getGameClass() + '\n' + "Level: " + player.getLevel() + '\n' + "Experience: " + player.getExperience() + '\n' + "Total Kills: " + player.getKills(), skin);
+        textArea = new TextArea("", skin);
         textArea.setSize(250, 250);
         textArea.setPosition( 300, 350);
 
@@ -39,7 +39,7 @@ public class InventoryScreen {
     }
 
     public void showCharacterScreen(){
-        textArea.setText("***Character Sheet***" + '\n' + '\n' + "Class: " + player.getGameClass() + '\n' + "Level: " + player.getLevel() + '\n' + "Experience: " + player.getExperience() + '\n' + "Total Kills: " + player.getKills() + '\n' + '\n' + "Active Spell: " + player.getActiveSpell());
+        textArea.setText("***Character Sheet***" + '\n' + '\n' + "Class: " + player.getGameClass() + '\n' + "Level: " + player.getLevel() + '\n' + "Experience: " + player.getExperience() + '\n' + "Next Level: " + player.evaluateExpToNextLevel() + " experience" + '\n' + "Total Kills: " + player.getKills() + '\n' + '\n' + "Active Spell: " + player.getActiveSpell());
     }
 
     public void showSpellbook(){
