@@ -20,8 +20,6 @@ public abstract class InteractiveTile {
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
-        Body body;
-
 
         bdef.type = BodyDef.BodyType.StaticBody;
         bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);

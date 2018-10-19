@@ -1,6 +1,7 @@
 package com.brian.rpg.Model;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
@@ -15,13 +16,12 @@ public class ChestTile extends InteractiveTile{
     }
 
     public void onContact(){
-        //getCell().setTile(null);
+        getCell().setTile(map.getTileSets().getTile(433));
     }
 
     private TiledMapTileLayer.Cell getCell(){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
         return layer.getCell((int)(body.getPosition().x / 16), (int)(body.getPosition().y / 16));
     }
-
-
+    
 }
