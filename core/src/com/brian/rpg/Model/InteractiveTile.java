@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.brian.rpg.RPG;
+import com.brian.rpg.Views.PlayScreen;
 
 public abstract class InteractiveTile {
     protected World world;
@@ -13,9 +14,12 @@ public abstract class InteractiveTile {
     protected Body body;
     protected Fixture fixture;
 
-    public InteractiveTile(World world, TiledMap map, Rectangle rect){
+    public PlayScreen screen;
+
+    public InteractiveTile(World world, PlayScreen screen, TiledMap map, Rectangle rect){
         this.world = world;
         this.map = map;
+        this.screen = screen;
 
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();

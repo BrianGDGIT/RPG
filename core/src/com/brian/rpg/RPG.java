@@ -21,6 +21,7 @@ public class RPG extends Game {
 	public static final short PLAYER_BIT = 8;
 	public static final short ITEM_BIT = 16;
 	public static final short CHEST_BIT = 32;
+	public static final short AREATRANSITION_BIT = 64;
 
 	public SpriteBatch batch;
 

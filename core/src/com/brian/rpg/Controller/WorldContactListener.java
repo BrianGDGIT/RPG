@@ -51,6 +51,11 @@ public class WorldContactListener implements ContactListener {
                 if(object.getUserData() != null && object.getUserData() instanceof ChestTile){
                     ((ChestTile) object.getUserData()).onContact();
                 }
+
+                //Area Transition collion
+                if(object.getUserData() != null && object.getUserData() instanceof AreaTransitionTile){
+                    ((AreaTransitionTile) object.getUserData()).onContact();
+                }
             }
         }
     }

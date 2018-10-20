@@ -58,6 +58,9 @@ public class PlayScreen implements Screen {
     private Box2dWorldGenerator worldGenerator;
     private Box2DDebugRenderer b2dr;
 
+    //Player body for area transition
+    public Body playerBody;
+
     //Map variables
     private TmxMapLoader mapLoader;
     private TiledMap map;
@@ -113,7 +116,7 @@ public class PlayScreen implements Screen {
         item = new Item(this, new Vector2(1238, 60));
         item2 = new Item(this, new Vector2(1112,650));
 
-        worldGenerator = new Box2dWorldGenerator(world, map);
+        worldGenerator = new Box2dWorldGenerator(world,this, map);
 
 
         gameCamera.update();
@@ -130,6 +133,8 @@ public class PlayScreen implements Screen {
 
         //Remove all bodies that need deleted
         removeBodies();
+
+        //movePlayer(playerBody);
 
         //Make game camera follow player
         gameCamera.position.x = player.box2body.getPosition().x;
@@ -272,6 +277,15 @@ public class PlayScreen implements Screen {
                 bodiesToDelete.remove(i);
             }
         }
+    }
+
+    //Player area transition implementation
+    //So player can move after world step
+    public void movePlayer(Body playerBody){
+        if(playerBody != null){
+            playerBody.setTransform(1790, 95, playerBody.getAngle());
+        }
+
     }
 
     public void projectilesToRender(Projectile staffProjectile){
