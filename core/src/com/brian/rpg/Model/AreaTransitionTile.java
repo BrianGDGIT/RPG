@@ -17,7 +17,7 @@ public class AreaTransitionTile extends InteractiveTile {
     }
 
     public void onContact(){
-        //screen.playerBody = screen.getPlayer().box2body;
+        screen.playerBody = screen.getPlayer().box2body;
     }
 
     private TiledMapTileLayer.Cell getCell(){

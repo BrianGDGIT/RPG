@@ -27,7 +27,9 @@ public class OrcEnemy extends Creature {
     public OrcEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint, int size){
         super(screen, hp, mana, gameClass, spawnPoint);
         experienceValue = 10 + size;
+        speed = 0.5f;
         this.size = size;
+        fixture.getShape().setRadius(size / 1.5f);
         fixture.setUserData(this);
         //Setting sprite
         sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Orc"));

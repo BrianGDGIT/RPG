@@ -40,6 +40,10 @@ public class PlayScreen implements Screen {
     MonsterSpawner monsterSpawner3;
     MonsterSpawner monsterSpawner4;
     MonsterSpawner monsterSpawner5;
+    MonsterSpawner monsterSpawner6;
+    MonsterSpawner monsterSpawner7;
+    MonsterSpawner monsterSpawner8;
+
     Item item;
     Item item2;
 
@@ -112,6 +116,9 @@ public class PlayScreen implements Screen {
         monsterSpawner3 = new MonsterSpawner(this, new Vector2(947, 70), "Normal");
         monsterSpawner4 = new MonsterSpawner(this, new Vector2(331, 589), "Boss");
         monsterSpawner5 = new MonsterSpawner(this, new Vector2(1141, 888), "Normal");
+        monsterSpawner6 = new MonsterSpawner(this, new Vector2(1890, 98), "Normal");
+        monsterSpawner7 = new MonsterSpawner(this, new Vector2(1818, 147), "Normal");
+        monsterSpawner8 = new MonsterSpawner(this, new Vector2(1822, 28), "Boss");
 
         item = new Item(this, new Vector2(1238, 60));
         item2 = new Item(this, new Vector2(1112,650));
@@ -134,7 +141,7 @@ public class PlayScreen implements Screen {
         //Remove all bodies that need deleted
         removeBodies();
 
-        //movePlayer(playerBody);
+        movePlayer(playerBody);
 
         //Make game camera follow player
         gameCamera.position.x = player.box2body.getPosition().x;
@@ -152,6 +159,9 @@ public class PlayScreen implements Screen {
         monsterSpawner3.update(delta);
         monsterSpawner4.update(delta);
         monsterSpawner5.update(delta);
+        monsterSpawner6.update(delta);
+        monsterSpawner7.update(delta);
+        monsterSpawner8.update(delta);
 
         //Update projectiles
         //Can't use advanced forloop here because update() removes items from the list, which causes concurrentModificationException
@@ -190,7 +200,7 @@ public class PlayScreen implements Screen {
         mapRenderer.render();
 
         //Render Box2d debug lines
-        //b2dr.render(world, gameCamera.combined);
+        b2dr.render(world, gameCamera.combined);
 
         game.batch.setProjectionMatrix(gameCamera.combined);
         game.batch.begin();
@@ -284,6 +294,7 @@ public class PlayScreen implements Screen {
     public void movePlayer(Body playerBody){
         if(playerBody != null){
             playerBody.setTransform(1790, 95, playerBody.getAngle());
+            this.playerBody = null;
         }
 
     }
