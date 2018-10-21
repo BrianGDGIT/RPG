@@ -84,7 +84,7 @@ public class PlayScreen implements Screen {
         //This limits the view of the world to 800, 600 so everything is zoomed in
         //enough to see the 16x16 tiles
         //Keeps the screen scaled properly based on the size of the screen
-        viewPort = new FitViewport(296, 144, gameCamera);
+        viewPort = new FitViewport(Gdx.app.getGraphics().getWidth() / 10, Gdx.app.getGraphics().getHeight() / 10, gameCamera);
 
         //Create new maploader
         mapLoader = new TmxMapLoader();
@@ -252,8 +252,12 @@ public class PlayScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        //setWorld increases the view based on resolution
+        //Using the same ratio
+        viewPort.setWorldWidth(width / 10);
+        viewPort.setWorldHeight(height / 10);
         viewPort.update(width, height);
-        hud.stage.getViewport().update(width, height);
+        //hud.stage.getViewport().update(width, height);
     }
 
     @Override
