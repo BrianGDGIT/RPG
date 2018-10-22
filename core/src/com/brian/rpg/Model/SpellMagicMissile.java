@@ -31,20 +31,20 @@ public class SpellMagicMissile {
             staffProjectile = new StaffProjectile(screen, createX, createY, velocity);
             screen.projectilesToRender(staffProjectile);
 
-            staffProjectile = new StaffProjectile(screen, createX + 5, createY, velocity);
+            staffProjectile = new StaffProjectile(screen, createX + 10, createY, velocity);
             screen.projectilesToRender(staffProjectile);
         }
 
         if(player.level >= 3){
             //Projectile 1
-            staffProjectile = new StaffProjectile(screen, createX + 5, createY, velocity);
+            staffProjectile = new StaffProjectile(screen, createX , createY, velocity);
             screen.projectilesToRender(staffProjectile);
             //Projectile2
-            staffProjectile = new StaffProjectile(screen, createX + 7, createY, velocity);
+            staffProjectile = new StaffProjectile(screen, createX + 10, createY, velocity);
             screen.projectilesToRender(staffProjectile);
 
             //Projectile3
-            staffProjectile = new StaffProjectile(screen, createX + 9, createY, velocity);
+            staffProjectile = new StaffProjectile(screen, createX + 20, createY, velocity);
             screen.projectilesToRender(staffProjectile);
         }
 

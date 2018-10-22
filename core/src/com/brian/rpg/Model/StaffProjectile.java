@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
@@ -29,6 +30,7 @@ public class StaffProjectile extends Projectile {
         this.projectileLife = 3;
         this.projectileSpeed = 1000f;
         this.fixture.setUserData(this);
+        box2body.setType(BodyDef.BodyType.KinematicBody);
         texture = screen.getGameManager().get("sprites/vortex_spritesheet.png", Texture.class);
 
         //Use split function to create an array of Textures

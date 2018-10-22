@@ -257,7 +257,7 @@ public class PlayScreen implements Screen {
         viewPort.setWorldWidth(width / 10);
         viewPort.setWorldHeight(height / 10);
         viewPort.update(width, height);
-        //hud.stage.getViewport().update(width, height);
+        hud.stage.getViewport().update(width, height);
     }
 
     @Override

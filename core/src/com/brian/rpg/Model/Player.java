@@ -87,7 +87,14 @@ public class Player extends Creature{
     public void update(float delta){
         //System.out.println(this.box2body.getPosition());
         //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
-        this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2, box2body.getPosition().y - this.sprite.getHeight() /2);
+        this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2, box2body.getPosition().y - this.sprite.getHeight() / 2);
+
+        //Move sprite to a more center-like position when attacking
+        if(currentState == State.ATTACKING && currentDirection == Direction.LEFT){
+            this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2 - 10, box2body.getPosition().y - this.sprite.getHeight() / 2);
+        }else if(currentState == State.ATTACKING && currentDirection == Direction.RIGHT){
+            this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2 + 10, box2body.getPosition().y - this.sprite.getHeight() / 2);
+        }
 
         //Change Sprite on player movement
         this.sprite.setRegion(getFrame(delta));
@@ -180,10 +187,14 @@ public class Player extends Creature{
 
     public void handleInput(float delta){
 
-            //Test
+            //Debug
             if(Gdx.input.isKeyJustPressed(P)){
                 System.out.println("Box2d: " + "X: " + this.box2body.getPosition().x + " Y: " + this.box2body.getPosition().y );
                 System.out.println("X: " + this.sprite.getX() + " Y: " + this.sprite.getY());
+            }
+
+            if(Gdx.input.isKeyJustPressed(O)){
+                level++;
             }
 
             //Keyboard controls
@@ -303,7 +314,7 @@ public class Player extends Creature{
             createX = this.box2body.getPosition().x + 5;
         }else{
             this.currentDirection = Creature.Direction.LEFT;
-            createX = this.box2body.getPosition().x - 5;
+            createX = this.box2body.getPosition().x - 15;
         }
 
         if(velocity.y < 0){
