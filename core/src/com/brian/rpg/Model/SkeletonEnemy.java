@@ -28,7 +28,7 @@ public class SkeletonEnemy extends Creature {
         super(screen, hp, mana, gameClass, spawnPoint);
         experienceValue = 10 + size;
         this.size = size;
-        fixture.getShape().setRadius(size / 1.5f);
+        fixture.getShape().setRadius(size / 2.3f);
         fixture.setUserData(this);
         //Setting sprite
         sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton"));

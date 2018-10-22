@@ -56,7 +56,7 @@ public class MonsterSpawner {
             }
         }
 
-        if (spawnerType.equals("Boss") && spawnerPos.dst(playerPos) < 150 && totalSpawns < 1) {
+        if (spawnerType.equals("Boss") && spawnerPos.dst(playerPos) > 150  && spawnerPos.dst(playerPos) < 350 && totalSpawns < 1) {
             totalSpawns++;
             if (monsterType == "Skeleton") {
                 SkeletonEnemy skeleton = new SkeletonEnemy(screen, 50, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y), 35);
