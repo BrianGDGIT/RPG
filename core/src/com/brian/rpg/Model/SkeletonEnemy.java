@@ -1,6 +1,7 @@
 package com.brian.rpg.Model;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,6 +11,7 @@ import com.brian.rpg.Views.PlayScreen;
 
 public class SkeletonEnemy extends Creature {
     float stateTimer = 0;
+    boolean isZombie = false;
 
     //Animations
     private Animation<TextureRegion> skeletonWalk;
@@ -17,6 +19,7 @@ public class SkeletonEnemy extends Creature {
     public SkeletonEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
         experienceValue = 10;
+        speed = 2;
         fixture.setUserData(this);
         //Setting sprite
         sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton"));
@@ -27,12 +30,28 @@ public class SkeletonEnemy extends Creature {
     public SkeletonEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint, int size){
         super(screen, hp, mana, gameClass, spawnPoint);
         experienceValue = 10 + size;
+        speed = 0.7f;
         this.size = size;
         fixture.getShape().setRadius(size / 2.3f);
         fixture.setUserData(this);
         //Setting sprite
         sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton"));
         sprite.setSize(size, size);
+        //Setting Animation
+        skeletonWalk = new Animation<TextureRegion>(0.3f, screen.getMonsters1SpriteAtlas().findRegions("Skeleton"));
+    }
+
+    public SkeletonEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint, int size, Color color ){
+        super(screen, hp, mana, gameClass, spawnPoint);
+        experienceValue = 10 + size;
+        this.size = size;
+        speed = 0.3f;
+        isZombie = true;
+        fixture.getShape().setRadius(size / 2.3f);
+        fixture.setUserData(this);
+        //Setting sprite
+        sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton"));
+        sprite.setColor(color);
         //Setting Animation
         skeletonWalk = new Animation<TextureRegion>(0.3f, screen.getMonsters1SpriteAtlas().findRegions("Skeleton"));
     }
@@ -48,7 +67,7 @@ public class SkeletonEnemy extends Creature {
         //Velocity equals target position - current position
         Vector2 velocity = new Vector2(playerPosition.x - box2body.getPosition().x, playerPosition.y - box2body.getPosition().y);
 
-        box2body.setLinearVelocity(velocity);
+        box2body.setLinearVelocity(velocity.scl(speed));
 
         //Update Animation every frame
         sprite.setRegion(skeletonWalk.getKeyFrame(stateTimer, true));
@@ -60,7 +79,11 @@ public class SkeletonEnemy extends Creature {
         //If not a player destroy the creature
         if(box2body != null){
             hp -= 2;
-            screen.getGameManager().get("Sounds/Bone Crushing.wav", Sound.class).play();
+            if(!isZombie) {
+                screen.getGameManager().get("Sounds/Bone Crushing.wav", Sound.class).play();
+            }else{
+                screen.getGameManager().get("Sounds/zombie-grunt.wav", Sound.class).play();
+            }
             if(hp <= 0) {
                 screen.bodiesToDelete.add(box2body);
                 deleteFlag = true;

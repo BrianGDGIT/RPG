@@ -1,5 +1,6 @@
 package com.brian.rpg.Model;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -21,14 +22,17 @@ public class MonsterSpawner {
     String spawnerType;
 
     public MonsterSpawner(PlayScreen screen, Vector2 spawnPoint, String spawnerType){
+        int number = MathUtils.random(3);
         this.screen = screen;
         this.world = screen.getWorld();
         this.spawnPoint = spawnPoint;
         this.spawnerType = spawnerType;
-        if(MathUtils.random(1) == 0){
+        if(number == 0){
             monsterType = "Skeleton";
-        }else{
+        }else if(number == 1){
             monsterType = "Orc";
+        }else{
+            monsterType = "Zombie";
         }
         createMonsterSpawner();
     }
@@ -50,9 +54,10 @@ public class MonsterSpawner {
                 } else if (monsterType == "Orc") {
                     OrcEnemy orc = new OrcEnemy(screen, 6, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
                     screen.creaturesToRender(orc);
+                } else{
+                    SkeletonEnemy skeleton = new SkeletonEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y), 10, Color.GREEN);
+                    screen.creaturesToRender(skeleton);
                 }
-
-
             }
         }
 
