@@ -1,5 +1,6 @@
 package com.brian.rpg.Model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
@@ -9,6 +10,8 @@ import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
 
 public class AreaTransitionTile extends InteractiveTile {
+    Player player = screen.getPlayer();
+
     public AreaTransitionTile(World world, PlayScreen screen, TiledMap map, Rectangle rect) {
         super(world, screen, map, rect);
         this.fixture.setUserData(this);
@@ -17,7 +20,13 @@ public class AreaTransitionTile extends InteractiveTile {
     }
 
     public void onContact(){
-        screen.playerBody = screen.getPlayer().box2body;
+        //screen.playerBody = screen.getPlayer().box2body;
+        Gdx.app.postRunnable(new Runnable(){
+            @Override
+            public void run(){
+                player.box2body.setTransform(1790, 95, player.box2body.getAngle());
+            }
+        });
     }
 
     private TiledMapTileLayer.Cell getCell(){

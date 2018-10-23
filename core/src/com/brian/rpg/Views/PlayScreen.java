@@ -44,6 +44,7 @@ public class PlayScreen implements Screen {
     MonsterSpawner monsterSpawner7;
     MonsterSpawner monsterSpawner8;
 
+    //Item related variables
     Item item;
     Item item2;
 
@@ -120,9 +121,6 @@ public class PlayScreen implements Screen {
         monsterSpawner7 = new MonsterSpawner(this, new Vector2(1818, 147), "Normal");
         monsterSpawner8 = new MonsterSpawner(this, new Vector2(1822, 28), "Boss");
 
-        item = new Item(this, new Vector2(1238, 60));
-        item2 = new Item(this, new Vector2(1112,650));
-
         worldGenerator = new Box2dWorldGenerator(world,this, map);
 
 
@@ -140,9 +138,7 @@ public class PlayScreen implements Screen {
 
         //Remove all bodies that need deleted
         removeBodies();
-
-        movePlayer(playerBody);
-
+        
         //Make game camera follow player
         gameCamera.position.x = player.box2body.getPosition().x;
         gameCamera.position.y = player.box2body.getPosition().y;
@@ -293,15 +289,6 @@ public class PlayScreen implements Screen {
         }
     }
 
-    //Player area transition implementation
-    //So player can move after world step
-    public void movePlayer(Body playerBody){
-        if(playerBody != null){
-            playerBody.setTransform(1790, 95, playerBody.getAngle());
-            this.playerBody = null;
-        }
-
-    }
 
     public void projectilesToRender(Projectile staffProjectile){
         this.staffProjectiles.add(staffProjectile);
