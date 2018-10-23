@@ -33,6 +33,7 @@ public class ChestTile extends InteractiveTile{
                    Item item = new Item(screen, new Vector2(playerX + 16, playerY));
                }
             });
+           itemFlag = true;
         }
 
     }

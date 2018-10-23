@@ -138,7 +138,7 @@ public class PlayScreen implements Screen {
 
         //Remove all bodies that need deleted
         removeBodies();
-        
+
         //Make game camera follow player
         gameCamera.position.x = player.box2body.getPosition().x;
         gameCamera.position.y = player.box2body.getPosition().y;
