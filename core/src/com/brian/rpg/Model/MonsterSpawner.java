@@ -16,17 +16,19 @@ public class MonsterSpawner {
     public PlayScreen screen;
     public Body box2body;
 
-    float timeSinceCreation = 0;
-    int spawnInterval = 3;
-    int totalSpawns = 0;
+    private float timeSinceCreation = 0;
+    private int spawnInterval = 3;
+    private int totalSpawns = 0;
+    private int spawnerDistanceMin;
     String spawnerType;
 
-    public MonsterSpawner(PlayScreen screen, Vector2 spawnPoint, String spawnerType){
+    public MonsterSpawner(PlayScreen screen, Vector2 spawnPoint, String spawnerType, int spawnerDistanceMin){
         int number = MathUtils.random(3);
         this.screen = screen;
         this.world = screen.getWorld();
         this.spawnPoint = spawnPoint;
         this.spawnerType = spawnerType;
+        this.spawnerDistanceMin = spawnerDistanceMin;
         if(number == 0){
             monsterType = "Skeleton";
         }else if(number == 1){
@@ -34,6 +36,17 @@ public class MonsterSpawner {
         }else{
             monsterType = "Zombie";
         }
+        createMonsterSpawner();
+    }
+
+    public MonsterSpawner(PlayScreen screen, Vector2 spawnPoint, String spawnerType, int spawnerDistanceMin, String monsterType){
+        int number = MathUtils.random(3);
+        this.screen = screen;
+        this.world = screen.getWorld();
+        this.spawnPoint = spawnPoint;
+        this.spawnerType = spawnerType;
+        this.spawnerDistanceMin = spawnerDistanceMin;
+        this.monsterType = monsterType;
         createMonsterSpawner();
     }
 
@@ -45,7 +58,7 @@ public class MonsterSpawner {
         timeSinceCreation += delta;
 
         if(spawnerType.equals("Normal")) {
-            if (spawnerPos.dst(playerPos) > 150 && spawnerPos.dst(playerPos) < 450 && timeSinceCreation >= spawnInterval && totalSpawns < 20) {
+            if (spawnerPos.dst(playerPos) > spawnerDistanceMin && spawnerPos.dst(playerPos) < 450 && timeSinceCreation >= spawnInterval && totalSpawns < 20) {
                 timeSinceCreation = 0;
                 totalSpawns++;
                 if (monsterType == "Skeleton") {
@@ -61,7 +74,7 @@ public class MonsterSpawner {
             }
         }
 
-        if (spawnerType.equals("Boss") && spawnerPos.dst(playerPos) > 150  && spawnerPos.dst(playerPos) < 350 && totalSpawns < 1) {
+        if (spawnerType.equals("Boss") && spawnerPos.dst(playerPos) > spawnerDistanceMin  && spawnerPos.dst(playerPos) < 350 && totalSpawns < 1) {
             totalSpawns++;
             if (monsterType == "Skeleton") {
                 SkeletonEnemy skeleton = new SkeletonEnemy(screen, 50, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y), 35);

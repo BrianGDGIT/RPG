@@ -311,10 +311,10 @@ public class Player extends Creature{
         //Also sets player State to either LEFT OR RIGHT so that the player is facing toward touched position
         if(velocity.x > 0){
             this.currentDirection = Creature.Direction.RIGHT;
-            createX = this.box2body.getPosition().x + 5;
+            createX = this.box2body.getPosition().x + 25;
         }else{
             this.currentDirection = Creature.Direction.LEFT;
-            createX = this.box2body.getPosition().x - 15;
+            createX = this.box2body.getPosition().x - 30;
         }
 
         if(velocity.y < 0){
