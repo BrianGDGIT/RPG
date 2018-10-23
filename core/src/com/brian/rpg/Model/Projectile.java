@@ -54,7 +54,6 @@ public abstract class Projectile {
         fdef.shape = shape;
         fdef.filter.categoryBits = RPG.PROJECTILE_BIT;
         fdef.filter.maskBits = RPG.WALL_BIT | RPG.CREATURE_BIT;
-        fdef.isSensor = true;
         fixture = box2body.createFixture(fdef);
     }
 

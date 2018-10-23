@@ -29,6 +29,7 @@ public class StaffProjectile extends Projectile {
         this.stateTimer = 0;
         this.projectileLife = 3;
         this.projectileSpeed = 1000f;
+        fixture.setSensor(true);
         this.fixture.setUserData(this);
         texture = screen.getGameManager().get("sprites/vortex_spritesheet.png", Texture.class);
 

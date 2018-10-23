@@ -8,7 +8,7 @@ public class SpellFireball {
     Player player;
 
     //Spell Stats
-    double castDelay = 2;
+    double castDelay = 1.5;
 
     public SpellFireball(PlayScreen screen, Player player){
         this.screen = screen;

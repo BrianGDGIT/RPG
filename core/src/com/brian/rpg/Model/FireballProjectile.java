@@ -21,11 +21,11 @@ public class FireballProjectile extends Projectile {
 
     public FireballProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity){
         super(screen, createX, createY, projectileVelocity, 10);
-        this.stateTimer = 0;
-        this.projectileLife = 5;
-        this.projectileSpeed = 100f;
-        this.fixture.setUserData(this);
-        this.box2body.setType(BodyDef.BodyType.KinematicBody);
+        stateTimer = 0;
+        projectileLife = 5;
+        projectileSpeed = 100f;
+        fixture.setUserData(this);
+        box2body.setType(BodyDef.BodyType.KinematicBody);
         texture = screen.getGameManager().get("sprites/16_sunburn_spritesheet.png", Texture.class);
 
         //Use split function to create an array of Textures
