@@ -63,10 +63,10 @@ public abstract class Creature{
         fixture = box2body.createFixture(fdef);
     }
 
-    public void onHit(){
+    public void onHit(int damage){
         //If not a player destroy the creature
         if(box2body != null){
-            this.hp -= 2;
+            this.hp -= damage;
             if(this.hp <= 0) {
                 screen.bodiesToDelete.add(box2body);
                 deleteFlag = true;

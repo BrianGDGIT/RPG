@@ -24,6 +24,7 @@ public abstract class Projectile {
     float createY;
 
     //Projectile attributes
+    int damage = 2;
     int projectileLife;
     int projectileSize;
     float projectileSpeed;
@@ -64,5 +65,7 @@ public abstract class Projectile {
     public Sprite getSprite(){
         return sprite;
     }
+
+    public int getDamage(){return damage;}
 
 }

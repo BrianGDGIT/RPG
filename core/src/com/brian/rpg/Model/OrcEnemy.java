@@ -57,10 +57,10 @@ public class OrcEnemy extends Creature {
     }
 
     @Override
-    public void onHit(){
+    public void onHit(int damage){
         //If not a player destroy the creature
         if(box2body != null){
-            hp -= 2;
+            hp -= damage;
             screen.getGameManager().get("Sounds/orc-34-hit.wav", Sound.class).play();
             if(this.hp <= 0) {
                 screen.bodiesToDelete.add(box2body);

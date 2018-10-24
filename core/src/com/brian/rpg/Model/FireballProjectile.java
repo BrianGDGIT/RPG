@@ -19,13 +19,14 @@ public class FireballProjectile extends Projectile {
     Boolean hasExploded = false;
     Float explosionTimer = 0f;
 
-    public FireballProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize){
+    public FireballProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize, int damage){
         super(screen, createX, createY, projectileVelocity, projectileSize);
         stateTimer = 0;
+        this.damage = damage;
         projectileLife = 5;
         projectileSpeed = 100f;
         fixture.setUserData(this);
-        box2body.setType(BodyDef.BodyType.KinematicBody);
+        fixture.setSensor(true);
 
         texture = screen.getGameManager().get("sprites/16_sunburn_spritesheet.png", Texture.class);
 

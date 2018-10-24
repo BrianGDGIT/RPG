@@ -36,7 +36,7 @@ public class SkeletonEnemy extends Creature {
     public SkeletonEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint, int size){
         super(screen, hp, mana, gameClass, spawnPoint);
         experienceValue = 10 + size;
-        speed = 0.7f;
+        speed = 0.6f;
         this.size = size;
         fixture.getShape().setRadius(size / 2.3f);
         fixture.setUserData(this);
@@ -89,10 +89,10 @@ public class SkeletonEnemy extends Creature {
     }
 
     @Override
-    public void onHit(){
+    public void onHit(int damage){
         //If not a player destroy the creature
         if(box2body != null){
-            hp -= 2;
+            hp -= damage;
             if(!isZombie) {
                 screen.getGameManager().get("Sounds/Bone Crushing.wav", Sound.class).play();
             }else{

@@ -20,13 +20,14 @@ public class AcidBlastProjectile extends Projectile {
     Boolean hasExploded = false;
     Float explosionTimer = 0f;
 
-    public AcidBlastProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity){
-        super(screen, createX, createY, projectileVelocity, 10);
+    public AcidBlastProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize, int damage){
+        super(screen, createX, createY, projectileVelocity, projectileSize);
         stateTimer = 0;
+        this.damage = damage;
         projectileLife = 5;
         projectileSpeed = 100f;
         fixture.setUserData(this);
-        box2body.setType(BodyDef.BodyType.KinematicBody);
+        fixture.setSensor(true);
         texture = screen.getGameManager().get("sprites/16_sunburn_spritesheet.png", Texture.class);
 
         //Use split function to create an array of Textures
@@ -75,6 +76,7 @@ public class AcidBlastProjectile extends Projectile {
             explosionTimer += Gdx.graphics.getDeltaTime();
             if(explosionTimer >= 1f){
                 destroyAfterExplosion();
+                screen.getGameManager().get("Sounds/HotSizzling.wav", Sound.class).stop();
             }
         }
     }
@@ -87,7 +89,7 @@ public class AcidBlastProjectile extends Projectile {
         this.box2body.setLinearVelocity(0, 0);
         this.box2body.setAngularVelocity(0);
         hasExploded = true;
-        screen.getGameManager().get("Sounds/Explosion.wav", Sound.class).play();
+        screen.getGameManager().get("Sounds/HotSizzling.wav", Sound.class).play();
     }
 
     private void destroyAfterExplosion(){

@@ -20,7 +20,7 @@ public class WorldContactListener implements ContactListener {
                 //Determine if the other object is a creature
                 //If it is call creatures onHit method to damage/kill it
                 if (object.getUserData() != null && Creature.class.isAssignableFrom(object.getUserData().getClass()) && object.getUserData() instanceof Player != true) {
-                    ((Creature) object.getUserData()).onHit();
+                    ((Creature) object.getUserData()).onHit(((Projectile) projectile.getUserData()).getDamage());
                     ((Projectile) projectile.getUserData()).onHit();
                 }
 

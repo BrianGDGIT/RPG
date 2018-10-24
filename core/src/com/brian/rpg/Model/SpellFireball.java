@@ -18,12 +18,12 @@ public class SpellFireball {
     public double castFireball(float createX, float createY, Vector2 velocity){
         FireballProjectile fireballProjectile;
 
-        if(player.level == 1){
-            fireballProjectile = new FireballProjectile(screen, createX, createY, velocity, 10);
+        if(player.level == 1 || player.level == 2){
+            fireballProjectile = new FireballProjectile(screen, createX, createY, velocity, 10, 4);
             screen.projectilesToRender(fireballProjectile);
         }
-        if(player.level == 3){
-            fireballProjectile = new FireballProjectile(screen, createX, createY, velocity, 20);
+        if(player.level >= 3){
+            fireballProjectile = new FireballProjectile(screen, createX, createY, velocity, 20, 6);
             screen.projectilesToRender(fireballProjectile);
         }
 

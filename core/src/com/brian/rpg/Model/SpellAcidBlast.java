@@ -18,10 +18,16 @@ public class SpellAcidBlast {
     public double castAcidBlast(float createX, float createY, Vector2 velocity){
         AcidBlastProjectile acidBlastProjectile;
 
-        if(player.level >= 1){
-            acidBlastProjectile = new AcidBlastProjectile(screen, createX, createY, velocity);
+        if(player.level == 1 || player.level == 2){
+            acidBlastProjectile = new AcidBlastProjectile(screen, createX, createY, velocity, 5, 4);
             screen.projectilesToRender(acidBlastProjectile);
         }
+
+        if(player.level >= 3){
+            acidBlastProjectile = new AcidBlastProjectile(screen, createX, createY, velocity, 10, 6);
+            screen.projectilesToRender(acidBlastProjectile);
+        }
+
 
         return castDelay;
     }
