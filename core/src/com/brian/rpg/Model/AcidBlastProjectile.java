@@ -12,8 +12,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.brian.rpg.Views.PlayScreen;
 
 public class AcidBlastProjectile extends Projectile {
-    private static final int FRAME_COLS = 8;
-    private static final int FRAME_ROWS = 8;
+    private static final int FRAME_COLS = 10;
+    private static final int FRAME_ROWS = 10;
     Animation<TextureRegion> acidBlastAnimation;
 
     //Explosion related variables
@@ -28,7 +28,7 @@ public class AcidBlastProjectile extends Projectile {
         projectileSpeed = 100f;
         fixture.setUserData(this);
         fixture.setSensor(true);
-        texture = screen.getGameManager().get("sprites/16_sunburn_spritesheet.png", Texture.class);
+        texture = screen.getGameManager().get("sprites/17_felspell_spritesheet.png", Texture.class);
 
         //Use split function to create an array of Textures
         TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / FRAME_COLS,
@@ -46,10 +46,10 @@ public class AcidBlastProjectile extends Projectile {
         acidBlastAnimation = new Animation<TextureRegion>(0.3f, staffFrames);
 
         //Initialize sprite when object is created
-        this.sprite = new Sprite(staffFrames[0]);
-        this.sprite.setSize(projectileSize + 30, projectileSize + 30);
-        this.sprite.setBounds(1, 1, projectileSize + 30, projectileSize + 30);
-        sprite.setColor(Color.GREEN);
+        sprite = new Sprite(staffFrames[0]);
+        sprite.setSize(this.projectileSize * 3, this.projectileSize * 3);
+        sprite.setBounds(1, 1, this.projectileSize * 3, this.projectileSize * 3);
+        //sprite.setColor(Color.GREEN);
 
         //Play sound
         screen.getGameManager().get("Sounds/Fireball.wav", Sound.class).play();
@@ -73,6 +73,7 @@ public class AcidBlastProjectile extends Projectile {
 
         //Destroy fireball after sometime after explosion
         if(hasExploded){
+            fixture.getShape().setRadius(projectileSize * 1.5f);
             explosionTimer += Gdx.graphics.getDeltaTime();
             if(explosionTimer >= 1f){
                 destroyAfterExplosion();
@@ -84,8 +85,8 @@ public class AcidBlastProjectile extends Projectile {
     @Override
     public void onHit(){
         //Increase sprite size as fireball explodes
-        this.sprite.setSize(projectileSize + 50, projectileSize + 50);
-        this.sprite.setBounds(1, 1,projectileSize + 50, projectileSize + 50);
+        this.sprite.setSize(projectileSize * 5, projectileSize * 5);
+        this.sprite.setBounds(1, 1,projectileSize * 5, projectileSize * 5);
         this.box2body.setLinearVelocity(0, 0);
         this.box2body.setAngularVelocity(0);
         hasExploded = true;

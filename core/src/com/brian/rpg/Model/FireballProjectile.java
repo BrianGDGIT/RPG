@@ -47,8 +47,8 @@ public class FireballProjectile extends Projectile {
 
         //Initialize sprite when object is created
         this.sprite = new Sprite(staffFrames[0]);
-        this.sprite.setSize(projectileSize * 3, projectileSize * 3);
-        this.sprite.setBounds(1, 1, projectileSize * 3, projectileSize * 3);
+        this.sprite.setSize(this.projectileSize * 3, this.projectileSize * 3);
+        this.sprite.setBounds(1, 1, this.projectileSize * 3, this.projectileSize * 3);
 
         //Play sound
         screen.getGameManager().get("Sounds/Fireball.wav", Sound.class).play();
@@ -72,6 +72,7 @@ public class FireballProjectile extends Projectile {
 
         //Destroy fireball after sometime after explosion
         if(hasExploded){
+            fixture.getShape().setRadius(projectileSize * 1.5f);
             explosionTimer += Gdx.graphics.getDeltaTime();
             if(explosionTimer >= 1f){
                 destroyAfterExplosion();
@@ -82,10 +83,10 @@ public class FireballProjectile extends Projectile {
     @Override
     public void onHit(){
         //Increase sprite size as fireball explodes
-        this.sprite.setSize(projectileSize * 5, projectileSize * 5);
-        this.sprite.setBounds(1, 1,projectileSize * 5, projectileSize * 5);
-        this.box2body.setLinearVelocity(0, 0);
-        this.box2body.setAngularVelocity(0);
+        sprite.setSize(projectileSize * 5, projectileSize * 5);
+        sprite.setBounds(1, 1,projectileSize * 5, projectileSize * 5);
+        box2body.setLinearVelocity(0, 0);
+        box2body.setAngularVelocity(0);
         hasExploded = true;
         screen.getGameManager().get("Sounds/Explosion.wav", Sound.class).play();
     }
