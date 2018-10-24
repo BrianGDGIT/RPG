@@ -19,13 +19,14 @@ public class FireballProjectile extends Projectile {
     Boolean hasExploded = false;
     Float explosionTimer = 0f;
 
-    public FireballProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity){
-        super(screen, createX, createY, projectileVelocity, 10);
+    public FireballProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize){
+        super(screen, createX, createY, projectileVelocity, projectileSize);
         stateTimer = 0;
         projectileLife = 5;
         projectileSpeed = 100f;
         fixture.setUserData(this);
         box2body.setType(BodyDef.BodyType.KinematicBody);
+
         texture = screen.getGameManager().get("sprites/16_sunburn_spritesheet.png", Texture.class);
 
         //Use split function to create an array of Textures
@@ -45,8 +46,8 @@ public class FireballProjectile extends Projectile {
 
         //Initialize sprite when object is created
         this.sprite = new Sprite(staffFrames[0]);
-        this.sprite.setSize(projectileSize + 30, projectileSize + 30);
-        this.sprite.setBounds(1, 1, projectileSize + 30, projectileSize + 30);
+        this.sprite.setSize(projectileSize * 3, projectileSize * 3);
+        this.sprite.setBounds(1, 1, projectileSize * 3, projectileSize * 3);
 
         //Play sound
         screen.getGameManager().get("Sounds/Fireball.wav", Sound.class).play();
@@ -80,8 +81,8 @@ public class FireballProjectile extends Projectile {
     @Override
     public void onHit(){
         //Increase sprite size as fireball explodes
-        this.sprite.setSize(projectileSize + 50, projectileSize + 50);
-        this.sprite.setBounds(1, 1,projectileSize + 50, projectileSize + 50);
+        this.sprite.setSize(projectileSize * 5, projectileSize * 5);
+        this.sprite.setBounds(1, 1,projectileSize * 5, projectileSize * 5);
         this.box2body.setLinearVelocity(0, 0);
         this.box2body.setAngularVelocity(0);
         hasExploded = true;
