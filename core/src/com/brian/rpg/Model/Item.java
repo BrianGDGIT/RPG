@@ -34,9 +34,12 @@ public class Item {
     }
 
     private void generateItem(){
-        if(MathUtils.random(0) == 0) {
+        if(MathUtils.random(1) == 0) {
             this.sprite.setRegion(itemAtlas.findRegion("book_03f"));
             this.itemType = 0;
+        }else{
+            this.sprite.setRegion(itemAtlas.findRegion("book_02b"));
+            this.itemType = 1;
         }
 
         BodyDef bdef = new BodyDef();
@@ -75,6 +78,10 @@ public class Item {
                 case 0:
                     if(!screen.getPlayer().spellBook.contains("Fireball")){
                         screen.getPlayer().spellBook.add("Fireball");
+                    }
+                case 1:
+                    if(!screen.getPlayer().spellBook.contains("Acid Blast")){
+                        screen.getPlayer().spellBook.add("Acid Blast");
                     }
 
             }

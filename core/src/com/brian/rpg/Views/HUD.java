@@ -26,10 +26,12 @@ public class HUD extends Stage {
     Image spellbookImage;
     Image magicMissileImage;
     Image fireBallImage;
+    Image acidBlastImage;
     Texture texture;
     Texture spellBookTexture;
     Texture magicMissileTexture;
     Texture fireBallTexture;
+    Texture acidBlastTexture;
 
     public HUD(PlayScreen screen){
         this.screen = screen;
@@ -63,6 +65,11 @@ public class HUD extends Stage {
         //Fireball
         fireBallTexture = screen.getGameManager().get("GUI/fireball.png", Texture.class);
         fireBallImage = new Image(fireBallTexture);
+
+        //Acid Blast
+        acidBlastTexture = screen.getGameManager().get("GUI/acidblast.png", Texture.class);
+        acidBlastImage = new Image(acidBlastTexture);
+
 
         activeSpellButton = new Button(magicMissileImage.getDrawable());
         activeSpellButton.setPosition(1600, 50);
@@ -124,10 +131,13 @@ public class HUD extends Stage {
         //Use that index to iterate to + 1 index in the array
 
         try {
+            Button.ButtonStyle style = activeSpellButton.getStyle();
             if (player.getSpellBook().get(currentSpellIndex + 1).equals("Fireball")) {
                 player.activeSpell = "Fireball";
-                Button.ButtonStyle style = activeSpellButton.getStyle();
                 style.up = fireBallImage.getDrawable();
+            }else if(player.getSpellBook().get(currentSpellIndex + 1).equals("Acid Blast")){
+                player.activeSpell = "Acid Blast";
+                style.up = acidBlastImage.getDrawable();
             }
         }catch(IndexOutOfBoundsException e){
             player.activeSpell = "Magic Missile";

@@ -55,6 +55,7 @@ public class Player extends Creature{
     //Spells
     SpellMagicMissile magicMissile = new SpellMagicMissile(screen, this);
     SpellFireball fireball = new SpellFireball(screen, this);
+    SpellAcidBlast acidBlast = new SpellAcidBlast(screen, this);
 
     public Player(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
@@ -331,6 +332,10 @@ public class Player extends Creature{
 
         if(this.activeSpell.equals("Fireball")){
             castDelay = fireball.castFireball(createX, createY, velocity);
+        }
+
+        if(this.activeSpell.equals("Acid Blast")){
+            castDelay = acidBlast.castAcidBlast(createX, createY, velocity);
         }
 
         return castDelay;
