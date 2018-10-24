@@ -28,6 +28,9 @@ public class SpellMagicMissile {
         }
 
         if(player.level == 2){
+            if(player.currentDirection == Creature.Direction.LEFT){
+                createX -= 5;
+            }
             staffProjectile = new StaffProjectile(screen, createX, createY, velocity);
             screen.projectilesToRender(staffProjectile);
 
@@ -36,8 +39,11 @@ public class SpellMagicMissile {
         }
 
         if(player.level >= 3){
+            if(player.currentDirection == Creature.Direction.LEFT){
+                createX -= 15;
+            }
             //Projectile 1
-            staffProjectile = new StaffProjectile(screen, createX , createY, velocity);
+            staffProjectile = new StaffProjectile(screen, createX, createY, velocity);
             screen.projectilesToRender(staffProjectile);
             //Projectile2
             staffProjectile = new StaffProjectile(screen, createX + 10, createY, velocity);
