@@ -35,11 +35,11 @@ public class Item {
 
     private void generateItem(){
         if(MathUtils.random(1) == 0) {
-            this.sprite.setRegion(itemAtlas.findRegion("book_03f"));
-            this.itemType = 0;
+            sprite.setRegion(itemAtlas.findRegion("book_03f"));
+            itemType = 0;
         }else{
-            this.sprite.setRegion(itemAtlas.findRegion("book_02b"));
-            this.itemType = 1;
+            sprite.setRegion(itemAtlas.findRegion("book_02b"));
+            itemType = 1;
         }
 
         BodyDef bdef = new BodyDef();
@@ -59,7 +59,7 @@ public class Item {
         fixture.setUserData(this);
 
         //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
-        this.sprite.setPosition(box2body.getPosition().x - this.sprite.getWidth() / 2, box2body.getPosition().y - this.sprite.getHeight() / 2);
+        sprite.setPosition(box2body.getPosition().x - sprite.getWidth() / 2, box2body.getPosition().y - sprite.getHeight() / 2);
 
         //Put generated item into PlayScreen array for rendering
         screen.itemsToRender(this);
@@ -74,23 +74,22 @@ public class Item {
             }
 
             //Give item to player on contact
-            switch(this.itemType){
+            switch(itemType){
                 case 0:
                     if(!screen.getPlayer().spellBook.contains("Fireball")){
                         screen.getPlayer().spellBook.add("Fireball");
                     }
+                    break;
                 case 1:
                     if(!screen.getPlayer().spellBook.contains("Acid Blast")){
                         screen.getPlayer().spellBook.add("Acid Blast");
                     }
-
+                    break;
             }
-
-
         }
     }
 
-    public int getItemType(){return this.itemType;}
+    public int getItemType(){return itemType;}
 
-    public Sprite getSprite(){return this.sprite;}
+    public Sprite getSprite(){return sprite;}
 }
