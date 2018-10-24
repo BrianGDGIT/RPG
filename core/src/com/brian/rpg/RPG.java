@@ -2,6 +2,7 @@ package com.brian.rpg;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -39,6 +40,7 @@ public class RPG extends Game {
 		manager.load("Sounds/orc-34-hit.wav", Sound.class);
 		manager.load("Sounds/orc-32-death.wav", Sound.class);
 		manager.load("Sounds/zombie-grunt.wav", Sound.class);
+		manager.load("Sounds/zombie-moan.wav", Music.class);
 		manager.load("sprites/vortex_spritesheet.png", Texture.class);
 		manager.load("sprites/11_fire_spritesheet.png", Texture.class);
 		manager.load("sprites/16_sunburn_spritesheet.png", Texture.class);

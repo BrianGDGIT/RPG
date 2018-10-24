@@ -1,17 +1,23 @@
 package com.brian.rpg.Model;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.brian.rpg.Views.PlayScreen;
 
 public class SkeletonEnemy extends Creature {
     float stateTimer = 0;
     boolean isZombie = false;
+    int moanTimer = 0;
+
+
 
     //Animations
     private Animation<TextureRegion> skeletonWalk;
@@ -72,6 +78,14 @@ public class SkeletonEnemy extends Creature {
         //Update Animation every frame
         sprite.setRegion(skeletonWalk.getKeyFrame(stateTimer, true));
         stateTimer += delta;
+
+        //Zombie moan check
+        if(isZombie && moanTimer > 500 && box2body.getPosition().dst(screen.getPlayer().box2body.getPosition()) < 50) {
+            screen.getGameManager().get("Sounds/zombie-moan.wav", Music.class).play();
+            moanTimer = 0;
+        }
+
+        moanTimer++;
     }
 
     @Override
