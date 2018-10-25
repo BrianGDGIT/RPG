@@ -19,7 +19,7 @@ public abstract class Creature{
     Vector2 spawnPoint;
 
     //Animation states
-    enum State {IDLE, WALKING, ATTACKING, DEAD};
+    enum State {IDLE, WALKING, ATTACKING, DEAD, HASBEENATTACKED};
     enum Direction {LEFT, RIGHT};
 
     State currentState;

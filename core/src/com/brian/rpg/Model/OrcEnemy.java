@@ -15,6 +15,9 @@ public class OrcEnemy extends Creature {
     //Animations
     private Animation<TextureRegion> orcWalk;
 
+    //Velocity equals target position - current position
+    Vector2 velocity;
+
     public OrcEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
         experienceValue = 10;
@@ -48,9 +51,6 @@ public class OrcEnemy extends Creature {
         //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
         sprite.setPosition(orcPosition.x - sprite.getWidth() / 2, orcPosition.y - sprite.getHeight() / 2);
 
-        //Velocity equals target position - current position
-        Vector2 velocity;
-
         //Wander AI
         if(aiTimer >= 5 && currentState != State.ATTACKING){
             int wanderRangeX = MathUtils.random(100);
@@ -76,7 +76,7 @@ public class OrcEnemy extends Creature {
             currentState = State.ATTACKING;
             velocity = new Vector2(playerPosition.x - orcPosition.x, playerPosition.y - orcPosition.y);
             box2body.setLinearVelocity(velocity.scl(speed));
-        }else{
+        }else if(currentState != State.HASBEENATTACKED){
             currentState = State.IDLE;
         }
 
@@ -104,6 +104,15 @@ public class OrcEnemy extends Creature {
                 screen.getPlayer().increaseKillCount();
             }
         }
+        //Attack player when damaged
+        //Prevents player from sniping monsters using Wander AI
+        if(currentState != State.ATTACKING){
+            Vector2 orcPosition = new Vector2(box2body.getPosition().x, box2body.getPosition().y);
+            Vector2 playerPosition = new Vector2(screen.getPlayer().box2body.getPosition().x, screen.getPlayer().box2body.getPosition().y);
 
+            currentState = State.HASBEENATTACKED;
+            velocity = new Vector2(playerPosition.x - orcPosition.x, playerPosition.y - orcPosition.y);
+            box2body.setLinearVelocity(velocity.scl(speed));
+        }
     }
 }
