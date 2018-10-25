@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.brian.rpg.Model.AreaTransitionTile;
 import com.brian.rpg.Model.ChestTile;
+import com.brian.rpg.Model.TrapTile;
 import com.brian.rpg.Model.WallTile;
 import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
@@ -37,6 +38,12 @@ public class Box2dWorldGenerator {
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new AreaTransitionTile(world, screen, map, rect);
+        }
+
+        //Create Trap tile bodies
+        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            new TrapTile(world, screen, map, rect);
         }
     }
 }
