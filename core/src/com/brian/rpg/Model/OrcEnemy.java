@@ -4,11 +4,13 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.brian.rpg.Views.PlayScreen;
 
 public class OrcEnemy extends Creature {
     float stateTimer = 0;
+    float aiTimer = 5;
 
     //Animations
     private Animation<TextureRegion> orcWalk;
@@ -40,20 +42,49 @@ public class OrcEnemy extends Creature {
 
     @Override
     public void update(float delta) {
-        //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
-        sprite.setPosition(box2body.getPosition().x - sprite.getWidth() / 2, box2body.getPosition().y - sprite.getHeight() / 2);
-
-        //Move toward player
+        Vector2 orcPosition = new Vector2(box2body.getPosition().x, box2body.getPosition().y);
         Vector2 playerPosition = new Vector2(screen.getPlayer().box2body.getPosition().x, screen.getPlayer().box2body.getPosition().y);
 
-        //Velocity equals target position - current position
-        Vector2 velocity = new Vector2(playerPosition.x - box2body.getPosition().x, playerPosition.y - box2body.getPosition().y);
+        //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
+        sprite.setPosition(orcPosition.x - sprite.getWidth() / 2, orcPosition.y - sprite.getHeight() / 2);
 
-        box2body.setLinearVelocity(velocity.scl(speed));
+        //Velocity equals target position - current position
+        Vector2 velocity;
+
+        //Wander AI
+        if(aiTimer >= 5 && currentState != State.ATTACKING){
+            int wanderRangeX = MathUtils.random(100);
+            int wanderRangeY = MathUtils.random(100);
+            int randomDirectionCheck = MathUtils.random(3);
+            //Depending on direction check move the enemy different directions
+            //This insures the enemy moves in a variety of directions
+            if(randomDirectionCheck == 0) {
+                velocity = new Vector2(orcPosition.x + wanderRangeX - orcPosition.x, orcPosition.y + wanderRangeY - orcPosition.y);
+            }else if(randomDirectionCheck == 1){
+                velocity = new Vector2(orcPosition.x - wanderRangeX - orcPosition.x, orcPosition.y - wanderRangeY - orcPosition.y);
+            }else if(randomDirectionCheck == 2){
+                velocity = new Vector2(orcPosition.x + wanderRangeX - orcPosition.x, orcPosition.y - wanderRangeY - orcPosition.y);
+            }else{
+                velocity = new Vector2(orcPosition.x - wanderRangeX - orcPosition.x, orcPosition.y + wanderRangeY - orcPosition.y);
+            }
+            box2body.setLinearVelocity(velocity.scl(speed));
+            aiTimer = 0;
+        }
+
+        //Attack AI
+        if(orcPosition.dst(playerPosition) < 100) {
+            currentState = State.ATTACKING;
+            velocity = new Vector2(playerPosition.x - orcPosition.x, playerPosition.y - orcPosition.y);
+            box2body.setLinearVelocity(velocity.scl(speed));
+        }else{
+            currentState = State.IDLE;
+        }
 
         //Update Animation every frame
         sprite.setRegion(orcWalk.getKeyFrame(stateTimer, true));
+
         stateTimer += delta;
+        aiTimer += delta;
     }
 
     @Override

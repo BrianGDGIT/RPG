@@ -69,11 +69,11 @@ public class SkeletonEnemy extends Creature {
         Vector2 playerPosition = new Vector2(screen.getPlayer().box2body.getPosition().x, screen.getPlayer().box2body.getPosition().y);
 
         //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
-        sprite.setPosition(box2body.getPosition().x - sprite.getWidth() / 2, box2body.getPosition().y - sprite.getHeight() / 2);
+        sprite.setPosition(skeletonPosition.x - sprite.getWidth() / 2, skeletonPosition.y - sprite.getHeight() / 2);
 
 
         //Velocity equals target position - current position
-        Vector2 velocity = new Vector2(playerPosition.x - box2body.getPosition().x, playerPosition.y - box2body.getPosition().y);
+        Vector2 velocity;
 
         //Wander AI
         if(aiTimer >= 5 && currentState != State.ATTACKING){
@@ -98,6 +98,7 @@ public class SkeletonEnemy extends Creature {
         //Attack AI
         if(skeletonPosition.dst(playerPosition) < 100) {
             currentState = State.ATTACKING;
+            velocity = new Vector2(playerPosition.x - skeletonPosition.x, playerPosition.y - skeletonPosition.y);
             box2body.setLinearVelocity(velocity.scl(speed));
         }else{
             currentState = State.IDLE;
