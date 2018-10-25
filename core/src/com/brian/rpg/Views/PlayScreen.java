@@ -43,6 +43,7 @@ public class PlayScreen implements Screen {
     MonsterSpawner monsterSpawner6;
     MonsterSpawner monsterSpawner7;
     MonsterSpawner monsterSpawner8;
+    MonsterSpawner monsterSpawner9;
 
     //Item related variables
     Item item;
@@ -120,6 +121,7 @@ public class PlayScreen implements Screen {
         monsterSpawner6 = new MonsterSpawner(this, new Vector2(1890, 98), "Normal", 10);
         monsterSpawner7 = new MonsterSpawner(this, new Vector2(1818, 147), "Normal", 10);
         monsterSpawner8 = new MonsterSpawner(this, new Vector2(1822, 28), "Boss", 10, "Skeleton");
+        monsterSpawner9 = new MonsterSpawner(this, new Vector2(1645, 801), "Boss", 150, "Skeleton");
 
         worldGenerator = new Box2dWorldGenerator(world,this, map);
 
@@ -158,6 +160,7 @@ public class PlayScreen implements Screen {
         monsterSpawner6.update(delta);
         monsterSpawner7.update(delta);
         monsterSpawner8.update(delta);
+        monsterSpawner9.update(delta);
 
         //Update projectiles
         //Can't use advanced forloop here because update() removes items from the list, which causes concurrentModificationException
