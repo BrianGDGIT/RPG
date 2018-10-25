@@ -17,12 +17,16 @@ public class TrapTile extends InteractiveTile {
         //setCategoryFilter(RPG.CHEST_BIT);
     }
 
-    public void onContact(){
+    public void onContact(Creature creature){
         final float playerX = screen.getPlayer().box2body.getPosition().x;
         final float playerY = screen.getPlayer().box2body.getPosition().y;
         //Setting tile to null to show trap beneath. I can't get spikes tile id for some reason.
         getCell().setTile(null);
-        screen.getPlayer().currentState = Creature.State.DEAD;
+        if(creature instanceof Player) {
+            screen.getPlayer().currentState = Creature.State.DEAD;
+        }else{
+            creature.onHit(10);
+        }
     }
 
     private TiledMapTileLayer.Cell getCell(){

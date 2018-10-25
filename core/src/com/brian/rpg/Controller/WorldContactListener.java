@@ -57,12 +57,22 @@ public class WorldContactListener implements ContactListener {
                     ((AreaTransitionTile) object.getUserData()).onContact();
                 }
 
-                //Trap Tile collision
-                if(object.getUserData() != null && object.getUserData() instanceof TrapTile){
-                    ((TrapTile) object.getUserData()).onContact();
-                }
             }
         }
+
+        if(fixA.getUserData() != null && fixB.getUserData() != null) {
+            if (fixA.getUserData() instanceof TrapTile || fixB.getUserData() instanceof TrapTile) {
+                Fixture creature = fixA.getUserData() instanceof Creature ? fixA : fixB;
+                Fixture trapTile = creature == fixA ? fixB : fixA;
+
+                //Trap Tile collision
+                if(trapTile.getUserData() != null && trapTile.getUserData() instanceof TrapTile){
+                    ((TrapTile) trapTile.getUserData()).onContact(((Creature) creature.getUserData()));
+                }
+
+            }
+        }
+
     }
 
     @Override
