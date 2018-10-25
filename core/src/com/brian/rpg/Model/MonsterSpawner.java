@@ -23,7 +23,7 @@ public class MonsterSpawner {
     String spawnerType;
 
     public MonsterSpawner(PlayScreen screen, Vector2 spawnPoint, String spawnerType, int spawnerDistanceMin){
-        int number = MathUtils.random(3);
+        int number = MathUtils.random(2);
         this.screen = screen;
         this.world = screen.getWorld();
         this.spawnPoint = spawnPoint;

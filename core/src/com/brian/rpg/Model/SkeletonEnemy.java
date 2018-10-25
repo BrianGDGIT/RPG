@@ -16,6 +16,7 @@ public class SkeletonEnemy extends Creature {
     float stateTimer = 0;
     boolean isZombie = false;
     int moanTimer = 0;
+    float aiTimer = 5;
 
 
 
@@ -25,7 +26,7 @@ public class SkeletonEnemy extends Creature {
     public SkeletonEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
         experienceValue = 10;
-        speed = 2;
+        speed = 1;
         fixture.setUserData(this);
         //Setting sprite
         sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton"));
@@ -36,7 +37,7 @@ public class SkeletonEnemy extends Creature {
     public SkeletonEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint, int size){
         super(screen, hp, mana, gameClass, spawnPoint);
         experienceValue = 10 + size;
-        speed = 0.6f;
+        speed = 1;
         this.size = size;
         fixture.getShape().setRadius(size / 2.3f);
         fixture.setUserData(this);
@@ -64,16 +65,43 @@ public class SkeletonEnemy extends Creature {
 
     @Override
     public void update(float delta) {
+        Vector2 skeletonPosition = new Vector2(box2body.getPosition().x, box2body.getPosition().y);
+        Vector2 playerPosition = new Vector2(screen.getPlayer().box2body.getPosition().x, screen.getPlayer().box2body.getPosition().y);
+
         //Sets sprite position to center of box2body position so the sprite and the physics body are in the same space
         sprite.setPosition(box2body.getPosition().x - sprite.getWidth() / 2, box2body.getPosition().y - sprite.getHeight() / 2);
 
-        //Move toward player
-        Vector2 playerPosition = new Vector2(screen.getPlayer().box2body.getPosition().x, screen.getPlayer().box2body.getPosition().y);
 
         //Velocity equals target position - current position
         Vector2 velocity = new Vector2(playerPosition.x - box2body.getPosition().x, playerPosition.y - box2body.getPosition().y);
 
-        box2body.setLinearVelocity(velocity.scl(speed));
+        //Wander AI
+        if(aiTimer >= 5 && currentState != State.ATTACKING){
+            int wanderRangeX = MathUtils.random(100);
+            int wanderRangeY = MathUtils.random(100);
+            int randomDirectionCheck = MathUtils.random(3);
+            //Depending on direction check move the enemy different directions
+            //This insures the enemy moves in a variety of directions
+            if(randomDirectionCheck == 0) {
+                velocity = new Vector2(skeletonPosition.x + wanderRangeX - skeletonPosition.x, skeletonPosition.y + wanderRangeY - skeletonPosition.y);
+            }else if(randomDirectionCheck == 1){
+                velocity = new Vector2(skeletonPosition.x - wanderRangeX - skeletonPosition.x, skeletonPosition.y - wanderRangeY - skeletonPosition.y);
+            }else if(randomDirectionCheck == 2){
+                velocity = new Vector2(skeletonPosition.x + wanderRangeX - skeletonPosition.x, skeletonPosition.y - wanderRangeY - skeletonPosition.y);
+            }else{
+                velocity = new Vector2(skeletonPosition.x - wanderRangeX - skeletonPosition.x, skeletonPosition.y + wanderRangeY - skeletonPosition.y);
+            }
+            box2body.setLinearVelocity(velocity.scl(speed));
+            aiTimer = 0;
+        }
+
+        //Attack AI
+        if(skeletonPosition.dst(playerPosition) < 100) {
+            currentState = State.ATTACKING;
+            box2body.setLinearVelocity(velocity.scl(speed));
+        }else{
+            currentState = State.IDLE;
+        }
 
         //Update Animation every frame
         sprite.setRegion(skeletonWalk.getKeyFrame(stateTimer, true));
@@ -86,6 +114,7 @@ public class SkeletonEnemy extends Creature {
         }
 
         moanTimer++;
+        aiTimer+= delta;
     }
 
     @Override
