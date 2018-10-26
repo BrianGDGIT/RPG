@@ -43,8 +43,9 @@ public class Player extends Creature{
     //Death variables
     float deathTimer = 0;
 
-    //Player states
+    //Player Screen states
     public boolean characterScreenDisplayed = false;
+    public boolean inventoryDisplayed = false;
     public boolean spellbookDisplayed = false;
 
     //Spell Related
@@ -240,12 +241,21 @@ public class Player extends Creature{
                 screen.getHud().equipNextSpell();
             }
 
-            //Display Inventory
+            //Display Character Screen
             if(Gdx.input.isKeyJustPressed(C)){
                 if(!characterScreenDisplayed) {
                     characterScreenDisplayed = true;
                 }else{
                     characterScreenDisplayed = false;
+                }
+            }
+
+            //Display Inventory
+            if(Gdx.input.isKeyJustPressed(I)){
+                if(!inventoryDisplayed){
+                    inventoryDisplayed = true;
+                }else{
+                    inventoryDisplayed = false;
                 }
             }
 

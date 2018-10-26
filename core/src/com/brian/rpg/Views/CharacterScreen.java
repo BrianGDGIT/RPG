@@ -11,8 +11,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.brian.rpg.Model.Player;
 import com.brian.rpg.RPG;
 
-import static com.badlogic.gdx.Input.Keys.I;
-
 public class CharacterScreen {
     private RPG game;
 
@@ -49,5 +47,4 @@ public class CharacterScreen {
         }
 
     }
-
 }

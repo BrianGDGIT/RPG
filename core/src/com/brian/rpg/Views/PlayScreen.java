@@ -27,6 +27,7 @@ public class PlayScreen implements Screen {
     //Screens
     CharacterScreen characterScreen;
     HUD hud;
+    Inventory inventory;
 
     //Texture Resources
     private TextureAtlas wizardSpriteAtlas;
@@ -107,8 +108,11 @@ public class PlayScreen implements Screen {
         //Create player
         player = new Player(this,10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
 
-        //Create Inventory Screen
+        //Create Character Screen
         characterScreen = new CharacterScreen(game, player, game.batch);
+
+        //Create Inventory Screen
+        inventory = new Inventory(game, this, player, game.batch);
 
         //Create HUD
         hud = new HUD(this);
@@ -234,10 +238,15 @@ public class PlayScreen implements Screen {
 
         game.batch.end();
 
-        //Render Inventory Screen
+        //Render Character Screen
         if(player.characterScreenDisplayed){
             characterScreen.showCharacterScreen();
             characterScreen.stage.draw();
+        }
+
+        //Render Inventory Screen
+        if(player.inventoryDisplayed){
+            inventory.stage.draw();
         }
 
         //Render Spellbook
