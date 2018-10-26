@@ -58,8 +58,8 @@ public class HUD extends Stage {
         inventoryButton.setPosition(1700, 50);
         //Set button position on Android. It's different for some reason even though I'm using the same viewPort???
         if(Gdx.app.getType() == Application.ApplicationType.Android){
-            characterSheetButton.setPosition(2300, 50);
-            characterSheetButton.setSize(100, 100);
+            inventoryButton.setPosition(2300, 50);
+            inventoryButton.setSize(100, 100);
         }
 
         //SpellBook button
