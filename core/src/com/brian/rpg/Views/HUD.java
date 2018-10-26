@@ -92,11 +92,11 @@ public class HUD extends Stage {
         timeSinceLastClick += Gdx.graphics.getDeltaTime();
 
         //Character sheet button
-        if(!player.inventoryDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 0.5){
-            player.inventoryDisplayed = true;
+        if(!player.characterScreenDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 0.5){
+            player.characterScreenDisplayed = true;
             timeSinceLastClick = 0f;
-        }else if(player.inventoryDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 0.5){
-            player.inventoryDisplayed = false;
+        }else if(player.characterScreenDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 0.5){
+            player.characterScreenDisplayed = false;
             timeSinceLastClick = 0f;
         }
 

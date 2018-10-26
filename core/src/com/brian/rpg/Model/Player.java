@@ -44,7 +44,7 @@ public class Player extends Creature{
     float deathTimer = 0;
 
     //Player states
-    public boolean inventoryDisplayed = false;
+    public boolean characterScreenDisplayed = false;
     public boolean spellbookDisplayed = false;
 
     //Spell Related
@@ -242,10 +242,10 @@ public class Player extends Creature{
 
             //Display Inventory
             if(Gdx.input.isKeyJustPressed(C)){
-                if(!inventoryDisplayed) {
-                    inventoryDisplayed = true;
+                if(!characterScreenDisplayed) {
+                    characterScreenDisplayed = true;
                 }else{
-                    inventoryDisplayed = false;
+                    characterScreenDisplayed = false;
                 }
             }
 

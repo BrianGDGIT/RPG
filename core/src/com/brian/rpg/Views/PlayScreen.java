@@ -25,7 +25,7 @@ public class PlayScreen implements Screen {
     private RPG game;
 
     //Screens
-    InventoryScreen inventory;
+    CharacterScreen characterScreen;
     HUD hud;
 
     //Texture Resources
@@ -108,7 +108,7 @@ public class PlayScreen implements Screen {
         player = new Player(this,10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
 
         //Create Inventory Screen
-        inventory = new InventoryScreen(game, player, game.batch);
+        characterScreen = new CharacterScreen(game, player, game.batch);
 
         //Create HUD
         hud = new HUD(this);
@@ -235,15 +235,15 @@ public class PlayScreen implements Screen {
         game.batch.end();
 
         //Render Inventory Screen
-        if(player.inventoryDisplayed){
-            inventory.showCharacterScreen();
-            inventory.stage.draw();
+        if(player.characterScreenDisplayed){
+            characterScreen.showCharacterScreen();
+            characterScreen.stage.draw();
         }
 
         //Render Spellbook
         if(player.spellbookDisplayed){
-            inventory.showSpellbook();
-            inventory.stage.draw();
+            characterScreen.showSpellbook();
+            characterScreen.stage.draw();
         }
 
         //Render HUD

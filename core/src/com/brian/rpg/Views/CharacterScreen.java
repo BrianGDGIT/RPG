@@ -13,7 +13,7 @@ import com.brian.rpg.RPG;
 
 import static com.badlogic.gdx.Input.Keys.I;
 
-public class InventoryScreen {
+public class CharacterScreen {
     private RPG game;
 
     public Stage stage;
@@ -24,7 +24,7 @@ public class InventoryScreen {
 
     TextArea textArea;
 
-    public InventoryScreen(RPG game, Player player, SpriteBatch batch){
+    public CharacterScreen(RPG game, Player player, SpriteBatch batch){
         this.game = game;
         this.player = player;
 
