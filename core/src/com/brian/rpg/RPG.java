@@ -51,6 +51,8 @@ public class RPG extends Game {
 		manager.load("GUI/acidblast.png", Texture.class);
 		manager.load("GUI/spell-book.png", Texture.class);
 		manager.load("GUI/Inventory.jpg", Texture.class);
+		manager.load("GUI/robe.png", Texture.class);
+		manager.load("GUI/wizard-face.png", Texture.class);
 		manager.finishLoading();
 		this.setScreen(new MainMenuScreen(this));
 	}

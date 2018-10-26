@@ -271,7 +271,7 @@ public class Player extends Creature{
 
 
             //Attack
-            if(Gdx.input.isTouched() && !hasAttacked && currentState != State.DEAD && !screen.getHud().characterSheetButton.isPressed() && !screen.getHud().spellbookButton.isPressed() && !screen.getHud().activeSpellButton.isPressed()){
+            if(Gdx.input.isTouched() && !hasAttacked && currentState != State.DEAD && !screen.getHud().characterSheetButton.isPressed() && !screen.getHud().inventoryButton.isPressed() && !screen.getHud().spellbookButton.isPressed() && !screen.getHud().activeSpellButton.isPressed()){
                 hasAttacked = true;
             }
 

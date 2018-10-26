@@ -18,16 +18,19 @@ public class HUD extends Stage {
     Boolean buttonClicked = false;
 
     public Button characterSheetButton;
+    public Button inventoryButton;
     public Button spellbookButton;
     public Button activeSpellButton;
 
 
-    Image image;
+    Image characterSheetimage;
+    Image inventoryImage;
     Image spellbookImage;
     Image magicMissileImage;
     Image fireBallImage;
     Image acidBlastImage;
-    Texture texture;
+    Texture characterSheettexture;
+    Texture inventoryTexture;
     Texture spellBookTexture;
     Texture magicMissileTexture;
     Texture fireBallTexture;
@@ -38,9 +41,9 @@ public class HUD extends Stage {
         this.player = screen.getPlayer();
 
         //Character Sheet Button
-        texture = new Texture(Gdx.files.internal("GUI/robe.png"));
-        image = new Image(texture);
-        characterSheetButton = new Button(image.getDrawable());
+        characterSheettexture = screen.getGameManager().get("GUI/wizard-face.png", Texture.class);
+        characterSheetimage = new Image(characterSheettexture);
+        characterSheetButton = new Button(characterSheetimage.getDrawable());
         characterSheetButton.setPosition(1800, 50);
         //Set button position on Android. It's different for some reason even though I'm using the same viewPort???
         if(Gdx.app.getType() == Application.ApplicationType.Android){
@@ -48,13 +51,24 @@ public class HUD extends Stage {
             characterSheetButton.setSize(100, 100);
         }
 
+        //Inventory Button
+        inventoryTexture = screen.getGameManager().get("GUI/robe.png", Texture.class);
+        inventoryImage = new Image(inventoryTexture);
+        inventoryButton = new Button(inventoryImage.getDrawable());
+        inventoryButton.setPosition(1700, 50);
+        //Set button position on Android. It's different for some reason even though I'm using the same viewPort???
+        if(Gdx.app.getType() == Application.ApplicationType.Android){
+            characterSheetButton.setPosition(2300, 50);
+            characterSheetButton.setSize(100, 100);
+        }
+
         //SpellBook button
         spellBookTexture = screen.getGameManager().get("GUI/spell-book.png", Texture.class);
         spellbookImage = new Image(spellBookTexture);
         spellbookButton = new Button(spellbookImage.getDrawable());
-        spellbookButton.setPosition(1700, 50);
+        spellbookButton.setPosition(1600, 50);
         if(Gdx.app.getType() == Application.ApplicationType.Android){
-            spellbookButton.setPosition( 2300, 50);
+            spellbookButton.setPosition( 2100, 50);
             spellbookButton.setSize(100, 100);
         }
 
@@ -72,9 +86,9 @@ public class HUD extends Stage {
 
 
         activeSpellButton = new Button(magicMissileImage.getDrawable());
-        activeSpellButton.setPosition(1600, 50);
+        activeSpellButton.setPosition(1500, 50);
         if(Gdx.app.getType() == Application.ApplicationType.Android){
-            activeSpellButton.setPosition(2100, 50);
+            activeSpellButton.setPosition(1900, 50);
             activeSpellButton.setSize(100, 100);
         }
 
@@ -83,6 +97,7 @@ public class HUD extends Stage {
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(characterSheetButton);
+        stage.addActor(inventoryButton);
         stage.addActor(spellbookButton);
         stage.addActor(activeSpellButton);
     }
@@ -97,6 +112,15 @@ public class HUD extends Stage {
             timeSinceLastClick = 0f;
         }else if(player.characterScreenDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 0.5){
             player.characterScreenDisplayed = false;
+            timeSinceLastClick = 0f;
+        }
+
+        //Inventory button
+        if(!player.inventoryDisplayed && inventoryButton.isPressed() && timeSinceLastClick > 0.5){
+            player.inventoryDisplayed = true;
+            timeSinceLastClick = 0f;
+        }else if(player.inventoryDisplayed && inventoryButton.isPressed() && timeSinceLastClick > 0.5){
+            player.inventoryDisplayed = false;
             timeSinceLastClick = 0f;
         }
 
