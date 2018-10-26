@@ -24,7 +24,7 @@ public class AreaTransitionTile extends InteractiveTile {
         Gdx.app.postRunnable(new Runnable(){
             @Override
             public void run(){
-                player.box2body.setTransform(1790, 95, player.box2body.getAngle());
+                player.box2body.setTransform(23, 95, player.box2body.getAngle());
             }
         });
     }
