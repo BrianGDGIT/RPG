@@ -34,12 +34,20 @@ public class Item {
     }
 
     private void generateItem(){
-        if(MathUtils.random(1) == 0) {
+        //int randomNumber = MathUtils.random(2);
+        int randomNumber = 2;
+        if(randomNumber == 0) {
+            //Fireball
             sprite.setRegion(itemAtlas.findRegion("book_03f"));
             itemType = 0;
-        }else{
-            sprite.setRegion(itemAtlas.findRegion("book_02b"));
+        }else if(randomNumber == 1){
+            //Acid Blast
+            sprite.setRegion(itemAtlas.findRegion("book_02f"));
             itemType = 1;
+        }else{
+            //Horrid Wilting
+            sprite.setRegion(itemAtlas.findRegion("book_01f"));
+            itemType = 2;
         }
 
         BodyDef bdef = new BodyDef();
@@ -85,6 +93,10 @@ public class Item {
                         screen.getPlayer().spellBook.add("Acid Blast");
                     }
                     break;
+                case 2:
+                    if(!screen.getPlayer().spellBook.contains("Horrid Wilting")){
+                        screen.getPlayer().spellBook.add("Horrid Wilting");
+                    }
             }
         }
     }

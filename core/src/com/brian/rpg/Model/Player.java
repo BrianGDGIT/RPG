@@ -57,6 +57,7 @@ public class Player extends Creature{
     SpellMagicMissile magicMissile = new SpellMagicMissile(screen, this);
     SpellFireball fireball = new SpellFireball(screen, this);
     SpellAcidBlast acidBlast = new SpellAcidBlast(screen, this);
+    SpellHorridWilting horridWilting = new SpellHorridWilting(screen, this);
 
     public Player(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
@@ -346,6 +347,10 @@ public class Player extends Creature{
 
         if(this.activeSpell.equals("Acid Blast")){
             castDelay = acidBlast.castAcidBlast(createX, createY, velocity);
+        }
+
+        if(this.activeSpell.equals("Horrid Wilting")){
+            castDelay = horridWilting.castHorridWilting(createX, createY, velocity);
         }
 
         return castDelay;

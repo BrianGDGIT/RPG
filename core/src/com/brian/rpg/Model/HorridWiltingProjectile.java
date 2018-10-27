@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.brian.rpg.Views.PlayScreen;
 
@@ -15,6 +16,7 @@ public class HorridWiltingProjectile extends Projectile {
     private static final int FRAME_ROWS = 8;
     Animation<TextureRegion> wiltingProjectileAnimation;
     Animation<TextureRegion> wiltingExplosionAnimation;
+
 
     //Explosion related variables
     Boolean hasExploded = false;
@@ -43,6 +45,10 @@ public class HorridWiltingProjectile extends Projectile {
         sprite = new Sprite(wiltingProjectileFrames[0]);
         sprite.setSize(projectileSize * 3, projectileSize * 3);
         sprite.setBounds(1, 1, projectileSize * 3, projectileSize * 3);
+
+        rotateSprite();
+
+        System.out.println(screen.getPlayer().box2body.getAngle());
         sprite.setColor(Color.GREEN);
 
         //Play sound
@@ -53,7 +59,7 @@ public class HorridWiltingProjectile extends Projectile {
     }
 
     public void update(){
-        sprite.setPosition(box2body.getPosition().x - sprite.getWidth() / 2, box2body.getPosition().y - sprite.getHeight() /2);
+        sprite.setPosition(box2body.getPosition().x - sprite.getWidth() / 2, box2body.getPosition().y - sprite.getHeight() / 2);
         if(!hasExploded) {
             sprite.setRegion(wiltingProjectileAnimation.getKeyFrame(stateTimer, true));
         }
@@ -71,9 +77,10 @@ public class HorridWiltingProjectile extends Projectile {
         if(hasExploded){
             sprite.setRegion(wiltingExplosionAnimation.getKeyFrame(stateTimer, true));
             sprite.setColor(Color.GREEN);
-            fixture.getShape().setRadius(projectileSize * 1.5f);
+            sprite.setRotation(0);
+            fixture.getShape().setRadius(projectileSize * 5);
             explosionTimer += Gdx.graphics.getDeltaTime();
-            if(explosionTimer >= 1f){
+            if(explosionTimer >= 5f){
                 destroyAfterExplosion();
             }
         }
@@ -82,8 +89,9 @@ public class HorridWiltingProjectile extends Projectile {
     @Override
     public void onHit(){
         //Increase sprite size as fireball explodes
-        sprite.setSize(projectileSize * 5, projectileSize * 5);
-        sprite.setBounds(1, 1,projectileSize * 5, projectileSize * 5);
+        sprite.setSize(projectileSize * 20, projectileSize * 20);
+        sprite.setBounds(1, 1,projectileSize * 20, projectileSize * 20);
+
         box2body.setLinearVelocity(0, 0);
         box2body.setAngularVelocity(0);
         hasExploded = true;
@@ -116,5 +124,12 @@ public class HorridWiltingProjectile extends Projectile {
         }
 
         return animationFrames;
+    }
+
+    private void rotateSprite(){
+        //Rotates sprite based on direction
+        sprite.setRotation(MathUtils.atan2(projectileVelocity.x, projectileVelocity.y) * MathUtils.radiansToDegrees);
+        //Keeps sprite centered with body after rotation
+        sprite.setOriginCenter();
     }
 }

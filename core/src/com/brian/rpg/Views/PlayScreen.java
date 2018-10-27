@@ -66,9 +66,6 @@ public class PlayScreen implements Screen {
     private Box2dWorldGenerator worldGenerator;
     private Box2DDebugRenderer b2dr;
 
-    //Player body for area transition
-    public Body playerBody;
-
     //Map variables
     private TmxMapLoader mapLoader;
     private TiledMap map;
@@ -206,7 +203,7 @@ public class PlayScreen implements Screen {
         mapRenderer.render();
 
         //Render Box2d debug lines
-        //b2dr.render(world, gameCamera.combined);
+        b2dr.render(world, gameCamera.combined);
 
         game.batch.setProjectionMatrix(gameCamera.combined);
         game.batch.begin();
