@@ -126,7 +126,7 @@ public class PlayScreen implements Screen {
         monsterSpawner6 = new MonsterSpawner(this, new Vector2(50, 28), "Normal", 10, "Skeleton", 20);
         monsterSpawner7 = new MonsterSpawner(this, new Vector2(50, 147), "Normal", 10, "Skeleton", 20);
         monsterSpawner8 = new MonsterSpawner(this, new Vector2(90, 98), "Boss", 10, "Skeleton", 1);
-        monsterSpawner9 = new MonsterSpawner(this, new Vector2(1645, 801), "Boss", 150, "Orc", 1);
+        monsterSpawner9 = new MonsterSpawner(this, new Vector2(1645, 801), "Boss", 150,1);
         monsterSpawner10 = new MonsterSpawner(this, new Vector2(1424, 330), "Normal", 150, 5);
 
         worldGenerator = new Box2dWorldGenerator(world,this, map);
@@ -206,7 +206,7 @@ public class PlayScreen implements Screen {
         mapRenderer.render();
 
         //Render Box2d debug lines
-        b2dr.render(world, gameCamera.combined);
+        //b2dr.render(world, gameCamera.combined);
 
         game.batch.setProjectionMatrix(gameCamera.combined);
         game.batch.begin();
