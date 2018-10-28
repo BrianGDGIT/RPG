@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.brian.rpg.RPG;
 import com.brian.rpg.Views.PlayScreen;
 
 public class HorridWiltingProjectile extends Projectile {
@@ -42,7 +44,6 @@ public class HorridWiltingProjectile extends Projectile {
         sprite.setSize(projectileSize * 3, projectileSize * 3);
         sprite.setBounds(1, 1, projectileSize * 3, projectileSize * 3);
 
-        System.out.println(screen.getPlayer().box2body.getAngle());
         sprite.setColor(Color.GREEN);
 
         //Play sound
@@ -120,7 +121,19 @@ public class HorridWiltingProjectile extends Projectile {
         screen.getGameManager().get("Sounds/Explosion.wav", Sound.class).play();
 
         sprite.setColor(Color.GREEN);
-        fixture.getShape().setRadius(projectileSize * 5);
+        Gdx.app.postRunnable(new Runnable(){
+            @Override
+            public void run(){
+                FixtureDef fdef = new FixtureDef();
+                fdef.shape = fixture.getShape();
+                fdef.shape.setRadius(projectileSize * 5);
+                fdef.filter.categoryBits = RPG.PROJECTILE_BIT;
+                fdef.filter.maskBits = RPG.WALL_BIT | RPG.CREATURE_BIT;
+                fixture = box2body.createFixture(fdef);
+                fixture.setSensor(true);
+            }
+        });
+
     }
 
 }

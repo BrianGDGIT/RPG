@@ -24,6 +24,10 @@ public class PlayScreen implements Screen {
     //Reference to RPG game used to set screens
     private RPG game;
 
+    //Used to Step the world
+    static final float STEP_TIME = 1/30f;
+    float accumulator = 0;
+
     //Screens
     CharacterScreen characterScreen;
     HUD hud;
@@ -138,7 +142,8 @@ public class PlayScreen implements Screen {
         //Calls Player object method to handle player input every frame
         player.handleInput(delta);
 
-        //Box2 handles physics
+        //World simulation
+        //stepWorld();
         world.step(1/60f, 6, 2);
 
         //Remove all bodies that need deleted
@@ -298,6 +303,17 @@ public class PlayScreen implements Screen {
                 bodiesToDelete.get(i).equals(null);
                 bodiesToDelete.remove(i);
             }
+        }
+    }
+
+    private void stepWorld(){
+        float delta = Gdx.graphics.getDeltaTime();
+        accumulator += Math.min(delta, 0.5f);
+
+        while(accumulator >= STEP_TIME){
+            accumulator -= STEP_TIME;
+
+            world.step(STEP_TIME, 6, 3);
         }
     }
 

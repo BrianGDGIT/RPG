@@ -19,7 +19,7 @@ public class SpellHorridWilting {
         HorridWiltingProjectile horridWiltingProjectile;
 
         if(player.level == 1 || player.level == 2){
-            horridWiltingProjectile = new HorridWiltingProjectile(screen, createX, createY, velocity, 10, 4);
+            horridWiltingProjectile = new HorridWiltingProjectile(screen, createX, createY, velocity, 10, 6);
             screen.projectilesToRender(horridWiltingProjectile);
         }
 
