@@ -11,36 +11,42 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.brian.rpg.Views.PlayScreen;
 
-public class HorridWiltingProjectile extends Projectile {
+public class AcidCloudProjectile extends Projectile {
     private static final int FRAME_COLS = 8;
     private static final int FRAME_ROWS = 8;
-    Animation<TextureRegion> wiltingExplosionAnimation;
+    Animation<TextureRegion> acidCloudProjectileAnimation;
+    Animation<TextureRegion> acidCloudExplosionAnimation;
 
 
     //Explosion related variables
     Boolean hasExploded = false;
     Float explosionTimer = 0f;
 
-
-    public HorridWiltingProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize, int damage){
+    public AcidCloudProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize, int damage){
         super(screen, createX, createY, projectileVelocity, projectileSize);
         stateTimer = 0;
         this.damage = damage;
         projectileLife = 5;
-
+        projectileSpeed = 100f;
         fixture.setUserData(this);
         fixture.setSensor(true);
+
+        texture = screen.getGameManager().get("sprites/11_fire_spritesheet.png", Texture.class);
+
+        TextureRegion[] wiltingProjectileFrames = createAnimationFrames(texture);
 
         texture = screen.getGameManager().get("sprites/16_sunburn_spritesheet.png", Texture.class);
         TextureRegion[] wiltingExplosionFrames = createAnimationFrames(texture);
 
-
-        wiltingExplosionAnimation = new Animation<TextureRegion>(0.3f, wiltingExplosionFrames);
+        acidCloudProjectileAnimation = new Animation<TextureRegion>(0.3f, wiltingProjectileFrames);
+        acidCloudExplosionAnimation = new Animation<TextureRegion>(0.3f, wiltingExplosionFrames);
 
         //Initialize sprite when object is created
-        sprite = new Sprite(screen.getGameManager().get("sprites/skull.png", Texture.class));
+        sprite = new Sprite(wiltingProjectileFrames[0]);
         sprite.setSize(projectileSize * 3, projectileSize * 3);
         sprite.setBounds(1, 1, projectileSize * 3, projectileSize * 3);
+
+        rotateSprite();
 
         System.out.println(screen.getPlayer().box2body.getAngle());
         sprite.setColor(Color.GREEN);
@@ -48,12 +54,15 @@ public class HorridWiltingProjectile extends Projectile {
         //Play sound
         screen.getGameManager().get("Sounds/Fireball.wav", Sound.class).play();
 
+        //Move Projectile
+        this.box2body.setLinearVelocity(projectileVelocity.scl(projectileSpeed));
     }
 
     public void update(){
         sprite.setPosition(box2body.getPosition().x - sprite.getWidth() / 2, box2body.getPosition().y - sprite.getHeight() / 2);
-        sprite.setPosition(box2body.getPosition().x - sprite.getWidth() / 2, box2body.getPosition().y - sprite.getHeight() / 2);
-
+        if(!hasExploded) {
+            sprite.setRegion(acidCloudProjectileAnimation.getKeyFrame(stateTimer, true));
+        }
         stateTimer = stateTimer + Gdx.graphics.getDeltaTime();
 
         //Destroy projectile body when done
@@ -64,16 +73,14 @@ public class HorridWiltingProjectile extends Projectile {
             stateTimer = 0;
         }
 
-        if(stateTimer > 1 && !hasExploded){
-            hasExploded = true;
-            explode();
-        }
-
         //Destroy fireball after sometime after explosion
         if(hasExploded){
-            sprite.setRegion(wiltingExplosionAnimation.getKeyFrame(stateTimer, true));
+            sprite.setRegion(acidCloudExplosionAnimation.getKeyFrame(stateTimer, true));
+            sprite.setColor(Color.GREEN);
+            sprite.setRotation(0);
+            fixture.getShape().setRadius(projectileSize * 5);
             explosionTimer += Gdx.graphics.getDeltaTime();
-            if(explosionTimer >= 1f){
+            if(explosionTimer >= 5f){
                 destroyAfterExplosion();
             }
         }
@@ -81,7 +88,14 @@ public class HorridWiltingProjectile extends Projectile {
 
     @Override
     public void onHit(){
+        //Increase sprite size as fireball explodes
+        sprite.setSize(projectileSize * 20, projectileSize * 20);
+        sprite.setBounds(1, 1,projectileSize * 20, projectileSize * 20);
 
+        box2body.setLinearVelocity(0, 0);
+        box2body.setAngularVelocity(0);
+        hasExploded = true;
+        screen.getGameManager().get("Sounds/Explosion.wav", Sound.class).play();
     }
 
     private void destroyAfterExplosion(){
@@ -112,15 +126,10 @@ public class HorridWiltingProjectile extends Projectile {
         return animationFrames;
     }
 
-    private void explode(){
-        //Increase sprite size of Horrid Wilting as it explodes
-        sprite.setSize(projectileSize * 20, projectileSize * 20);
-        sprite.setBounds(1, 1,projectileSize * 20, projectileSize * 20);
-
-        screen.getGameManager().get("Sounds/Explosion.wav", Sound.class).play();
-
-        sprite.setColor(Color.GREEN);
-        fixture.getShape().setRadius(projectileSize * 5);
+    private void rotateSprite(){
+        //Rotates sprite based on direction
+        sprite.setRotation(MathUtils.atan2(projectileVelocity.x, projectileVelocity.y) * MathUtils.radiansToDegrees);
+        //Keeps sprite centered with body after rotation
+        sprite.setOriginCenter();
     }
-
 }

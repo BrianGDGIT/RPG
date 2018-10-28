@@ -350,7 +350,7 @@ public class Player extends Creature{
         }
 
         if(this.activeSpell.equals("Horrid Wilting")){
-            castDelay = horridWilting.castHorridWilting(createX, createY, velocity);
+            castDelay = horridWilting.castHorridWilting(touchPos.x, touchPos.y, velocity);
         }
 
         return castDelay;
