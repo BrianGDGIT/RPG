@@ -21,35 +21,33 @@ public class MonsterSpawner {
     private int totalSpawns = 0;
     private int spawnAmount;
     private int spawnerDistanceMin;
+    private int monsterSize;
     String spawnerType;
 
     public MonsterSpawner(PlayScreen screen, Vector2 spawnPoint, String spawnerType, int spawnerDistanceMin, int spawnAmount){
-        int number = MathUtils.random(2);
         this.screen = screen;
         this.world = screen.getWorld();
         this.spawnPoint = spawnPoint;
         this.spawnerType = spawnerType;
         this.spawnerDistanceMin = spawnerDistanceMin;
         this.spawnAmount = spawnAmount;
-        if(number == 0){
-            monsterType = "Skeleton";
-        }else if(number == 1){
-            monsterType = "Orc";
-        }else{
-            monsterType = "Zombie";
-        }
+        monsterType = randomizeMonsterType();
         createMonsterSpawner();
     }
 
-    public MonsterSpawner(PlayScreen screen, Vector2 spawnPoint, String spawnerType, int spawnerDistanceMin, String monsterType, int spawnAmount){
-        int number = MathUtils.random(3);
+    public MonsterSpawner(PlayScreen screen, Vector2 spawnPoint, String spawnerType, int spawnerDistanceMin, String monsterType, int spawnAmount, int monsterSize){
         this.screen = screen;
         this.world = screen.getWorld();
         this.spawnPoint = spawnPoint;
         this.spawnerType = spawnerType;
         this.spawnerDistanceMin = spawnerDistanceMin;
         this.spawnAmount = spawnAmount;
-        this.monsterType = monsterType;
+        if(!monsterType.equals("Any")) {
+            this.monsterType = monsterType;
+        }else{
+            this.monsterType = randomizeMonsterType();
+        }
+        this.monsterSize = monsterSize;
         createMonsterSpawner();
     }
 
@@ -70,9 +68,9 @@ public class MonsterSpawner {
                 } else if (monsterType == "Orc") {
                     OrcEnemy orc = new OrcEnemy(screen, 6, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y));
                     screen.creaturesToRender(orc);
-                } else{
-                    SkeletonEnemy skeleton = new SkeletonEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y), 10, Color.GREEN);
-                    screen.creaturesToRender(skeleton);
+                } else if(monsterType == "Zombie"){
+                    SkeletonEnemy zombie = new SkeletonEnemy(screen, 10, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y), 10, Color.GREEN);
+                    screen.creaturesToRender(zombie);
                 }
             }
         }
@@ -80,11 +78,14 @@ public class MonsterSpawner {
         if (spawnerType.equals("Boss") && spawnerPos.dst(playerPos) > spawnerDistanceMin  && spawnerPos.dst(playerPos) < 350 && totalSpawns < spawnAmount) {
             totalSpawns++;
             if (monsterType == "Skeleton") {
-                SkeletonEnemy skeleton = new SkeletonEnemy(screen, 50, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y), 35);
+                SkeletonEnemy skeleton = new SkeletonEnemy(screen, 50, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y), monsterSize);
                 screen.creaturesToRender(skeleton);
             }else if (monsterType == "Orc") {
-                OrcEnemy orc = new OrcEnemy(screen, 70, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y), 35);
+                OrcEnemy orc = new OrcEnemy(screen, 70, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y), monsterSize);
                 screen.creaturesToRender(orc);
+            }else if(monsterType == "Zombie"){
+                SkeletonEnemy zombie = new SkeletonEnemy(screen, 100, 0, "Monster", new Vector2(box2body.getPosition().x, box2body.getPosition().y), monsterSize, Color.GREEN);
+                screen.creaturesToRender(zombie);
             }
         }
 
@@ -105,6 +106,17 @@ public class MonsterSpawner {
         //So nothing can interact or collide with it
         fdef.isSensor = true;
         box2body.createFixture(fdef);
+    }
+
+    private String randomizeMonsterType(){
+        int number = MathUtils.random(2);
+        if(number == 0){
+            return "Skeleton";
+        }else if(number == 1){
+            return "Orc";
+        }else{
+            return "Zombie";
+        }
     }
 
 

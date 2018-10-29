@@ -122,12 +122,12 @@ public class PlayScreen implements Screen {
         monsterSpawner1 = new MonsterSpawner(this, new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2 + 151), "Normal;", 150, 20);
         monsterSpawner2 = new MonsterSpawner(this, new Vector2(RPG.V_WIDTH / 2 - 300, RPG.V_HEIGHT / 2), "Normal", 150, 20);
         monsterSpawner3 = new MonsterSpawner(this, new Vector2(947, 70), "Normal", 150, 20);
-        monsterSpawner4 = new MonsterSpawner(this, new Vector2(331, 589), "Boss", 150, 1);
+        monsterSpawner4 = new MonsterSpawner(this, new Vector2(331, 589), "Boss", 150, "Any", 1, 25);
         monsterSpawner5 = new MonsterSpawner(this, new Vector2(1141, 888), "Normal", 150, 20);
-        monsterSpawner6 = new MonsterSpawner(this, new Vector2(50, 28), "Normal", 10, "Skeleton", 20);
-        monsterSpawner7 = new MonsterSpawner(this, new Vector2(50, 147), "Normal", 10, "Skeleton", 20);
-        monsterSpawner8 = new MonsterSpawner(this, new Vector2(90, 98), "Boss", 10, "Skeleton", 1);
-        monsterSpawner9 = new MonsterSpawner(this, new Vector2(1645, 801), "Boss", 150,1);
+        monsterSpawner6 = new MonsterSpawner(this, new Vector2(50, 28), "Normal", 10, "Skeleton", 20, 5);
+        monsterSpawner7 = new MonsterSpawner(this, new Vector2(50, 147), "Normal", 10, "Skeleton", 20, 5);
+        monsterSpawner8 = new MonsterSpawner(this, new Vector2(90, 98), "Boss", 10, "Skeleton", 1, 35);
+        monsterSpawner9 = new MonsterSpawner(this, new Vector2(1645, 801), "Boss", 150, "Any", 1, 35);
         monsterSpawner10 = new MonsterSpawner(this, new Vector2(1424, 330), "Normal", 150, 5);
 
         worldGenerator = new Box2dWorldGenerator(world,this, map);
