@@ -30,6 +30,7 @@ public class HUD extends Stage {
     Image fireBallImage;
     Image acidBlastImage;
     Image horridWiltingImage;
+    Image acidCloudImage;
     Texture characterSheettexture;
     Texture inventoryTexture;
     Texture spellBookTexture;
@@ -37,6 +38,7 @@ public class HUD extends Stage {
     Texture fireBallTexture;
     Texture acidBlastTexture;
     Texture horridWiltingTexture;
+    Texture acidCloudTexture;
 
     public HUD(PlayScreen screen){
         this.screen = screen;
@@ -89,6 +91,10 @@ public class HUD extends Stage {
         //Horrid Wilting
         horridWiltingTexture = screen.getGameManager().get("GUI/horridwilting.png", Texture.class);
         horridWiltingImage = new Image(horridWiltingTexture);
+
+        //Horrid Wilting
+        acidCloudTexture = screen.getGameManager().get("GUI/acidCloud.png", Texture.class);
+        acidCloudImage = new Image(acidCloudTexture);
 
         activeSpellButton = new Button(magicMissileImage.getDrawable());
         activeSpellButton.setPosition(1500, 50);
@@ -170,6 +176,9 @@ public class HUD extends Stage {
             }else if(player.getSpellBook().get(currentSpellIndex + 1).equals("Horrid Wilting")){
                 player.activeSpell = "Horrid Wilting";
                 style.up = horridWiltingImage.getDrawable();
+            }else if(player.getSpellBook().get(currentSpellIndex + 1).equals("Acid Cloud")){
+                player.activeSpell = "Acid Cloud";
+                style.up = acidCloudImage.getDrawable();
             }
         }catch(IndexOutOfBoundsException e){
             player.activeSpell = "Magic Missile";

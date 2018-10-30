@@ -21,13 +21,15 @@ public class AcidCloudProjectile extends Projectile {
     //Explosion related variables
     Boolean hasExploded = false;
     Float explosionTimer = 0f;
+    int explosionSize;
 
-    public AcidCloudProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize, int damage){
+    public AcidCloudProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize, int explosionSize, int damage){
         super(screen, createX, createY, projectileVelocity, projectileSize);
         stateTimer = 0;
         this.damage = damage;
         projectileLife = 5;
         projectileSpeed = 100f;
+        this.explosionSize = explosionSize;
         fixture.setUserData(this);
         fixture.setSensor(true);
 
@@ -43,8 +45,8 @@ public class AcidCloudProjectile extends Projectile {
 
         //Initialize sprite when object is created
         sprite = new Sprite(wiltingProjectileFrames[0]);
-        sprite.setSize(projectileSize * 3, projectileSize * 3);
-        sprite.setBounds(1, 1, projectileSize * 3, projectileSize * 3);
+        sprite.setSize(30, 30);
+        sprite.setBounds(1, 1, 30, 30);
 
         rotateSprite();
 
@@ -78,7 +80,7 @@ public class AcidCloudProjectile extends Projectile {
             sprite.setRegion(acidCloudExplosionAnimation.getKeyFrame(stateTimer, true));
             sprite.setColor(Color.GREEN);
             sprite.setRotation(0);
-            fixture.getShape().setRadius(projectileSize * 5);
+            fixture.getShape().setRadius(explosionSize);
             explosionTimer += Gdx.graphics.getDeltaTime();
             if(explosionTimer >= 5f){
                 destroyAfterExplosion();
@@ -88,9 +90,9 @@ public class AcidCloudProjectile extends Projectile {
 
     @Override
     public void onHit(){
-        //Increase sprite size as fireball explodes
-        sprite.setSize(projectileSize * 20, projectileSize * 20);
-        sprite.setBounds(1, 1,projectileSize * 20, projectileSize * 20);
+        //Increase sprite size as projectile explodes
+        sprite.setSize(explosionSize * 4.5f, explosionSize * 4.5f);
+        sprite.setBounds(1, 1,explosionSize * 4.5f, explosionSize * 4.5f);
 
         box2body.setLinearVelocity(0, 0);
         box2body.setAngularVelocity(0);
@@ -128,7 +130,7 @@ public class AcidCloudProjectile extends Projectile {
 
     private void rotateSprite(){
         //Rotates sprite based on direction
-        sprite.setRotation(MathUtils.atan2(projectileVelocity.x, projectileVelocity.y) * MathUtils.radiansToDegrees);
+        sprite.setRotation(MathUtils.atan2(projectileVelocity.y, projectileVelocity.x) * MathUtils.radiansToDegrees + 75);
         //Keeps sprite centered with body after rotation
         sprite.setOriginCenter();
     }
