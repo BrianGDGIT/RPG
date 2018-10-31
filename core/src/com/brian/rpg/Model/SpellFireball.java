@@ -19,11 +19,11 @@ public class SpellFireball {
         FireballProjectile fireballProjectile;
 
         if(player.level == 1 || player.level == 2){
-            fireballProjectile = new FireballProjectile(screen, createX, createY, velocity, 10, 4);
+            fireballProjectile = new FireballProjectile(screen, createX, createY, velocity, 6, 20, 4);
             screen.projectilesToRender(fireballProjectile);
         }
         if(player.level >= 3){
-            fireballProjectile = new FireballProjectile(screen, createX, createY, velocity, 20, 6);
+            fireballProjectile = new FireballProjectile(screen, createX, createY, velocity, 6, 30, 6);
             screen.projectilesToRender(fireballProjectile);
         }
 

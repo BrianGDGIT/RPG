@@ -19,12 +19,12 @@ public class SpellAcidBlast {
         AcidBlastProjectile acidBlastProjectile;
 
         if(player.level == 1 || player.level == 2){
-            acidBlastProjectile = new AcidBlastProjectile(screen, createX, createY, velocity, 5, 4);
+            acidBlastProjectile = new AcidBlastProjectile(screen, createX, createY, velocity, 5, 10, 5);
             screen.projectilesToRender(acidBlastProjectile);
         }
 
         if(player.level >= 3){
-            acidBlastProjectile = new AcidBlastProjectile(screen, createX, createY, velocity, 10, 6);
+            acidBlastProjectile = new AcidBlastProjectile(screen, createX, createY, velocity, 5, 15, 7);
             screen.projectilesToRender(acidBlastProjectile);
         }
 

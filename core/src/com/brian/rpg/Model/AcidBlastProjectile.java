@@ -19,11 +19,13 @@ public class AcidBlastProjectile extends Projectile {
     //Explosion related variables
     Boolean hasExploded = false;
     Float explosionTimer = 0f;
+    int explosionSize;
 
-    public AcidBlastProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize, int damage){
+    public AcidBlastProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize, int explosionSize, int damage){
         super(screen, createX, createY, projectileVelocity, projectileSize);
         stateTimer = 0;
         this.damage = damage;
+        this.explosionSize = explosionSize;
         projectileLife = 5;
         projectileSpeed = 100f;
         fixture.setUserData(this);
@@ -73,7 +75,7 @@ public class AcidBlastProjectile extends Projectile {
 
         //Destroy fireball after sometime after explosion
         if(hasExploded){
-            fixture.getShape().setRadius(projectileSize * 1.5f);
+            fixture.getShape().setRadius(explosionSize);
             explosionTimer += Gdx.graphics.getDeltaTime();
             if(explosionTimer >= 1f){
                 destroyAfterExplosion();
@@ -85,8 +87,8 @@ public class AcidBlastProjectile extends Projectile {
     @Override
     public void onHit(){
         //Increase sprite size as fireball explodes
-        this.sprite.setSize(projectileSize * 5, projectileSize * 5);
-        this.sprite.setBounds(1, 1,projectileSize * 5, projectileSize * 5);
+        this.sprite.setSize(explosionSize * 3, explosionSize * 3);
+        this.sprite.setBounds(1, 1,explosionSize * 3, explosionSize * 3);
         this.box2body.setLinearVelocity(0, 0);
         this.box2body.setAngularVelocity(0);
         hasExploded = true;

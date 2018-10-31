@@ -91,8 +91,8 @@ public class AcidCloudProjectile extends Projectile {
     @Override
     public void onHit(){
         //Increase sprite size as projectile explodes
-        sprite.setSize(explosionSize * 4.5f, explosionSize * 4.5f);
-        sprite.setBounds(1, 1,explosionSize * 4.5f, explosionSize * 4.5f);
+        sprite.setSize(explosionSize * 4, explosionSize * 4);
+        sprite.setBounds(1, 1,explosionSize * 4, explosionSize * 4);
 
         box2body.setLinearVelocity(0, 0);
         box2body.setAngularVelocity(0);

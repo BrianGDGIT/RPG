@@ -19,12 +19,12 @@ public class SpellAcidCloud {
         AcidCloudProjectile acidCloudProjectile;
 
         if(player.level == 1 || player.level == 2){
-            acidCloudProjectile = new AcidCloudProjectile(screen, createX, createY, velocity, 6, 45, 4);
+            acidCloudProjectile = new AcidCloudProjectile(screen, createX, createY, velocity, 6, 45, 3);
             screen.projectilesToRender(acidCloudProjectile);
         }
 
         if(player.level >= 3){
-            acidCloudProjectile = new AcidCloudProjectile(screen, createX, createY, velocity, 6, 65, 6);
+            acidCloudProjectile = new AcidCloudProjectile(screen, createX, createY, velocity, 6, 65, 4);
             screen.projectilesToRender(acidCloudProjectile);
         }
 

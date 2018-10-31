@@ -34,6 +34,7 @@ public class Item {
     }
 
     private void generateItem(){
+        //int randomNumber = 0; //For testing
         int randomNumber = MathUtils.random(3);
         if(randomNumber == 0) {
             //Fireball
@@ -44,6 +45,7 @@ public class Item {
             sprite.setRegion(itemAtlas.findRegion("book_02f"));
             itemType = 1;
         }else if(randomNumber == 2){
+            //Acid Cloud
             sprite.setRegion(itemAtlas.findRegion("book_01f"));
             itemType = 2;
         }else {

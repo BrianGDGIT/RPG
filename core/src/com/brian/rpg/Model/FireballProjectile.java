@@ -18,11 +18,13 @@ public class FireballProjectile extends Projectile {
     //Explosion related variables
     Boolean hasExploded = false;
     Float explosionTimer = 0f;
+    int explosionSize;
 
-    public FireballProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize, int damage){
+    public FireballProjectile(PlayScreen screen, float createX, float createY, Vector2 projectileVelocity, int projectileSize, int explosionSize, int damage){
         super(screen, createX, createY, projectileVelocity, projectileSize);
         stateTimer = 0;
         this.damage = damage;
+        this.explosionSize = explosionSize;
         projectileLife = 5;
         projectileSpeed = 100f;
         fixture.setUserData(this);
@@ -47,8 +49,8 @@ public class FireballProjectile extends Projectile {
 
         //Initialize sprite when object is created
         this.sprite = new Sprite(staffFrames[0]);
-        this.sprite.setSize(this.projectileSize * 3, this.projectileSize * 3);
-        this.sprite.setBounds(1, 1, this.projectileSize * 3, this.projectileSize * 3);
+        this.sprite.setSize(this.projectileSize * 3.4f, this.projectileSize * 3.4f);
+        this.sprite.setBounds(1, 1, this.projectileSize * 3.4f, this.projectileSize * 3.4f);
 
         //Play sound
         screen.getGameManager().get("Sounds/Fireball.wav", Sound.class).play();
@@ -72,7 +74,7 @@ public class FireballProjectile extends Projectile {
 
         //Destroy fireball after sometime after explosion
         if(hasExploded){
-            fixture.getShape().setRadius(projectileSize * 1.5f);
+            fixture.getShape().setRadius(explosionSize);
             explosionTimer += Gdx.graphics.getDeltaTime();
             if(explosionTimer >= 1f){
                 destroyAfterExplosion();
@@ -83,8 +85,8 @@ public class FireballProjectile extends Projectile {
     @Override
     public void onHit(){
         //Increase sprite size as fireball explodes
-        sprite.setSize(projectileSize * 5, projectileSize * 5);
-        sprite.setBounds(1, 1,projectileSize * 5, projectileSize * 5);
+        sprite.setSize(explosionSize * 4, explosionSize * 4);
+        sprite.setBounds(1, 1,explosionSize * 4, explosionSize * 4);
         box2body.setLinearVelocity(0, 0);
         box2body.setAngularVelocity(0);
         hasExploded = true;
