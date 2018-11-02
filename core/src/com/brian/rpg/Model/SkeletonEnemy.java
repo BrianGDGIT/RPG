@@ -49,6 +49,7 @@ public class SkeletonEnemy extends Creature {
         skeletonWalk = new Animation<TextureRegion>(0.3f, screen.getMonsters1SpriteAtlas().findRegions("Skeleton"));
     }
 
+    //Zombie constructor
     public SkeletonEnemy(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint, int size, Color color ){
         super(screen, hp, mana, gameClass, spawnPoint);
         experienceValue = 10 + size;
@@ -59,6 +60,7 @@ public class SkeletonEnemy extends Creature {
         fixture.setUserData(this);
         //Setting sprite
         sprite = new Sprite(screen.getMonsters1SpriteAtlas().findRegion("Skeleton"));
+        sprite.setSize(size, size);
         sprite.setColor(color);
         //Setting Animation
         skeletonWalk = new Animation<TextureRegion>(0.3f, screen.getMonsters1SpriteAtlas().findRegions("Skeleton"));
