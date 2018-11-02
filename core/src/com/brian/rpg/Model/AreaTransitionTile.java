@@ -20,13 +20,29 @@ public class AreaTransitionTile extends InteractiveTile {
     }
 
     public void onContact(){
-        //screen.playerBody = screen.getPlayer().box2body;
-        Gdx.app.postRunnable(new Runnable(){
-            @Override
-            public void run(){
-                player.box2body.setTransform(23, 95, player.box2body.getAngle());
-            }
-        });
+        if(body.getPosition().dst(new Vector2(1143, 943)) < 10 ){
+            Gdx.app.postRunnable(new Runnable(){
+                @Override
+                public void run(){
+                    player.box2body.setTransform(23, 95, player.box2body.getAngle());
+                }
+            });
+        }else if(body.getPosition().dst(new Vector2(18, 378)) < 10){
+            Gdx.app.postRunnable(new Runnable(){
+                @Override
+                public void run(){
+                    player.box2body.setTransform(1798, 748, player.box2body.getAngle());
+                }
+            });
+        }else if(body.getPosition().dst(new Vector2(1801, 755)) < 10){
+            Gdx.app.postRunnable(new Runnable(){
+                @Override
+                public void run(){
+                    player.box2body.setTransform(25, 378, player.box2body.getAngle());
+                }
+            });
+        }
+
     }
 
     private TiledMapTileLayer.Cell getCell(){
