@@ -120,6 +120,8 @@ public class HUD extends Stage {
         //Character sheet button
         if(!player.characterScreenDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 0.5){
             player.characterScreenDisplayed = true;
+            //Need to stop displaying spellbook when character screen displayed otherwise UI does not function properly with multiple screens open
+            player.spellbookDisplayed = false;
             timeSinceLastClick = 0f;
         }else if(player.characterScreenDisplayed && characterSheetButton.isPressed() && timeSinceLastClick > 0.5){
             player.characterScreenDisplayed = false;
@@ -138,6 +140,7 @@ public class HUD extends Stage {
         //Spellbook button
         if(!player.spellbookDisplayed && spellbookButton.isPressed() && timeSinceLastClick > 0.5){
             player.spellbookDisplayed = true;
+            player.characterScreenDisplayed = false;
             timeSinceLastClick = 0f;
         }else if(player.spellbookDisplayed && spellbookButton.isPressed() && timeSinceLastClick > 0.5){
             player.spellbookDisplayed = false;
