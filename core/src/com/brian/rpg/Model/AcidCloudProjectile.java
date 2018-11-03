@@ -19,6 +19,7 @@ public class AcidCloudProjectile extends Projectile {
 
 
     //Explosion related variables
+    Boolean hasHit = false;
     Boolean hasExploded = false;
     Float explosionTimer = 0f;
     int explosionSize;
@@ -50,7 +51,6 @@ public class AcidCloudProjectile extends Projectile {
 
         rotateSprite();
 
-        System.out.println(screen.getPlayer().box2body.getAngle());
         sprite.setColor(Color.GREEN);
 
         //Play sound
@@ -75,14 +75,19 @@ public class AcidCloudProjectile extends Projectile {
             stateTimer = 0;
         }
 
-        //Destroy fireball after sometime after explosion
+        //Explode Acid Cloud
+        //Ensures that explosion only happens once
+        if(hasHit && !hasExploded){
+            hasExploded = true;
+            explode();
+        }
+
+        //Destroy AcidCloud sometime after explosion
         if(hasExploded){
             sprite.setRegion(acidCloudExplosionAnimation.getKeyFrame(stateTimer, true));
             sprite.setColor(Color.GREEN);
-            sprite.setRotation(0);
-            fixture.getShape().setRadius(explosionSize);
             explosionTimer += Gdx.graphics.getDeltaTime();
-            if(explosionTimer >= 5f){
+            if(explosionTimer >= 10f){
                 destroyAfterExplosion();
             }
         }
@@ -96,7 +101,7 @@ public class AcidCloudProjectile extends Projectile {
 
         box2body.setLinearVelocity(0, 0);
         box2body.setAngularVelocity(0);
-        hasExploded = true;
+        hasHit = true;
         screen.getGameManager().get("Sounds/Explosion.wav", Sound.class).play();
     }
 
@@ -133,5 +138,10 @@ public class AcidCloudProjectile extends Projectile {
         sprite.setRotation(MathUtils.atan2(projectileVelocity.y, projectileVelocity.x) * MathUtils.radiansToDegrees + 75);
         //Keeps sprite centered with body after rotation
         sprite.setOriginCenter();
+    }
+
+    private void explode(){
+        sprite.setRotation(0);
+        fixture.getShape().setRadius(explosionSize);
     }
 }

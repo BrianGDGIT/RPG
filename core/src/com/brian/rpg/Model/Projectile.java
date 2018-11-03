@@ -25,6 +25,8 @@ public abstract class Projectile {
 
     //Projectile attributes
     int damage = 2;
+    int dotDamage = 1;
+
     int projectileLife;
     int projectileSize;
     float projectileSpeed;
@@ -67,5 +69,7 @@ public abstract class Projectile {
     }
 
     public int getDamage(){return damage;}
+
+    public int getDotDamage(){return dotDamage;}
 
 }
