@@ -34,8 +34,8 @@ public class Item {
     }
 
     private void generateItem(){
-        //int randomNumber = 0; //For testing
-        int randomNumber = MathUtils.random(3);
+        int randomNumber = 2; //For testing
+        //int randomNumber = MathUtils.random(3);
         if(randomNumber == 0) {
             //Fireball
             sprite.setRegion(itemAtlas.findRegion("book_03f"));

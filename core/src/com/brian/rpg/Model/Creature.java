@@ -14,6 +14,12 @@ public abstract class Creature{
     int size;
     float speed;
 
+    //Status state
+    enum Status {NONE, POISON};
+    Status currentStatus;
+    int poisonTimer = 0;
+    int totalPoisonDuration = 0;
+
     String gameClass;
     Sprite sprite;
     Vector2 spawnPoint;
@@ -82,6 +88,23 @@ public abstract class Creature{
 
     public abstract void update(float delta);
 
+    public void statusUpdate(float delta){
+
+        if(currentStatus == Status.POISON){
+            if(totalPoisonDuration >= 150){
+                currentStatus = Status.NONE;
+            }
+
+            if (poisonTimer >= 50) {
+                onHit(1);
+                poisonTimer = 0;
+            }
+
+            poisonTimer += 1;
+            totalPoisonDuration += 1;
+        }
+    }
+
     public Sprite getSprite(){
         return this.sprite;
     }
@@ -97,5 +120,13 @@ public abstract class Creature{
     public int getLevel(){return this.level;}
 
     public int getExperienceValue(){return experienceValue;}
+
+    public void setStatus(String status){
+        if(status.equals("Poison")){
+            currentStatus = Status.POISON;
+        }
+
+    }
+
 
 }

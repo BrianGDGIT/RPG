@@ -27,6 +27,11 @@ public class WorldContactListener implements ContactListener {
                 if (object.getUserData() != null && Creature.class.isAssignableFrom(object.getUserData().getClass()) && object.getUserData() instanceof Player != true) {
                     ((Creature) object.getUserData()).onHit(((Projectile) projectile.getUserData()).getDamage());
                     ((Projectile) projectile.getUserData()).onHit();
+
+                    //Determine if creature should be poisoned depending on spell
+                    if(projectile.getUserData() instanceof AcidCloudProjectile){
+                        ((Creature) object.getUserData()).setStatus("Poison");
+                    }
                 }
 
                 //Destroy projectile on collision with wall
@@ -87,30 +92,6 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-        //The following code applies DOT damage during contact based on a timer for relevant spells
-        Fixture fixA = contact.getFixtureA();
-        Fixture fixB = contact.getFixtureB();
-
-
-
-
-        //Determine when a projectile and a creature collide
-        if (fixA.getUserData() != null && fixB.getUserData() != null) {
-            if (fixA.getUserData() instanceof AcidCloudProjectile || fixB.getUserData() instanceof AcidCloudProjectile) {
-                Fixture projectile = fixA.getUserData() instanceof AcidCloudProjectile ? fixA : fixB;
-                Fixture object = projectile == fixA ? fixB : fixA;
-
-
-                //In a collision between a projectile and some other object
-                //Determine if the other object is a creature
-                //If it is call creatures onHit method to damage/kill it
-                if (dotTimer >= 250 && object.getUserData() != null && Creature.class.isAssignableFrom(object.getUserData().getClass()) && object.getUserData() instanceof Player != true) {
-                    ((Creature) object.getUserData()).onHit(((Projectile) projectile.getUserData()).getDotDamage());
-                    dotTimer = 0;
-                }
-            }
-            dotTimer += 1;
-        }
 
     }
 
@@ -118,4 +99,5 @@ public class WorldContactListener implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
+
 }

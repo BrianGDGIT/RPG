@@ -184,6 +184,7 @@ public class PlayScreen implements Screen {
         if(spawnedCreatures != null){
             for(int i = 0; i < spawnedCreatures.size(); i++){
                 spawnedCreatures.get(i).update(delta);
+                spawnedCreatures.get(i).statusUpdate(delta);
             }
         }
 

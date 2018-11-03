@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.brian.rpg.Views.PlayScreen;
 
 public class AcidCloudProjectile extends Projectile {
@@ -85,8 +86,9 @@ public class AcidCloudProjectile extends Projectile {
         //Destroy AcidCloud sometime after explosion
         if(hasExploded){
             sprite.setRegion(acidCloudExplosionAnimation.getKeyFrame(stateTimer, true));
-            sprite.setColor(Color.GREEN);
             explosionTimer += Gdx.graphics.getDeltaTime();
+            box2body.setLinearVelocity(0, 0);
+            box2body.setAngularVelocity(0);
             if(explosionTimer >= 10f){
                 destroyAfterExplosion();
             }
@@ -144,4 +146,5 @@ public class AcidCloudProjectile extends Projectile {
         sprite.setRotation(0);
         fixture.getShape().setRadius(explosionSize);
     }
+
 }
