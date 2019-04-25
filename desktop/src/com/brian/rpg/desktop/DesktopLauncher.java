@@ -7,7 +7,7 @@ import com.brian.rpg.RPG;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = "RPG";
+		config.title = "Wizard";
 		config.width = 1920;
 		config.height = 1080;
 		new LwjglApplication(new RPG(), config);
