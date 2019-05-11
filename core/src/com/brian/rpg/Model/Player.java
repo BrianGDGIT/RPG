@@ -4,6 +4,7 @@ package com.brian.rpg.Model;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -148,6 +149,22 @@ public class Player extends Creature{
                 //Prevent body from moving after death
                 this.box2body.setType(BodyDef.BodyType.StaticBody);
                 deathTimer += delta;
+
+                //Save player's high score on death
+                Preferences preferences = Gdx.app.getPreferences("game preferences");
+                Integer experienceScore = preferences.getInteger("experience score");
+                Integer playerLevelScore = preferences.getInteger("level score");
+
+                if(experience > experienceScore){
+                    preferences.putInteger("experience score", experience);
+                    preferences.flush();
+                }
+
+                if(level > playerLevelScore){
+                    preferences.putInteger("level score", level);
+                    preferences.flush();
+                }
+
 
                 if(deathTimer > 5){
                     screen.getGame().setScreen(new GameOverScreen(screen.getGame()));

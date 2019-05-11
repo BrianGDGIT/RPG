@@ -18,6 +18,7 @@ public class GameOverScreen implements Screen {
     Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
     TextButton newGame = new TextButton("New Game", skin);
+    TextButton highScores = new TextButton("High Scores", skin);
     TextButton exit = new TextButton("Exit", skin);
 
     Texture gameOverTexture = new Texture("GameOver.png");
@@ -41,6 +42,8 @@ public class GameOverScreen implements Screen {
         table.row().pad(100, 0, 10, 0);
         table.add(newGame).fillX().uniform();
         table.row().pad(0, 0, 10, 0);
+        table.add(highScores).fillX().uniform();
+        table.row().pad(0, 0, 10, 0);
         table.add(exit).fillX().uniformX();
 
     }
@@ -62,6 +65,11 @@ public class GameOverScreen implements Screen {
         //Change Screen
         if(newGame.isPressed()){
             game.setScreen(new PlayScreen(game));
+            dispose();
+        }
+
+        if(highScores.isPressed()){
+            game.setScreen(new HighscoreScreen(game));
             dispose();
         }
 
