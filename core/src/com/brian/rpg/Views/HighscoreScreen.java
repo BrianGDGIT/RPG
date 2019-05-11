@@ -5,28 +5,24 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.brian.rpg.RPG;
 
-public class MainMenuScreen implements Screen {
+public class HighscoreScreen implements Screen {
     final RPG game;
     private Stage stage;
 
     //Table Buttons
     Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-    TextButton newGame = new TextButton("New Game", skin);
-    TextButton exit = new TextButton("Exit", skin);
-    TextButton highScores = new TextButton("High Scores", skin);
 
-    Texture titleTexture = new Texture("TitleArt.png");
-    Image titleImage = new Image(titleTexture);
+    TextButton back = new TextButton("Back", skin);
+    Label title = new Label("High Scores", skin);
 
-    public MainMenuScreen(final RPG game){
+
+
+    public HighscoreScreen(final RPG game){
         this.game = game;
 
         //Create stage
@@ -34,26 +30,17 @@ public class MainMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         //Add items to stage
-        Table backGroundTable = new Table();
-        backGroundTable.setFillParent(true);
         Table table = new Table();
         table.setFillParent(true);
 
 
         //table.setDebug(true);
-        stage.addActor(backGroundTable);
         stage.addActor(table);
 
-        //Add items to Background table
-        backGroundTable.add(titleImage);
-
         //Add items to the stage table
-        table.add(newGame).fillX().uniform();
+        table.add(title);
         table.row().pad(20, 0, 10, 0);
-        table.add(highScores);
-        table.row().pad(20, 0, 10, 0);
-        table.add(exit).fillX().uniformX();
-
+        table.add(back).fillX().uniform();
     }
 
     @Override
@@ -71,17 +58,9 @@ public class MainMenuScreen implements Screen {
         stage.draw();
 
         //Change Screen
-        if(newGame.isPressed()){
-            game.setScreen(new PlayScreen(game));
+        if(back.isPressed()){
+            game.setScreen(new MainMenuScreen(game));
             dispose();
-        }
-
-        if(exit.isPressed()){
-            Gdx.app.exit();
-        }
-
-        if(highScores.isPressed()){
-            game.setScreen(new HighscoreScreen(game));
         }
     }
 
@@ -109,6 +88,5 @@ public class MainMenuScreen implements Screen {
     public void dispose() {
         stage.dispose();
         skin.dispose();
-        titleTexture.dispose();
     }
 }
