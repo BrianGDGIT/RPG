@@ -151,18 +151,16 @@ public class Player extends Creature{
                 deathTimer += delta;
 
                 //Save player's high score on death
-                Preferences preferences = Gdx.app.getPreferences("game preferences");
+                Preferences preferences = Gdx.app.getPreferences("Wizard");
                 Integer experienceScore = preferences.getInteger("experience score");
                 Integer playerLevelScore = preferences.getInteger("level score");
 
                 if(experience > experienceScore){
-                    preferences.putInteger("experience score", experience);
-                    preferences.flush();
+                    preferences.putInteger("experience score", experience).flush();
                 }
 
                 if(level > playerLevelScore){
-                    preferences.putInteger("level score", level);
-                    preferences.flush();
+                    preferences.putInteger("level score", level).flush();
                 }
 
 

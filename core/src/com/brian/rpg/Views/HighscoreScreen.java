@@ -16,19 +16,35 @@ public class HighscoreScreen implements Screen {
 
     //Table Buttons
     Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-    Preferences preferences = Gdx.app.getPreferences("game preferences");
+
 
     TextButton back = new TextButton("Back", skin);
 
-    Label title = new Label("High Score", skin);
-    Label highScoreLevel = new Label("Level = ", skin);
-    Label highScoreExperience = new Label("Experience = ", skin);
-    Label levelValue = new Label(preferences.getString("level score"), skin);
-    Label experienceValue = new Label(preferences.getString("experience score"), skin);
+
 
     public HighscoreScreen(final RPG game){
         this.game = game;
+        Preferences preferences = Gdx.app.getPreferences("Wizard");
 
+        Integer levelValue = preferences.getInteger("level score");
+        String level = levelValue.toString();
+
+        Integer experienceValue = preferences.getInteger("experience score");
+        String experience = experienceValue.toString();
+
+        //Create Labels
+        Label title = new Label("High Score", skin);
+        Label highScoreLevel = new Label("Level", skin);
+        Label highScoreExperience = new Label("Experience", skin);
+        Label levelLabel = new Label(level, skin);
+        Label experienceLabel = new Label(experience, skin);
+
+        //Set Label style
+        title.setFontScale(2.5f);
+        highScoreLevel.setFontScale(2.0f);
+        highScoreExperience.setFontScale(2.0f);
+        levelLabel.setFontScale(2.0f);
+        experienceLabel.setFontScale(2.0f);
 
         //Create stage
         stage = new Stage(new ScreenViewport());
@@ -45,11 +61,11 @@ public class HighscoreScreen implements Screen {
         //Add items to the stage table
         table.add(title);
         table.row().pad(20, 0, 10, 0);
-        table.add(highScoreLevel);
-        table.add(levelValue);
+        table.add(highScoreLevel).left();
+        table.add(levelLabel);
         table.row().pad(20, 0, 10, 0);
-        table.add(highScoreExperience);
-        table.add(experienceValue);
+        table.add(highScoreExperience).left();
+        table.add(experienceLabel).fillX();
         table.row().pad(20, 0, 10, 0);
         table.add(back).fillX().uniform();
     }

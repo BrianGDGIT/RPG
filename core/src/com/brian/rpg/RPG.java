@@ -1,6 +1,8 @@
 package com.brian.rpg;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -27,6 +29,7 @@ public class RPG extends Game {
 	public SpriteBatch batch;
 
 	private AssetManager manager;
+	private Preferences preferences;
 
 	@Override
 	public void create () {
@@ -72,5 +75,5 @@ public class RPG extends Game {
 	}
 
 	public AssetManager getManager(){return manager;}
-
+	
 }
