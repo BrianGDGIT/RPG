@@ -40,11 +40,11 @@ public class HighscoreScreen implements Screen {
         Label experienceLabel = new Label(experience, skin);
 
         //Set Label style
-        title.setFontScale(2.5f);
-        highScoreLevel.setFontScale(2.0f);
-        highScoreExperience.setFontScale(2.0f);
-        levelLabel.setFontScale(2.0f);
-        experienceLabel.setFontScale(2.0f);
+        title.setFontScale(4.0f);
+        highScoreLevel.setFontScale(3.0f);
+        highScoreExperience.setFontScale(3.0f);
+        levelLabel.setFontScale(3.0f);
+        experienceLabel.setFontScale(3.0f);
 
         //Create stage
         stage = new Stage(new ScreenViewport());

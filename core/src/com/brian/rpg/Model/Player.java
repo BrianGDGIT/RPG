@@ -43,6 +43,7 @@ public class Player extends Creature{
 
     //Death variables
     float deathTimer = 0;
+    Boolean isHighScore = false;
 
     //Player Screen states
     public boolean characterScreenDisplayed = false;
@@ -146,6 +147,7 @@ public class Player extends Creature{
             case DEAD:
                 region = playerDeath.getKeyFrame(stateTimer, false);
                 this.sprite.setSize(16, 16);
+
                 //Prevent body from moving after death
                 this.box2body.setType(BodyDef.BodyType.StaticBody);
                 deathTimer += delta;
@@ -157,6 +159,7 @@ public class Player extends Creature{
 
                 if(experience > experienceScore){
                     preferences.putInteger("experience score", experience).flush();
+                    isHighScore = true;
                 }
 
                 if(level > playerLevelScore){
@@ -165,7 +168,7 @@ public class Player extends Creature{
 
 
                 if(deathTimer > 5){
-                    screen.getGame().setScreen(new GameOverScreen(screen.getGame()));
+                    screen.getGame().setScreen(new GameOverScreen(screen.getGame(), isHighScore));
                     screen.dispose();
                 }
                 break;

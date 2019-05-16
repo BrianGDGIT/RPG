@@ -24,8 +24,10 @@ public class GameOverScreen implements Screen {
     Texture gameOverTexture = new Texture("GameOver.png");
     Image gameOverImage = new Image(gameOverTexture);
 
-    public GameOverScreen(RPG game){
+    public GameOverScreen(RPG game, Boolean isHighScore){
         this.game = game;
+
+
 
         //Create stage
         stage = new Stage(new ScreenViewport());
@@ -36,6 +38,16 @@ public class GameOverScreen implements Screen {
         table.setFillParent(true);
 
         stage.addActor(table);
+
+        //Handle high score achievement message
+
+        if(isHighScore){
+            Label highScoreMessage = new Label("High score achieved!", skin);
+            highScoreMessage.setFontScale(5.0f);
+            table.add(highScoreMessage);
+            table.row().pad(100, 0, 10, 0);
+        }
+
 
         //Add items to the stage table
         table.add(gameOverImage);
