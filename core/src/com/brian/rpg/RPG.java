@@ -11,10 +11,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.brian.rpg.Views.MainMenuScreen;
 import com.brian.rpg.Views.PlayScreen;
+import de.golfgl.gdxgamesvcs.IGameServiceClient;
+import de.golfgl.gdxgamesvcs.IGameServiceListener;
+import de.golfgl.gdxgamesvcs.NoGameServiceClient;
 
 import java.*;
 
-public class RPG extends Game {
+public class RPG extends Game implements IGameServiceListener {
 	public static final int V_WIDTH = 1920;
 	public static final int V_HEIGHT = 1080;
 
@@ -27,6 +30,9 @@ public class RPG extends Game {
 	public static final short AREATRANSITION_BIT = 64;
 
 	public SpriteBatch batch;
+
+	//Google play services
+	public IGameServiceClient gsClient;
 
 	private AssetManager manager;
 	private Preferences preferences;
@@ -60,6 +66,17 @@ public class RPG extends Game {
 		manager.load("GUI/robe.png", Texture.class);
 		manager.load("GUI/wizard-face.png", Texture.class);
 		manager.finishLoading();
+		//Google play services code
+		if (gsClient == null)
+			gsClient = new NoGameServiceClient();
+
+		// for getting callbacks from the client
+		gsClient.setListener(this);
+
+		// establish a connection to the game service without error messages or login screens
+		gsClient.resumeSession();
+		//End Google Play services code
+
 		this.setScreen(new MainMenuScreen(this));
 	}
 
@@ -72,6 +89,21 @@ public class RPG extends Game {
 	public void dispose () {
 		batch.dispose();
 		manager.dispose();
+	}
+
+	@Override
+	public void gsOnSessionActive() {
+
+	}
+
+	@Override
+	public void gsOnSessionInactive() {
+
+	}
+
+	@Override
+	public void gsShowErrorToUser(GsErrorType et, String msg, Throwable t) {
+
 	}
 
 	public AssetManager getManager(){return manager;}
