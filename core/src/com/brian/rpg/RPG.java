@@ -29,6 +29,11 @@ public class RPG extends Game{
 
 	private AssetManager manager;
 	private Preferences preferences;
+	public PlayServices playServices;
+
+	public RPG(PlayServices playServices){
+		this.playServices = playServices;
+	}
 
 	@Override
 	public void create () {

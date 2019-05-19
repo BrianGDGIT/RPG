@@ -46,8 +46,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 
 		//Create the client used to sign in
 		googleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN);
-
-		initialize(new RPG(), config);
+		startSignInIntent();
+		initialize(new RPG(this), config);
 	}
 
 	/**
@@ -60,12 +60,12 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 
 	@Override
 	public void onSignInButtonClicked() {
-
+		startSignInIntent();
 	}
 
 	@Override
 	public void onSignOutButtonClicked() {
-
+		signOut();
 	}
 
 	@Override
@@ -92,6 +92,24 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 				});
 	}
 
+	public void signOut(){
+		Log.d(TAG, "signOut()");
+
+		googleSignInClient.signOut().addOnCompleteListener(this,
+				new OnCompleteListener<Void>() {
+					@Override
+					public void onComplete(@NonNull Task<Void> task) {
+						if(task.isSuccessful()){
+							Log.d(TAG, "signOut(): success");
+						}else{
+							//Handle exception
+						}
+
+						onDisconnected();
+					}
+				});
+	}
+
 	@Override
 	public void submitScore(String leaderboardId, int highScore) {
 
@@ -106,6 +124,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	public void setTrackerScreenName(String screenName) {
 
 	}
+
 
 	//Google Games API callbacks
 	private void onConnected(GoogleSignInAccount googleSignInAccount){

@@ -20,6 +20,8 @@ public class MultiplayerScreen implements Screen{
     Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
     TextButton quickGame = new TextButton("Quick Game", skin);
+    TextButton signIn = new TextButton("Sign In", skin);
+    TextButton signOut = new TextButton("Sign Out", skin);
     TextButton back = new TextButton("Back", skin);
 
     public MultiplayerScreen(final RPG game){
@@ -41,6 +43,10 @@ public class MultiplayerScreen implements Screen{
 
         //Add items to the stage table
         table.add(quickGame).fillX().uniform();
+        table.row().pad(20, 0, 10, 0);
+        table.add(signIn);
+        table.row().pad(20, 0, 10, 0);
+        table.add(signOut);
         table.row().pad(20, 0, 10, 0);
         table.add(back);
 
@@ -64,6 +70,14 @@ public class MultiplayerScreen implements Screen{
         if(quickGame.isPressed()){
             game.setScreen(new PlayScreen(game));
             dispose();
+        }
+
+        if(signIn.isPressed()){
+            game.playServices.onSignInButtonClicked();
+        }
+
+        if(signOut.isPressed()){
+            game.playServices.onSignOutButtonClicked();
         }
 
         if(back.isPressed()){
