@@ -12,22 +12,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.brian.rpg.RPG;
 
-public class MainMenuScreen implements Screen {
+public class MultiplayerScreen implements Screen{
     final RPG game;
     private Stage stage;
 
     //Table Buttons
     Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-    TextButton newGame = new TextButton("New Game", skin);
-    TextButton exit = new TextButton("Exit", skin);
-    TextButton highScores = new TextButton("High Scores", skin);
-    TextButton multiplayer = new TextButton("Multiplayer", skin);
+    TextButton quickGame = new TextButton("Quick Game", skin);
+    TextButton back = new TextButton("Back", skin);
 
-    Texture titleTexture = new Texture("TitleArt.png");
-    Image titleImage = new Image(titleTexture);
-
-    public MainMenuScreen(final RPG game){
+    public MultiplayerScreen(final RPG game){
         this.game = game;
 
         //Create stage
@@ -35,27 +30,19 @@ public class MainMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         //Add items to stage
-        Table backGroundTable = new Table();
-        backGroundTable.setFillParent(true);
         Table table = new Table();
         table.setFillParent(true);
 
 
         //table.setDebug(true);
-        stage.addActor(backGroundTable);
         stage.addActor(table);
 
-        //Add items to Background table
-        backGroundTable.add(titleImage);
+
 
         //Add items to the stage table
-        table.add(newGame).fillX().uniform();
+        table.add(quickGame).fillX().uniform();
         table.row().pad(20, 0, 10, 0);
-        table.add(highScores).fillX().uniform();
-        table.row().pad(20, 0, 10, 0);
-        table.add(multiplayer).fillX().uniform();
-        table.row().pad(20, 0, 10, 0);
-        table.add(exit).fillX().uniformX();
+        table.add(back);
 
     }
 
@@ -74,21 +61,13 @@ public class MainMenuScreen implements Screen {
         stage.draw();
 
         //Change Screen
-        if(newGame.isPressed()){
+        if(quickGame.isPressed()){
             game.setScreen(new PlayScreen(game));
             dispose();
         }
 
-        if(exit.isPressed()){
-            Gdx.app.exit();
-        }
-
-        if(multiplayer.isPressed()){
-            game.setScreen(new MultiplayerScreen(game));
-        }
-
-        if(highScores.isPressed()){
-            game.setScreen(new HighscoreScreen(game));
+        if(back.isPressed()){
+            game.setScreen(new MainMenuScreen(game));
         }
     }
 
@@ -116,6 +95,5 @@ public class MainMenuScreen implements Screen {
     public void dispose() {
         stage.dispose();
         skin.dispose();
-        titleTexture.dispose();
     }
 }
