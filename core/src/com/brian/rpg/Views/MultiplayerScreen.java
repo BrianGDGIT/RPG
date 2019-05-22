@@ -48,7 +48,7 @@ public class MultiplayerScreen implements Screen{
         table.row().pad(20, 0, 10, 0);
         table.add(signOut);
         table.row().pad(20, 0, 10, 0);
-        table.add(back);
+        table.add(back).fillX().uniform();
 
     }
 
@@ -68,6 +68,7 @@ public class MultiplayerScreen implements Screen{
 
         //Change Screen
         if(quickGame.isPressed()){
+            game.playServices.onQuickGameButtonClicked();
             game.setScreen(new PlayScreen(game));
             dispose();
         }

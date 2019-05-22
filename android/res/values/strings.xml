@@ -3,5 +3,6 @@
 
     <string name="app_name">Wizard</string>
     <string name="app_id">1019536858900</string>
+    <string name="game_error">An error occurred while starting the game. Please try again.</string>
 
 </resources>
