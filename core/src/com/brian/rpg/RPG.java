@@ -31,9 +31,12 @@ public class RPG extends Game{
 	private Preferences preferences;
 	public PlayServices playServices;
 
+	private Boolean isMultiplayer = false;
+
 	public RPG(PlayServices playServices){
 		this.playServices = playServices;
 	}
+	public RPG(){};
 
 	@Override
 	public void create () {
@@ -80,5 +83,7 @@ public class RPG extends Game{
 	}
 
 	public AssetManager getManager(){return manager;}
+	public void setIsMultiplayer(){isMultiplayer = true;}
+	public boolean getIsMultiplayer(){return isMultiplayer;}
 
 }

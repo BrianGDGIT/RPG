@@ -10,6 +10,7 @@ import android.util.Log;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.badlogic.gdx.math.Vector2;
 import com.brian.rpg.RPG;
 import com.brian.rpg.Views.MainMenuScreen;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -29,6 +30,7 @@ import java.util.List;
 import static android.content.ContentValues.TAG;
 
 public class AndroidLauncher extends AndroidApplication implements PlayServices {
+	private RPG game;
 	// Client used to sign in with Google APIs
 	private GoogleSignInClient googleSignInClient;
 	//The currently signed in account
@@ -46,6 +48,9 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	//participant id in currently active game
 	String myId = null;
 
+	//Message buffer for sending messages
+	byte[] msgBuf = new byte[2];
+
 
 	//Request codes for the UIs that we show with startActivityForResult:
 	final static int RC_WAITING_ROOM = 10002;
@@ -62,7 +67,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 
 		//Create the client used to sign in
 		googleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN);
-		initialize(new RPG(this), config);
+		game = new RPG(this);
+		initialize(game, config);
 	}
 
 	@Override
@@ -360,8 +366,29 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 		@Override
 		public void onRealTimeMessageReceived(@NonNull RealTimeMessage realTimeMessage) {
 			//Needs to be implemented
+
 		}
 	};
+
+	//Broadcast player position to everyone else
+	void broadcastPlayerPosition(Vector2 position){
+		msgBuf[0] = (byte) position.x;
+		msgBuf[1] = (byte) position.y;
+
+		for(Participant p : participants){
+			if(p.getParticipantId().equals(myId)){
+				continue;
+			}
+			if(p.getStatus() != Participant.STATUS_JOINED){
+				continue;
+			}
+
+			//broadcast position
+			realTimeMultiplayerClient.sendUnreliableMessage(msgBuf, roomId, p.getParticipantId());
+		}
+
+
+	}
 
 
 

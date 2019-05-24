@@ -1,8 +1,10 @@
 package com.brian.rpg.Views;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 public class PlayScreen implements Screen {
     //Reference to RPG game used to set screens
     private RPG game;
+    private Boolean isMultiplayer = false;
 
     //Used to Step the world
     static final float STEP_TIME = 1/30f;
@@ -40,6 +43,8 @@ public class PlayScreen implements Screen {
     //Objects Rendered
     //Reference to player object
     private Player player;
+    private Player player2;
+
     MonsterSpawner monsterSpawner1;
     MonsterSpawner monsterSpawner2;
     MonsterSpawner monsterSpawner3;
@@ -106,8 +111,17 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
         world.setContactListener(new WorldContactListener());
 
-        //Create player
+        //Multiplayer check
+        if(Gdx.app.getType() == Application.ApplicationType.Android ){
+            isMultiplayer = game.getIsMultiplayer();
+        }
+
+        //Create players
         player = new Player(this,10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
+        if(isMultiplayer){
+            player2 = new Player(this, 10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2 + 20, RPG.V_HEIGHT / 2));
+            player2.getSprite().setColor(Color.RED);
+        }
 
         //Create Character Screen
         characterScreen = new CharacterScreen(game, player, game.batch);
@@ -158,6 +172,9 @@ public class PlayScreen implements Screen {
 
         //Update player sprite position every frame
         player.update(delta);
+        if(isMultiplayer){
+            player2.update(delta);
+        }
 
         //Update MonsterSpawners
         monsterSpawner1.update(delta);
@@ -216,6 +233,9 @@ public class PlayScreen implements Screen {
 
         //Draw the player sprite
         player.getSprite().draw(game.batch);
+        if(isMultiplayer){
+            player2.getSprite().draw(game.batch);
+        }
 
         //Render projectiles
         if(staffProjectiles != null){

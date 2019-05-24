@@ -1,5 +1,6 @@
 package com.brian.rpg.Views;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -68,7 +69,10 @@ public class MultiplayerScreen implements Screen{
 
         //Change Screen
         if(quickGame.isPressed()){
-            game.playServices.onQuickGameButtonClicked();
+            if(Gdx.app.getType() == Application.ApplicationType.Android){
+                game.playServices.onQuickGameButtonClicked();
+                game.setIsMultiplayer();
+            }
             game.setScreen(new PlayScreen(game));
             dispose();
         }
