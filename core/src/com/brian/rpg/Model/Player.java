@@ -23,6 +23,8 @@ import static com.badlogic.gdx.Input.Keys.*;
 
 public class Player extends Creature{
 
+    private String name;
+
     //Player stats
     int experience = 0;
     int kills = 0;
@@ -63,9 +65,10 @@ public class Player extends Creature{
     SpellHorridWilting horridWilting = new SpellHorridWilting(screen, this);
 
 
-    public Player(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
+    public Player(PlayScreen screen, String name, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
         //Set player stats
+        this.name = name;
         this.level = 1;
 
         this.fixture.setUserData(this);
@@ -172,7 +175,7 @@ public class Player extends Creature{
                 }
 
 
-                if(deathTimer > 5){
+                if(deathTimer > 5 && name.equals("Player1") ){
                     screen.getGame().setScreen(new GameOverScreen(screen.getGame(), isHighScore));
                     screen.dispose();
                 }

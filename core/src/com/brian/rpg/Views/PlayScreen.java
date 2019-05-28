@@ -117,9 +117,9 @@ public class PlayScreen implements Screen {
 
         //Create players
         if(game.getIsPlayer2()){
-            player = new Player(this,10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2 + 20, RPG.V_HEIGHT / 2));
+            player = new Player(this, "Player1",10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2 + 20, RPG.V_HEIGHT / 2));
         }else{
-            player = new Player(this,10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
+            player = new Player(this, "Player1", 10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
         }
 
 
@@ -344,10 +344,10 @@ public class PlayScreen implements Screen {
     public void spawnPlayer2(){
         if(game.getIsMultiplayer()){
             if(game.getIsPlayer2()){
-                player2 = new Player(this, 10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2 + 40, RPG.V_HEIGHT / 2));
+                player2 = new Player(this, "Player2",10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2 + 40, RPG.V_HEIGHT / 2));
             }else{
                 //Player2 object is placed where Player1 spawned to represent that player
-                player2 = new Player(this, 10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
+                player2 = new Player(this, "Player2", 10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
             }
             player2.getSprite().setColor(Color.RED);
 
