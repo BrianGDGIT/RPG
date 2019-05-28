@@ -25,7 +25,9 @@ import java.util.ArrayList;
 public class PlayScreen implements Screen {
     //Reference to RPG game used to set screens
     private RPG game;
-    private Boolean isMultiplayer = false;
+    private int networkPacketTime;
+    private Boolean player2Connected = false;
+
 
     //Used to Step the world
     static final float STEP_TIME = 1/30f;
@@ -83,6 +85,8 @@ public class PlayScreen implements Screen {
     public PlayScreen(RPG game){
         this.game = game;
 
+        game.setGamePlayScreen(this);
+
         //Initializing Texture resources
         wizardSpriteAtlas = new TextureAtlas("sprites/Wizard.pack");
         monsters1SpriteAtlas = new TextureAtlas("sprites/Monsters1.pack");
@@ -111,17 +115,13 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
         world.setContactListener(new WorldContactListener());
 
-        //Multiplayer check
-        if(Gdx.app.getType() == Application.ApplicationType.Android ){
-            isMultiplayer = game.getIsMultiplayer();
+        //Create players
+        if(game.getIsPlayer2()){
+            player = new Player(this,10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2 + 20, RPG.V_HEIGHT / 2));
+        }else{
+            player = new Player(this,10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
         }
 
-        //Create players
-        player = new Player(this,10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
-        if(isMultiplayer){
-            player2 = new Player(this, 10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2 + 20, RPG.V_HEIGHT / 2));
-            player2.getSprite().setColor(Color.RED);
-        }
 
         //Create Character Screen
         characterScreen = new CharacterScreen(game, player, game.batch);
@@ -153,6 +153,7 @@ public class PlayScreen implements Screen {
 
 
     public void update(float delta){
+
         //Calls Player object method to handle player input every frame
         player.handleInput(delta);
 
@@ -172,8 +173,10 @@ public class PlayScreen implements Screen {
 
         //Update player sprite position every frame
         player.update(delta);
-        if(isMultiplayer){
+        if(game.getIsMultiplayer()){
+            networkPacketTime += 1;
             player2.update(delta);
+            player.multiplayerUpdate();
         }
 
         //Update MonsterSpawners
@@ -233,7 +236,7 @@ public class PlayScreen implements Screen {
 
         //Draw the player sprite
         player.getSprite().draw(game.batch);
-        if(isMultiplayer){
+        if(game.getIsMultiplayer()){
             player2.getSprite().draw(game.batch);
         }
 
@@ -338,6 +341,19 @@ public class PlayScreen implements Screen {
         }
     }
 
+    public void spawnPlayer2(){
+        if(game.getIsMultiplayer()){
+            if(game.getIsPlayer2()){
+                player2 = new Player(this, 10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2 + 40, RPG.V_HEIGHT / 2));
+            }else{
+                //Player2 object is placed where Player1 spawned to represent that player
+                player2 = new Player(this, 10, 10, "Wizard", new Vector2(RPG.V_WIDTH / 2, RPG.V_HEIGHT / 2));
+            }
+            player2.getSprite().setColor(Color.RED);
+
+        }
+    }
+
 
     public void projectilesToRender(Projectile staffProjectile){
         this.staffProjectiles.add(staffProjectile);
@@ -366,6 +382,7 @@ public class PlayScreen implements Screen {
     public World getWorld(){return world;}
 
     public Player getPlayer(){return player;}
+    public Player getPlayer2(){return player2;}
 
     public AssetManager getGameManager(){return game.getManager();}
 

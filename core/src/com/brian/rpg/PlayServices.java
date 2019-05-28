@@ -1,5 +1,7 @@
 package com.brian.rpg;
 
+import com.badlogic.gdx.math.Vector2;
+
 public interface PlayServices {
     public void onSignInButtonClicked();
     public void onSignOutButtonClicked();
@@ -9,4 +11,5 @@ public interface PlayServices {
     public void submitScore(String leaderboardId, int highScore);
     public void showLeaderboard(String leaderboardId);
     public void setTrackerScreenName(String screenName);
+    public void broadcast(Vector2 position);
 }

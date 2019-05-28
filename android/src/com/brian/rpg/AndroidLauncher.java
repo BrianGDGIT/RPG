@@ -13,6 +13,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
 import com.brian.rpg.RPG;
 import com.brian.rpg.Views.MainMenuScreen;
+import com.brian.rpg.Views.PlayScreen;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -24,6 +25,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +52,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	String myId = null;
 
 	//Message buffer for sending messages
-	byte[] msgBuf = new byte[2];
+	byte[] msgBuf = new byte[8];
 
 
 	//Request codes for the UIs that we show with startActivityForResult:
@@ -102,7 +105,12 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	@Override
 	public void onQuickGameButtonClicked() { startQuickGame(); }
 
-	@Override
+    @Override
+    public void broadcast(Vector2 position) {
+        broadcastPlayerPosition(position);
+    }
+
+    @Override
 	public boolean isSignedIn() {
 		return false;
 	}
@@ -307,45 +315,42 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 		}
 
 		@Override
-		public void onRoomConnecting(@Nullable Room room) {updateRoom(room);} {
-
-		}
+		public void onRoomConnecting(@Nullable Room room) {updateRoom(room);}
 
 		@Override
-		public void onRoomAutoMatching(@Nullable Room room) {updateRoom(room);} {
-
-		}
-
-		@Override
-		public void onPeerInvitedToRoom(@Nullable Room room, @NonNull List<String> list) {updateRoom(room);} {
-
-		}
-
-		@Override
-		public void onPeerDeclined(@Nullable Room room, @NonNull List<String> list) {updateRoom(room);} {
-
-		}
-
-		@Override
-		public void onPeerJoined(@Nullable Room room, @NonNull List<String> list) {updateRoom(room);} {
-
-		}
-
-		@Override
-		public void onPeerLeft(@Nullable Room room, @NonNull List<String> list) {updateRoom(room);} {
-
-		}
+		public void onRoomAutoMatching(@Nullable Room room) {updateRoom(room);}
 
 
 		@Override
-		public void onPeersConnected(@Nullable Room room, @NonNull List<String> list) {updateRoom(room);} {
+		public void onPeerInvitedToRoom(@Nullable Room room, @NonNull List<String> list) {updateRoom(room);}
 
+
+		@Override
+		public void onPeerDeclined(@Nullable Room room, @NonNull List<String> list) {updateRoom(room);}
+
+
+		@Override
+		public void onPeerJoined(@Nullable Room room, @NonNull List<String> list) {updateRoom(room);}
+
+
+		@Override
+		public void onPeerLeft(@Nullable Room room, @NonNull List<String> list) {updateRoom(room);}
+
+
+		@Override
+		public void onPeersConnected(@Nullable Room room, @NonNull List<String> list) {
+			updateRoom(room);
+			Log.d(TAG, "onP2PConnected: ");
+			game.setIsMultiplayer();
+			if(participants.get(0).getParticipantId() != myId){
+				game.setIsPlayer2();
+			}
+			game.getGamePlayScreen().spawnPlayer2();
 		}
 
 		@Override
-		public void onPeersDisconnected(@Nullable Room room, @NonNull List<String> list) {updateRoom(room);} {
+		public void onPeersDisconnected(@Nullable Room room, @NonNull List<String> list) {updateRoom(room);}
 
-		}
 
 		@Override
 		public void onP2PConnected(@NonNull String s) {
@@ -365,15 +370,20 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	OnRealTimeMessageReceivedListener onRealTimeMessageReceivedListener = new OnRealTimeMessageReceivedListener() {
 		@Override
 		public void onRealTimeMessageReceived(@NonNull RealTimeMessage realTimeMessage) {
-			//Needs to be implemented
+			byte[] buf = realTimeMessage.getMessageData();
+
+			Vector2 position = new Vector2(ByteBuffer.wrap(buf).getFloat(0), ByteBuffer.wrap(buf).getFloat(4));
+			System.out.println("Message received position: " +position);
+			game.getGamePlayScreen().getPlayer2().updatePlayerPosition(position);
+			Log.d(TAG, "onRealTimeMessageReceived: ");
 
 		}
 	};
 
 	//Broadcast player position to everyone else
 	void broadcastPlayerPosition(Vector2 position){
-		msgBuf[0] = (byte) position.x;
-		msgBuf[1] = (byte) position.y;
+		System.out.println("Message broadcast position: " +position);
+		ByteBuffer bb = ByteBuffer.wrap(msgBuf).putFloat(position.x).putFloat(position.y);
 
 		for(Participant p : participants){
 			if(p.getParticipantId().equals(myId)){
@@ -385,6 +395,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 
 			//broadcast position
 			realTimeMultiplayerClient.sendUnreliableMessage(msgBuf, roomId, p.getParticipantId());
+			Log.d(TAG, "broadcastPlayerPosition:");
 		}
 
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.brian.rpg.Views.MainMenuScreen;
+import com.brian.rpg.Views.PlayScreen;
 
 
 import java.*;
@@ -31,12 +32,18 @@ public class RPG extends Game{
 	private Preferences preferences;
 	public PlayServices playServices;
 
+
+	//Multiplayer settings
 	private Boolean isMultiplayer = false;
+	private Boolean isStarted = false;
+	private Boolean isPlayer2 = false;
 
 	public RPG(PlayServices playServices){
 		this.playServices = playServices;
 	}
 	public RPG(){};
+
+	private PlayScreen playScreen;
 
 	@Override
 	public void create () {
@@ -85,5 +92,11 @@ public class RPG extends Game{
 	public AssetManager getManager(){return manager;}
 	public void setIsMultiplayer(){isMultiplayer = true;}
 	public boolean getIsMultiplayer(){return isMultiplayer;}
+	public void setIsPlayer2(){isPlayer2 = true;}
+	public boolean getIsPlayer2(){return isPlayer2;}
+	public void setIsStarted(){isStarted = true;}
+	public boolean getIsStarted(){return isStarted;}
+	public void setGamePlayScreen(PlayScreen screen){playScreen = screen;}
+	public PlayScreen getGamePlayScreen(){return playScreen;}
 
 }

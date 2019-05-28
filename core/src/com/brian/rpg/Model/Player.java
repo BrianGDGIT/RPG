@@ -62,6 +62,7 @@ public class Player extends Creature{
     SpellAcidCloud acidCloud = new SpellAcidCloud(screen, this);
     SpellHorridWilting horridWilting = new SpellHorridWilting(screen, this);
 
+
     public Player(PlayScreen screen, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
         //Set player stats
@@ -122,6 +123,10 @@ public class Player extends Creature{
             basicAttackTimer = basicAttackTimer + delta;
         }
 
+    }
+
+    public void multiplayerUpdate(){
+        screen.getGame().playServices.broadcast(box2body.getPosition());
     }
 
     public TextureRegion getFrame(float delta){
@@ -440,4 +445,22 @@ public class Player extends Creature{
     public void increaseKillCount(){
         this.kills++;
     }
+
+    public void updatePlayerPosition(Vector2 position){
+
+        Vector2 currentPosition = new Vector2(this.box2body.getPosition().x, this.box2body.getPosition().y);
+        //System.out.println("Player2 current position: " + currentPosition);
+        //System.out.println("Updated position: " + position);
+
+        if(currentPosition != position){
+            Vector2 velocity = new Vector2((position.x - currentPosition.x) * 0.5f, (position.y - currentPosition.y) * 0.5f);
+            box2body.setLinearVelocity(velocity);
+        }
+
+        if(currentPosition == position){
+            this.box2body.setLinearVelocity(0f, 0f);
+        }
+
+    }
+
 }

@@ -49,7 +49,7 @@ public class WorldContactListener implements ContactListener {
                 Fixture object = player == fixA ? fixB : fixA;
 
                 //Determine if other object is a creature
-                if(object.getUserData() != null && Creature.class.isAssignableFrom(object.getUserData().getClass())){
+                if(object.getUserData() != null && Creature.class.isAssignableFrom(object.getUserData().getClass()) && object.getUserData() instanceof Player != true){
                     ((Player) player.getUserData()).onHit();
                 }
 

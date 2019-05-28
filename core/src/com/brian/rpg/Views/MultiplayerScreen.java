@@ -71,10 +71,11 @@ public class MultiplayerScreen implements Screen{
         if(quickGame.isPressed()){
             if(Gdx.app.getType() == Application.ApplicationType.Android){
                 game.playServices.onQuickGameButtonClicked();
-                game.setIsMultiplayer();
             }
+
             game.setScreen(new PlayScreen(game));
             dispose();
+
         }
 
         if(signIn.isPressed()){
