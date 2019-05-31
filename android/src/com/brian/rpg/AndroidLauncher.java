@@ -51,8 +51,9 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	//participant id in currently active game
 	String myId = null;
 
-	//Message buffer for sending messages
+	//Message buffers for sending messages
 	byte[] msgBuf = new byte[8];
+	byte[] attackMsgBuf = new byte[1];
 
 
 	//Request codes for the UIs that we show with startActivityForResult:
@@ -110,7 +111,12 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
         broadcastPlayerPosition(position);
     }
 
-    @Override
+	@Override
+	public void broadcastPlayerAttack() {
+		msgBroadcastPlayerAttack();
+	}
+
+	@Override
 	public boolean isSignedIn() {
 		return false;
 	}
@@ -342,10 +348,10 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 			updateRoom(room);
 			Log.d(TAG, "onP2PConnected: ");
 			game.setIsMultiplayer();
-			if(participants.get(0).getParticipantId() != myId){
+			if(participants.get(1).getParticipantId() != myId){
 				game.setIsPlayer2();
 			}
-			game.getGamePlayScreen().spawnPlayer2();
+			game.getGamePlayScreen().spawnPlayers();
 		}
 
 		@Override
@@ -372,17 +378,20 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 		public void onRealTimeMessageReceived(@NonNull RealTimeMessage realTimeMessage) {
 			byte[] buf = realTimeMessage.getMessageData();
 
-			Vector2 position = new Vector2(ByteBuffer.wrap(buf).getFloat(0), ByteBuffer.wrap(buf).getFloat(4));
-			System.out.println("Message received position: " +position);
-			game.getGamePlayScreen().getPlayer2().updatePlayerPosition(position);
-			Log.d(TAG, "onRealTimeMessageReceived: ");
+			//Syncing player attacking
+			if(buf[0] == 'A'){
+				game.getGamePlayScreen().getPlayer2().setHasAttacked();
+			}else{
+				Vector2 position = new Vector2(ByteBuffer.wrap(buf).getFloat(0), ByteBuffer.wrap(buf).getFloat(4));
+				game.getGamePlayScreen().getPlayer2().updatePlayerPosition(position);
+			}
+
 
 		}
 	};
 
 	//Broadcast player position to everyone else
 	void broadcastPlayerPosition(Vector2 position){
-		System.out.println("Message broadcast position: " +position);
 		ByteBuffer bb = ByteBuffer.wrap(msgBuf).putFloat(position.x).putFloat(position.y);
 
 		for(Participant p : participants){
@@ -395,10 +404,25 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 
 			//broadcast position
 			realTimeMultiplayerClient.sendUnreliableMessage(msgBuf, roomId, p.getParticipantId());
-			Log.d(TAG, "broadcastPlayerPosition:");
 		}
 
 
+	}
+
+	void msgBroadcastPlayerAttack(){
+		attackMsgBuf[0] = 'A';
+		for(Participant p : participants){
+
+			if(p.getParticipantId().equals(myId)){
+				continue;
+			}
+			if(p.getStatus() != Participant.STATUS_JOINED){
+				continue;
+			}
+
+			//broadcast position
+			realTimeMultiplayerClient.sendUnreliableMessage(attackMsgBuf, roomId, p.getParticipantId());
+		}
 	}
 
 

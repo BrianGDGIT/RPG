@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.brian.rpg.PlayServices;
 import com.brian.rpg.RPG;
 import com.brian.rpg.Views.GameOverScreen;
 import com.brian.rpg.Views.PlayScreen;
@@ -24,6 +25,8 @@ import static com.badlogic.gdx.Input.Keys.*;
 public class Player extends Creature{
 
     private String name;
+
+    private PlayServices playServices;
 
     //Player stats
     int experience = 0;
@@ -67,6 +70,9 @@ public class Player extends Creature{
 
     public Player(PlayScreen screen, String name, int hp, int mana, String gameClass, Vector2 spawnPoint){
         super(screen, hp, mana, gameClass, spawnPoint);
+
+        //Set playServices
+        playServices = screen.getGame().playServices;
         //Set player stats
         this.name = name;
         this.level = 1;
@@ -301,6 +307,9 @@ public class Player extends Creature{
             //Attack
             if(Gdx.input.isTouched() && !hasAttacked && currentState != State.DEAD && !screen.getHud().characterSheetButton.isPressed() && !screen.getHud().inventoryButton.isPressed() && !screen.getHud().spellbookButton.isPressed() && !screen.getHud().activeSpellButton.isPressed()){
                 hasAttacked = true;
+                if(screen.getPlayer2() != null){
+                    playServices.broadcastPlayerAttack();
+                }
             }
 
 
@@ -456,7 +465,7 @@ public class Player extends Creature{
         //System.out.println("Updated position: " + position);
 
         if(currentPosition != position){
-            Vector2 velocity = new Vector2((position.x - currentPosition.x) * 0.5f, (position.y - currentPosition.y) * 0.5f);
+            Vector2 velocity = new Vector2((position.x - currentPosition.x), (position.y - currentPosition.y));
             box2body.setLinearVelocity(velocity);
         }
 
@@ -464,6 +473,11 @@ public class Player extends Creature{
             this.box2body.setLinearVelocity(0f, 0f);
         }
 
+    }
+
+    //Used for Multiplayer implementation to make player2 attack when needed
+    public void setHasAttacked(){
+        hasAttacked = true;
     }
 
 }

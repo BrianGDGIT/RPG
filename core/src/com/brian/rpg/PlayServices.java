@@ -12,4 +12,5 @@ public interface PlayServices {
     public void showLeaderboard(String leaderboardId);
     public void setTrackerScreenName(String screenName);
     public void broadcast(Vector2 position);
+    public void broadcastPlayerAttack();
 }
