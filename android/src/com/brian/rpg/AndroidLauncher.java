@@ -106,15 +106,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	@Override
 	public void onQuickGameButtonClicked() { startQuickGame(); }
 
-    @Override
-    public void broadcast(Vector2 position) {
-        broadcastPlayerPosition(position);
-    }
-
-	@Override
-	public void broadcastPlayerAttack() {
-		msgBroadcastPlayerAttack();
-	}
 
 	@Override
 	public boolean isSignedIn() {
@@ -378,20 +369,35 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 		public void onRealTimeMessageReceived(@NonNull RealTimeMessage realTimeMessage) {
 			byte[] buf = realTimeMessage.getMessageData();
 
-			//Syncing player attacking
-			if(buf[0] == 'A'){
+			//Syncing player
+			if(buf[0] == 'A') {
+				//Sync player attacking
 				game.getGamePlayScreen().getPlayer2().setHasAttacked();
+			}else if(buf[0] == 'S'){
+				//Get information from buffer and copy to new byte array starting from position 1 after indicator byte 'S'
+				byte[] spellArray = new byte[buf.length - 1];
+				System.arraycopy(buf, 1, spellArray, 0, buf.length - 1);
+
+				//Convert byte array to String
+				String spell = spellArray.toString();
+
+				//Sync spell
+				game.getGamePlayScreen().getPlayer2().activeSpell.equals(spell);
 			}else{
+				//Sync player position
 				Vector2 position = new Vector2(ByteBuffer.wrap(buf).getFloat(0), ByteBuffer.wrap(buf).getFloat(4));
 				game.getGamePlayScreen().getPlayer2().updatePlayerPosition(position);
 			}
+
+
 
 
 		}
 	};
 
 	//Broadcast player position to everyone else
-	void broadcastPlayerPosition(Vector2 position){
+	@Override
+	public void broadcastPlayerPosition(Vector2 position) {
 		ByteBuffer bb = ByteBuffer.wrap(msgBuf).putFloat(position.x).putFloat(position.y);
 
 		for(Participant p : participants){
@@ -402,14 +408,15 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 				continue;
 			}
 
-			//broadcast position
+			//broadcastPlayerPosition position
 			realTimeMultiplayerClient.sendUnreliableMessage(msgBuf, roomId, p.getParticipantId());
 		}
 
-
 	}
 
-	void msgBroadcastPlayerAttack(){
+	@Override
+	public void broadcastPlayerAttack() {
+		//Set byte indicator to A for player attack
 		attackMsgBuf[0] = 'A';
 		for(Participant p : participants){
 
@@ -420,9 +427,41 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 				continue;
 			}
 
-			//broadcast position
+			//broadcastPlayerPosition position
 			realTimeMultiplayerClient.sendUnreliableMessage(attackMsgBuf, roomId, p.getParticipantId());
 		}
+	}
+
+	@Override
+	public void broadcastPlayerSpell(String spell) {
+		Log.d(TAG, "broadcastPlayerSpell:");
+		byte [] msgBuf;
+
+		//Get spell string and convert to bytes
+		msgBuf = spell.getBytes();
+
+		//used to copy array into to add byte indicator
+		byte [] destinationBuf = new byte[msgBuf.length + 1];
+
+		//add byte indicator
+		destinationBuf[0] = 'S';
+
+		//Copy array containing spell string into the new array that contains the byte indicator S
+		System.arraycopy(msgBuf, 0, destinationBuf, 1, msgBuf.length);
+
+
+		for(Participant p : participants){
+			if(p.getParticipantId().equals(myId)){
+				continue;
+			}
+			if(p.getStatus() != Participant.STATUS_JOINED){
+				continue;
+			}
+
+			//broadcast Player spell
+			realTimeMultiplayerClient.sendUnreliableMessage(destinationBuf, roomId, p.getParticipantId());
+		}
+
 	}
 
 

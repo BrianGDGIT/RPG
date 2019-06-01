@@ -135,7 +135,7 @@ public class Player extends Creature{
     }
 
     public void multiplayerUpdate(){
-        screen.getGame().playServices.broadcast(box2body.getPosition());
+        playServices.broadcastPlayerPosition(box2body.getPosition());
     }
 
     public TextureRegion getFrame(float delta){

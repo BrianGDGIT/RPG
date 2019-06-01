@@ -7,12 +7,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.brian.rpg.Model.Player;
+import com.brian.rpg.PlayServices;
 
 
 public class HUD extends Stage {
     public Stage stage;
     private Player player;
     private PlayScreen screen;
+    private PlayServices playServices;
+    Boolean isMultiplayer = false;
 
     Float timeSinceLastClick = 0f;
     Boolean buttonClicked = false;
@@ -43,6 +46,10 @@ public class HUD extends Stage {
     public HUD(PlayScreen screen){
         this.screen = screen;
         this.player = screen.getPlayer();
+
+        //Required for multiplayer implementation
+        playServices = screen.getGame().playServices;
+        isMultiplayer = screen.getGame().getIsMultiplayer();
 
         //Character Sheet Button
         characterSheettexture = screen.getGameManager().get("GUI/wizard-face.png", Texture.class);
@@ -173,20 +180,35 @@ public class HUD extends Stage {
             if (player.getSpellBook().get(currentSpellIndex + 1).equals("Fireball")) {
                 player.activeSpell = "Fireball";
                 style.up = fireBallImage.getDrawable();
+                if(isMultiplayer){
+                    playServices.broadcastPlayerSpell("Fireball");
+                }
             }else if(player.getSpellBook().get(currentSpellIndex + 1).equals("Acid Blast")){
                 player.activeSpell = "Acid Blast";
                 style.up = acidBlastImage.getDrawable();
+                if(isMultiplayer){
+                    playServices.broadcastPlayerSpell("Acid Blast");
+                }
             }else if(player.getSpellBook().get(currentSpellIndex + 1).equals("Horrid Wilting")){
                 player.activeSpell = "Horrid Wilting";
                 style.up = horridWiltingImage.getDrawable();
+                if(isMultiplayer){
+                    playServices.broadcastPlayerSpell("Horrid Wilting");
+                }
             }else if(player.getSpellBook().get(currentSpellIndex + 1).equals("Acid Cloud")){
                 player.activeSpell = "Acid Cloud";
                 style.up = acidCloudImage.getDrawable();
+                if(isMultiplayer){
+                    playServices.broadcastPlayerSpell("Acid Cloud");
+                }
             }
         }catch(IndexOutOfBoundsException e){
             player.activeSpell = "Magic Missile";
             Button.ButtonStyle style = activeSpellButton.getStyle();
             style.up = magicMissileImage.getDrawable();
+            if(isMultiplayer){
+                playServices.broadcastPlayerSpell("Magic Missile");
+            }
         }
     }
 
