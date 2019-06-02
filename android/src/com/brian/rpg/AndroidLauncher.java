@@ -379,10 +379,12 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 				System.arraycopy(buf, 1, spellArray, 0, buf.length - 1);
 
 				//Convert byte array to String
-				String spell = spellArray.toString();
+				String spell = new String(spellArray);
+
+				Log.d(TAG, "SPELL = " + spell);
 
 				//Sync spell
-				game.getGamePlayScreen().getPlayer2().activeSpell.equals(spell);
+				game.getGamePlayScreen().getPlayer2().activeSpell = spell;
 			}else{
 				//Sync player position
 				Vector2 position = new Vector2(ByteBuffer.wrap(buf).getFloat(0), ByteBuffer.wrap(buf).getFloat(4));
