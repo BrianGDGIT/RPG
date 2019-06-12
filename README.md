@@ -8,9 +8,9 @@ LibGDX framework, Google Play Games APIs
 
 Systems created:
 
-Multiplayer network syncing
-Google Play Login
-Google Play Matchmaking
+Multiplayer network syncing*
+Google Play Login*
+Google Play Matchmaking*
 Random Item Generation
 Random Monster spawning
 Spells with varying effects on other objects
@@ -20,5 +20,6 @@ UI
 High Scores saved to device
 
 
+*Google Play Games integration is in the googleplay branch for now and has not been merged into Master yet
 
 
